@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"Whip",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Whip",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -17,7 +17,7 @@ function Whip(_carry, _x, _y) constructor {
 		x = carry.x;
 		y = carry.y;
 		
-		if ((mouse_check_button_pressed(mb_left) && allIn) || goOut) {
+		if ((mouse_check_button_pressed(mb_right) && allIn) || goOut) {
 			out();
 		}
 		else if (!allIn) {
@@ -37,6 +37,14 @@ function Whip(_carry, _x, _y) constructor {
 			
 		}
 		
+		if (!allIn) {
+			colls = collisions(oEnemy);
+			for (var i = 0; i < ds_list_size(colls); i ++) {
+				instance_destroy(ds_list_find_value(colls, i));
+			}
+			ds_list_destroy(colls);
+		}
+		
 	}
 	
 	draw = function() {
@@ -44,9 +52,17 @@ function Whip(_carry, _x, _y) constructor {
 	}
 	
 	out = function() {
+		
 		goOut = true;
 		allIn = false;
 		head.out();
+		
+		colls = head.collisions(oGround);
+		if (ds_list_size(colls) > 0) {
+			setOut();
+		}
+		ds_list_destroy(colls);
+		
 	}
 	
 	in = function() {
@@ -67,6 +83,10 @@ function Whip(_carry, _x, _y) constructor {
 		allIn = true;
 		allOut = false;
 		head.reset(angle, scale, 0);
+	}
+	
+	collisions = function(_obj) {
+		return head.collisions(_obj);
 	}
 	
 }
@@ -154,6 +174,27 @@ function Link(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 	
 	setIn = function() {
 		prev.setIn();
+	}
+	
+	collisions = function(_obj) {
+		
+		colls = ds_list_create();
+		with (_obj) {
+			if (collision_line(other.x, other.y, other.x + lengthdir_x(other.length, other.angle), other.y + lengthdir_y(other.length, other.angle), self, false, false)) {
+				ds_list_add(other.colls, self);
+			}
+		}
+		
+		if (!is_undefined(next)) {
+			var nextColls = next.collisions(_obj);
+			for (var i = 0; i < ds_list_size(nextColls); i ++) {
+				ds_list_add(colls, ds_list_find_value(nextColls, i));
+			}
+			ds_list_destroy(nextColls);
+		}
+		
+		return colls;
+		
 	}
 	
 }

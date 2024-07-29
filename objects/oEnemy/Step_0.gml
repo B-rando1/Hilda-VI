@@ -1,16 +1,14 @@
-hSpeed = walkSpeed * (keyboard_check(ord("D")) - keyboard_check(ord("A")));
-
 if (place_meeting(x, y + 1, oGround)) {
-	if (mouse_check_button_pressed(mb_left)) {
+	hSpeed = 0;
+	if (sitTimer++ > sitTime) {
+		hSpeed = clamp((oPlayer.x - x) / tof, -moveSpeed, moveSpeed);
 		vSpeed = -jumpSpeed;
-		jumpUp = true;
+		sitTimer = 0;
+		setSitTime();
 	}
 }
 else {
-	if (!mouse_check_button(mb_left) || vSpeed > 0) {
-		jumpUp = false;
-	}
-	vSpeed += jumpUp ? grav : fallGrav;
+	vSpeed += grav;
 }
 
 if (place_meeting(x + hSpeed, y, oGround)) {
@@ -28,5 +26,3 @@ if (place_meeting(x, y + vSpeed, oGround)) {
 	vSpeed = 0;
 }
 y += vSpeed;
-
-whip.step();

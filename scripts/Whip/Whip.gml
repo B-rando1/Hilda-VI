@@ -8,6 +8,8 @@ function Whip(_carry, _x, _y) constructor {
 	carry = _carry;
 	head = new Link(x, y, 0, self, 0, 35);
 	
+	length = 35 * head.length;
+	
 	goOut = false;
 	allOut = false;
 	allIn = true;
@@ -47,6 +49,23 @@ function Whip(_carry, _x, _y) constructor {
 		
 	}
 	
+	grapple = function() {
+		
+		x = carry.x;
+		y = carry.y;
+		
+		angle = point_direction(carry.x, carry.y, carry.grappleX, carry.grappleY);
+		var dist = point_distance(carry.x, carry.y, carry.grappleX, carry.grappleY);
+		
+		if (dist > length) {
+			throw("grapple length too long");
+		}
+		
+		var dev = radtodeg(arccos(dist / length));
+		
+		head.line(angle, dev, 1, carry.grappleX, carry.grappleY);
+	}
+	
 	draw = function() {
 		head.draw();
 	}
@@ -83,6 +102,18 @@ function Whip(_carry, _x, _y) constructor {
 		allIn = true;
 		allOut = false;
 		head.reset(angle, scale, 0);
+	}
+	
+	startGrapple = function(_x, _y) {
+		
+		var dist = point_distance(carry.x, carry.y, _x, _y);
+		if (dist < length - 1) {
+			carry.state = STATE.GRAPPLE;
+			carry.grappleX = _x;
+			carry.grappleY = _y;
+			setOut();
+		}
+	
 	}
 	
 	collisions = function(_obj) {
@@ -137,6 +168,13 @@ function Link(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 			setOut();
 		}
 		
+		for (var i = 0; i < array_length(global.grapplePoints); i ++) {
+			var gX = global.grapplePoints[i][0], gY = global.grapplePoints[i][1];
+			if (point_distance(x + lengthdir_x(length / 2, angle), y + lengthdir_x(length / 2, angle), gX, gY) < length * 3) {
+				startGrapple(gX, gY);
+			}
+		}
+		
 	}
 	
 	in = function(_angle, _dir) {
@@ -149,6 +187,22 @@ function Link(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 		}
 		else if (abs(angle_difference(_angle + 90 * _dir, angle)) < 1) {
 			setIn();
+		}
+		
+	}
+	
+	line = function(_angle, _dev, _dir, _xTo, _yTo) {
+		
+		angle = _angle + _dev * _dir;
+		
+		if (next == undefined) {
+			x = _xTo - lengthdir_x(length, angle);
+			y = _yTo - lengthdir_y(length, angle);
+		}
+		else {
+			next.line(_angle, _dev, _dir * -1, _xTo, _yTo);
+			x = next.x - lengthdir_x(length, angle);
+			y = next.y - lengthdir_y(length, angle);
 		}
 		
 	}
@@ -174,6 +228,10 @@ function Link(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 	
 	setIn = function() {
 		prev.setIn();
+	}
+	
+	startGrapple = function(_x, _y) {
+		prev.startGrapple(_x, _y);
 	}
 	
 	collisions = function(_obj) {

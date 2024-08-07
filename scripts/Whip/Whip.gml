@@ -58,10 +58,10 @@ function Whip(_carry, _x, _y) constructor {
 		var dist = point_distance(carry.x, carry.y, carry.grappleX, carry.grappleY);
 		
 		if (dist > length) {
-			throw("grapple length too long");
+			show_debug_message("grapple length too long");
 		}
 		
-		var dev = radtodeg(arccos(dist / length));
+		var dev = radtodeg(arccos(min(dist / length, 1)));
 		
 		head.line(angle, dev, 1, carry.grappleX, carry.grappleY);
 	}
@@ -111,6 +111,7 @@ function Whip(_carry, _x, _y) constructor {
 			carry.state = STATE.GRAPPLE;
 			carry.grappleX = _x;
 			carry.grappleY = _y;
+			carry.jumpUp = false;
 			setOut();
 		}
 	

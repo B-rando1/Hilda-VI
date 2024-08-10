@@ -6,9 +6,10 @@ function Whip(_carry, _x, _y) constructor {
 	angle = 0;
 	
 	carry = _carry;
-	head = new Link(x, y, 0, self, 0, 35);
+	var linkNum = 50;
+	head = new Link(x, y, 0, self, 0, linkNum);
 	
-	length = 35 * head.length;
+	length = linkNum * head.length;
 	
 	goOut = false;
 	allOut = false;
@@ -159,7 +160,8 @@ function Link(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 	
 	out = function() {
 		
-		angle += angle_difference(prev.angle, angle) / 1.2;
+		var angDiff = lerp(0, angle_difference(prev.angle, angle), 0.8)
+		angle += angDiff;//updateAng(angDiff);
 		updatePos();
 		
 		if (!is_undefined(next)) {
@@ -169,11 +171,8 @@ function Link(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 			setOut();
 		}
 		
-		for (var i = 0; i < array_length(global.grapplePoints); i ++) {
-			var gX = global.grapplePoints[i][0], gY = global.grapplePoints[i][1];
-			if (point_distance(x + lengthdir_x(length / 2, angle), y + lengthdir_x(length / 2, angle), gX, gY) < length * 3) {
-				startGrapple(gX, gY);
-			}
+		if (collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oGround, false, true)) {
+			startGrapple(x + lengthdir_x(length / 2, angle), y + lengthdir_y(length / 2, angle));
 		}
 		
 	}

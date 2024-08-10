@@ -1,14 +1,14 @@
 if (place_meeting(x, y + 1, oGround)) {
 	postCoyTime = postCoyTimeMax;
-	if (mouse_check_button_pressed(mb_left) || preCoyTime > 0) {
+	if (JUMP_PRESSED || preCoyTime > 0) {
 		jump();
 	}
 }
 else {
-	if (!mouse_check_button(mb_left) || vSpeed > 0) {
+	if (!JUMP_DOWN || vSpeed > 0) {
 		jumpUp = false;
 	}
-	if (!jumpUp && mouse_check_button_pressed(mb_left)) {
+	if (!jumpUp && JUMP_PRESSED) {
 		if (postCoyTime > 0) {
 			jump();
 		}
@@ -84,4 +84,8 @@ switch (state) {
 	break;
 	default:
 		throw("Something went horribly wrong");
+}
+
+if (bbox_top > room_height + whip.length || place_meeting(x, y, oEnemy)) {
+	die();
 }

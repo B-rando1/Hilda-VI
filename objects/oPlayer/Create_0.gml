@@ -4,6 +4,8 @@ jumpSpeed = 10;
 grav = 0.39;
 fallGrav = 0.7;
 
+#macro JUMP_PRESSED (mouse_check_button_pressed(mb_left) || keyboard_check_pressed(vk_space))
+#macro JUMP_DOWN (mouse_check_button(mb_left) || keyboard_check(vk_space))
 jumpUp = false;
 
 preCoyTime = 0;
@@ -25,7 +27,7 @@ grappleX = 0;
 grappleY = 0;
 grappleLength = 0;
 changeGL = false;
-grappleHAccel = 0.1;
+grappleHAccel = 0.2;
 grappleVSpeed = 2.5;
 
 whip = new Whip(self, x, y);
@@ -36,11 +38,6 @@ jump = function() {
 	postCoyTime = 0;
 	preCoyTime = 0;
 	state = STATE.NORMAL;
-}
-
-global.grapplePoints = [];
-with (oGround) {
-	array_push(global.grapplePoints, [bbox_left, bbox_top], [bbox_right, bbox_top]);
 }
 
 collision = function() {
@@ -142,6 +139,10 @@ collisionGrapple = function() {
 	vSpeed = y - yprevious;
 	hSpeed = x - xprevious;
 
+}
+
+die = function() {
+	game_restart();
 }
 
 floatEq = function(_f1, _f2) {

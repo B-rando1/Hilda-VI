@@ -7,9 +7,10 @@ function Whip(_carry, _x, _y) constructor {
 	
 	carry = _carry;
 	var linkNum = 50;
+	offset = 12;
 	head = new Link(x, y, 0, self, 0, linkNum);
 	
-	length = linkNum * head.length;
+	length = linkNum * head.length + offset;
 	
 	goOut = false;
 	allOut = false;
@@ -17,10 +18,16 @@ function Whip(_carry, _x, _y) constructor {
 	
 	step = function() {
 		
-		x = carry.x;
+		var newScale = sign(mouse_x - carry.x);
+		newScale = (newScale == 0) ? 1 : newScale;
+		x = carry.x + 12 * newScale - 2 * (newScale == 1);
 		y = carry.y;
 		
-		if ((mouse_check_button_pressed(mb_right) && allIn) || goOut) {
+		if (mouse_check_button_pressed(mb_right) && allIn) {
+			carry.imgXScale = newScale;
+			out();
+		}
+		else if (goOut) {
 			out();
 		}
 		else if (!allIn) {
@@ -32,7 +39,6 @@ function Whip(_carry, _x, _y) constructor {
 			head.updateAng(angle_difference(newAng, angle));
 			angle = newAng;
 			
-			var newScale = (mouse_x - x < 0) ? -1 : 1;
 			if (newScale != scale) {
 				head.reset(angle, newScale, 0);
 				scale = newScale;
@@ -52,22 +58,26 @@ function Whip(_carry, _x, _y) constructor {
 	
 	grapple = function() {
 		
-		x = carry.x;
-		y = carry.y;
-		
 		angle = point_direction(carry.x, carry.y, carry.grappleX, carry.grappleY);
-		var dist = point_distance(carry.x, carry.y, carry.grappleX, carry.grappleY);
+		var dist = point_distance(carry.x, carry.y, carry.grappleX, carry.grappleY) - offset;
+		
+		// TODO: get better mouth tracking abilities.
+		x = carry.x + lengthdir_x(offset, angle)
+		y = carry.y + lengthdir_y(offset, angle);
 		
 		if (dist > length) {
 			show_debug_message("grapple length too long");
 		}
 		
-		var dev = radtodeg(arccos(min(dist / length, 1)));
+		var dev = radtodeg(arccos(clamp(dist / length, 0, 1)));
 		
 		head.line(angle, dev, 1, carry.grappleX, carry.grappleY);
 	}
 	
 	draw = function() {
+		
+		if (allIn) return;
+		draw_set_colour(make_color_rgb(255, 125, 199));
 		head.draw();
 	}
 	
@@ -87,11 +97,6 @@ function Whip(_carry, _x, _y) constructor {
 	
 	in = function() {
 		head.in(angle, 1);
-	}
-	
-	updatePos = function(_x, _y) {
-		x = _x;
-		y = _y;
 	}
 	
 	setOut = function() {
@@ -141,9 +146,9 @@ function Link(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 	
 	draw = function() {
 		
-		draw_set_colour(c_white);
 		draw_line_width(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), 1.2);
 		if (!is_undefined(next)) {
+			draw_triangle(x, y, next.x, next.y, next.x + lengthdir_x(next.length, next.angle), next.y + lengthdir_y(next.length, next.angle), false);
 			next.draw();
 		}
 		
@@ -161,7 +166,7 @@ function Link(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 	out = function() {
 		
 		var angDiff = lerp(0, angle_difference(prev.angle, angle), 0.8)
-		angle += angDiff;//updateAng(angDiff);
+		angle += angDiff;
 		updatePos();
 		
 		if (!is_undefined(next)) {

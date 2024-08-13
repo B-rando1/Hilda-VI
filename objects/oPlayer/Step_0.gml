@@ -25,7 +25,11 @@ postCoyTime = max(postCoyTime - 1, 0);
 switch (state) {
 	case STATE.NORMAL:
 	
-		hSpeed = walkSpeed * (keyboard_check(ord("D")) - keyboard_check(ord("A")));
+		var moveDir = keyboard_check(ord("D")) - keyboard_check(ord("A"))
+		hSpeed = walkSpeed * moveDir;
+		if (moveDir != 0 && whip.allIn) {
+			imgXScale = moveDir;
+		}
 		
 		collision();
 		
@@ -68,9 +72,16 @@ switch (state) {
 			
 		}
 		
-		vSpeed -= fallMag * sin(degtorad(fallAng));
-		
 		if (preCoyTime > 0 && y >= grappleY) {
+			
+			imgAng = 0;
+			imgYScale = 1;
+			var moveDir = keyboard_check(ord("D")) - keyboard_check(ord("A"))
+			hSpeed = walkSpeed * moveDir;
+			if (moveDir != 0 && whip.allIn) {
+				imgXScale = moveDir;
+			}
+			
 			jump();
 			collision();
 			state = STATE.NORMAL
@@ -78,6 +89,24 @@ switch (state) {
 		}
 		else {
 			collisionGrapple();
+			
+			if (place_meeting(x, y + 1, oGround)) {
+				imgAng = 0;
+				imgYScale = 1;
+				imgXScale = (x > grappleX) ? -1 : 1;
+			}
+			else if (place_meeting(x - 1, y, oGround) || place_meeting(x + 1, y, oGround)) {
+				imgXScale = 1;
+				imgAng = 90;
+				imgYScale = (x > grappleX) ? -1 : 1;
+			}
+			else {
+				vSpeed -= fallMag * sin(degtorad(fallAng));
+				imgAng = point_direction(x, y, grappleX, grappleY);
+				imgXScale = 1;
+				imgYScale = (imgAng > 90 && imgAng < 270) ? -1 : 1;
+			}
+			
 			whip.grapple();
 		}
 		

@@ -16,6 +16,10 @@ postCoyTimeMax = 20;
 hSpeed = 0;
 vSpeed = 0;
 
+imgAng = 0;
+imgXScale = 1;
+imgYScale = 1;
+
 enum STATE {
 	NORMAL,
 	GRAPPLE

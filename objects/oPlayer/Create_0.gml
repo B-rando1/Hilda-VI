@@ -6,6 +6,7 @@ fallGrav = 0.7;
 
 #macro JUMP_PRESSED (mouse_check_button_pressed(mb_left) || keyboard_check_pressed(vk_space))
 #macro JUMP_DOWN (mouse_check_button(mb_left) || keyboard_check(vk_space))
+#macro MOVE_DIR (keyboard_check(ord("D")) - keyboard_check(ord("A")))
 jumpUp = false;
 
 preCoyTime = 0;
@@ -22,7 +23,7 @@ imgYScale = 1;
 
 enum STATE {
 	NORMAL,
-	GRAPPLE
+	TONGETIED
 }
 
 state = STATE.NORMAL;
@@ -68,13 +69,14 @@ collisionGrapple = function() {
 	
 	collision()
 	
-	if (place_meeting(x, y + 1, oGround)) {
-		if (point_distance(x, y, grappleX, grappleY) <= whip.length) {
+	if (place_meeting(x, y + 1, oGround) && (MOVE_DIR != 0 || point_distance(x, y, grappleX, grappleY) > grappleLength)) {
+		
+		if (MOVE_DIR != 0 && point_distance(x, y, grappleX, grappleY) <= whip.length) {
 			return;
 		}
 		
 		var ang = point_direction(x, y, grappleX, grappleY);
-		var sqrtPart = sqrt(max(sqr(whip.length) - sqr(y - grappleY), 0));
+		var sqrtPart = sqrt(max(sqr(grappleLength) - sqr(y - grappleY), 0));
 		var circX = (x > grappleX) ? grappleX + sqrtPart : grappleX - sqrtPart;
 		
 		if (!place_meeting(circX, y, oGround)) {
@@ -85,7 +87,7 @@ collisionGrapple = function() {
 			
 			var oldX = x - 1;
 			var oldY = y - 1;
-			while (point_distance(x, y, grappleX, grappleY) > whip.length &&
+			while (point_distance(x, y, grappleX, grappleY) > grappleLength &&
 				abs(angle_difference(point_direction(x, y, grappleX, grappleY), ang)) < 90 &&
 				(!floatEq(x, oldX) || !floatEq(y, oldY))) {
 				
@@ -97,11 +99,12 @@ collisionGrapple = function() {
 			}
 			
 		}
-	
-		vSpeed = y - yprevious;
-		hSpeed = x - xprevious;
 	}
 	else {
+		
+		if (place_meeting(x, y + 1, oGround)) {
+			grappleLength = min(grappleLength, point_distance(x, y, grappleX, grappleY));
+		}
 	
 		if (point_distance(x, y, grappleX, grappleY) <= grappleLength) {
 			return;
@@ -118,7 +121,6 @@ collisionGrapple = function() {
 			var circY = (y > grappleY) ? grappleY + sqrtPart : grappleY - sqrtPart;
 			
 			if (place_meeting(x + sign(grappleX - x), y, oGround) && !place_meeting(x, circY, oGround)) {
-				x = x;
 				y = circY;
 			}
 			else {

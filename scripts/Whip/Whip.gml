@@ -23,7 +23,7 @@ function Whip(_carry, _x, _y) constructor {
 		x = carry.x + 12 * newScale - 2 * (newScale == 1);
 		y = carry.y;
 		
-		if (mouse_check_button_pressed(mb_right) && allIn) {
+		if ((mouse_check_button_pressed(mb_right) || keyboard_check_pressed(vk_alt)) && allIn) {
 			carry.imgXScale = newScale;
 			out();
 		}
@@ -114,7 +114,7 @@ function Whip(_carry, _x, _y) constructor {
 		
 		var dist = point_distance(carry.x, carry.y, _x, _y);
 		if (dist < length - 1) {
-			carry.state = STATE.GRAPPLE;
+			carry.state = STATE.TONGETIED;
 			carry.grappleX = _x;
 			carry.grappleY = _y;
 			carry.jumpUp = false;

@@ -25,10 +25,9 @@ postCoyTime = max(postCoyTime - 1, 0);
 switch (state) {
 	case STATE.NORMAL:
 	
-		var moveDir = keyboard_check(ord("D")) - keyboard_check(ord("A"))
-		hSpeed = walkSpeed * moveDir;
-		if (moveDir != 0 && whip.allIn) {
-			imgXScale = moveDir;
+		hSpeed = walkSpeed * MOVE_DIR;
+		if (MOVE_DIR != 0 && whip.allIn) {
+			imgXScale = MOVE_DIR;
 		}
 		
 		collision();
@@ -36,7 +35,7 @@ switch (state) {
 		whip.step();
 		
 	break;
-	case STATE.GRAPPLE:
+	case STATE.TONGETIED:
 	
 		grappleLength = min(point_distance(x, y, grappleX, grappleY), whip.length);
 		changeGL = false;
@@ -61,7 +60,7 @@ switch (state) {
 				var newGrappleLength = min(grappleLength + grappleVSpeed * (keyboard_check(ord("S")) - keyboard_check(ord("W"))), whip.length);
 				var lenDelta = grappleLength - newGrappleLength
 				grappleLength = newGrappleLength;
-				if (lenDelta < 0) {
+				if (lenDelta < 0 && (!place_meeting(x, y + 1, oGround))) {
 					hSpeed += lengthdir_x(lenDelta, ang);
 					vSpeed += lengthdir_y(lenDelta, ang);
 				}
@@ -76,10 +75,10 @@ switch (state) {
 			
 			imgAng = 0;
 			imgYScale = 1;
-			var moveDir = keyboard_check(ord("D")) - keyboard_check(ord("A"))
-			hSpeed = walkSpeed * moveDir;
-			if (moveDir != 0 && whip.allIn) {
-				imgXScale = moveDir;
+			
+			hSpeed = walkSpeed * MOVE_DIR;
+			if (MOVE_DIR != 0 && whip.allIn) {
+				imgXScale = MOVE_DIR;
 			}
 			
 			jump();

@@ -1,4 +1,4 @@
-if (place_meeting(x, y + 1, oGround)) {
+if (ON_GROUND) {
 	hSpeed = 0;
 	if (sitTimer++ > sitTime) {
 		hSpeed = clamp((oPlayer.x - x) / tof, -moveSpeed, moveSpeed);

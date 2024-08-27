@@ -4,6 +4,8 @@ jumpSpeed = 10;
 grav = 0.39;
 fallGrav = 0.7;
 
+#macro ON_GROUND place_meeting(x, y + 1, oGround)
+
 #macro MOVE_DIR (keyboard_check(ord("D")) - keyboard_check(ord("A")))
 #macro JUMP_PRESSED (mouse_check_button_pressed(mb_left) || keyboard_check_pressed(vk_space))
 #macro JUMP_DOWN (mouse_check_button(mb_left) || keyboard_check(vk_space))
@@ -19,6 +21,10 @@ postCoyTimeMax = 20;
 
 hSpeed = 0;
 vSpeed = 0;
+maxSpeed = 15;
+
+safeX = x;
+safeY = y;
 
 imgAng = 0;
 imgXScale = 1;
@@ -41,6 +47,8 @@ grappleVSpeed = 2.5;
 tongue = new Tongue(self, x, y);
 
 jump = function() {
+	imgAng = 0;
+	imgYScale = 1;
 	vSpeed = -jumpSpeed;
 	jumpUp = true;
 	postCoyTime = 0;
@@ -70,9 +78,12 @@ collision = function() {
 
 collisionGrapple = function() {
 	
-	collision()
+	collision();
 	
-	if (place_meeting(x, y + 1, oGround) && (MOVE_DIR != 0 || point_distance(x, y, grappleX, grappleY) > grappleLength)) {
+	if (ON_GROUND &&
+			(MOVE_DIR != 0 ||
+			(point_distance(x, y, grappleX, grappleY) > grappleLength &&
+				abs(angle_difference(90, point_direction(x, y, grappleX, grappleY))) > 20))) {
 		
 		if (MOVE_DIR != 0 && point_distance(x, y, grappleX, grappleY) <= tongue.length) {
 			return;
@@ -105,7 +116,7 @@ collisionGrapple = function() {
 	}
 	else {
 		
-		if (place_meeting(x, y + 1, oGround)) {
+		if (ON_GROUND) {
 			grappleLength = min(grappleLength, point_distance(x, y, grappleX, grappleY));
 		}
 	
@@ -151,5 +162,17 @@ collisionGrapple = function() {
 }
 
 die = function() {
-	game_restart();
+	
+	x = safeX;
+	y = safeY;
+	hSpeed = 0;
+	vSpeed = 0;
+	preCoyTime = 0;
+	postCoyTime = 0;
+	imgAng = 0;
+	imgXScale = 1;
+	imgYScale = 1;
+	state = STATE.NORMAL;
+	tongue.setIn();
+	
 }

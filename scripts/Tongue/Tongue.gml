@@ -117,6 +117,7 @@ function Tongue(_carry, _x, _y) constructor {
 	setIn = function() {
 		allIn = true;
 		allOut = false;
+		goOut = false;
 		head.reset(angle, dir, 0);
 	}
 	

@@ -1,4 +1,6 @@
-if (place_meeting(x, y + 1, oGround)) {
+if (ON_GROUND) {
+	safeX = x;
+	safeY = y;
 	postCoyTime = postCoyTimeMax;
 	if (JUMP_PRESSED || preCoyTime > 0) {
 		jump();
@@ -44,12 +46,12 @@ switch (state) {
 		var fallAng = (x > grappleX) ? ang + 90 : ang - 90;
 		var fallMag = fallGrav * cos(abs(degtorad(angle_difference(fallAng, 270))));
 		
-		if (place_meeting(x, y + 1, oGround)) {
+		if (ON_GROUND) {
 			hSpeed = walkSpeed * (keyboard_check(ord("D")) - keyboard_check(ord("A")));
 		}
 		else {
 			hSpeed += grappleHAccel * (keyboard_check(ord("D")) - keyboard_check(ord("A")));
-			if (y > grappleY && !place_meeting(x, y + 1, oGround)) {
+			if (y > grappleY && !ON_GROUND) {
 				hSpeed += fallMag * cos(degtorad(fallAng));
 			}
 		}
@@ -58,9 +60,9 @@ switch (state) {
 			
 			if (keyboard_check(ord("S")) || keyboard_check(ord("W"))) {
 				var newGrappleLength = min(grappleLength + grappleVSpeed * (keyboard_check(ord("S")) - keyboard_check(ord("W"))), tongue.length);
-				var lenDelta = grappleLength - newGrappleLength
+				var lenDelta = grappleLength - newGrappleLength;
 				grappleLength = newGrappleLength;
-				if (lenDelta < 0 && (!place_meeting(x, y + 1, oGround))) {
+				if (lenDelta < 0 && (!ON_GROUND)) {
 					hSpeed += lengthdir_x(lenDelta, ang);
 					vSpeed += lengthdir_y(lenDelta, ang);
 				}
@@ -72,23 +74,20 @@ switch (state) {
 		}
 		
 		// If you jump, exit tonguetied state
-		if (preCoyTime > 0 && y >= grappleY) {
-			
-			imgAng = 0;
-			imgYScale = 1;
+		if (preCoyTime > 0 && (y >= grappleY || place_meeting(x + 1, y, oGround) || place_meeting(x - 1, y, oGround))) {
 			
 			hSpeed = walkSpeed * MOVE_DIR;
 			imgXScale = betterSign(grappleX - x);
 			
 			jump();
 			collision();
-			state = STATE.NORMAL
+			state = STATE.NORMAL;
 			tongue.step();
 		}
 		else {
 			collisionGrapple();
 			
-			if (place_meeting(x, y + 1, oGround)) {
+			if (ON_GROUND) {
 				imgAng = 0;
 				imgYScale = 1;
 				imgXScale = (x > grappleX) ? -1 : 1;
@@ -113,6 +112,9 @@ switch (state) {
 		throw("Something went horribly wrong");
 }
 
-if (bbox_top > room_height + tongue.length || place_meeting(x, y, oEnemy)) {
+hSpeed = clamp(hSpeed, -maxSpeed, maxSpeed);
+vSpeed = clamp(vSpeed, -maxSpeed, maxSpeed);
+
+if (bbox_top > room_height + tongue.length || place_meeting(x, y, oDeath) || place_meeting(x, y, oEnemy)) {
 	die();
 }

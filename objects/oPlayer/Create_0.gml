@@ -4,9 +4,12 @@ jumpSpeed = 10;
 grav = 0.39;
 fallGrav = 0.7;
 
+#macro MOVE_DIR (keyboard_check(ord("D")) - keyboard_check(ord("A")))
 #macro JUMP_PRESSED (mouse_check_button_pressed(mb_left) || keyboard_check_pressed(vk_space))
 #macro JUMP_DOWN (mouse_check_button(mb_left) || keyboard_check(vk_space))
-#macro MOVE_DIR (keyboard_check(ord("D")) - keyboard_check(ord("A")))
+#macro TONGUE_PRESSED (mouse_check_button_pressed(mb_right) || keyboard_check_pressed(vk_alt))
+#macro TONGUE_DOWN (mouse_check_button(mb_right) || keyboard_check(vk_alt))
+
 jumpUp = false;
 
 preCoyTime = 0;
@@ -35,7 +38,7 @@ changeGL = false;
 grappleHAccel = 0.2;
 grappleVSpeed = 2.5;
 
-whip = new Whip(self, x, y);
+tongue = new Tongue(self, x, y);
 
 jump = function() {
 	vSpeed = -jumpSpeed;
@@ -71,7 +74,7 @@ collisionGrapple = function() {
 	
 	if (place_meeting(x, y + 1, oGround) && (MOVE_DIR != 0 || point_distance(x, y, grappleX, grappleY) > grappleLength)) {
 		
-		if (MOVE_DIR != 0 && point_distance(x, y, grappleX, grappleY) <= whip.length) {
+		if (MOVE_DIR != 0 && point_distance(x, y, grappleX, grappleY) <= tongue.length) {
 			return;
 		}
 		
@@ -149,8 +152,4 @@ collisionGrapple = function() {
 
 die = function() {
 	game_restart();
-}
-
-floatEq = function(_f1, _f2) {
-	return abs(_f1 - _f2) < 1;
 }

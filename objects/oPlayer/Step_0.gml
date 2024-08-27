@@ -26,18 +26,18 @@ switch (state) {
 	case STATE.NORMAL:
 	
 		hSpeed = walkSpeed * MOVE_DIR;
-		if (MOVE_DIR != 0 && whip.allIn) {
+		if (MOVE_DIR != 0 && tongue.allIn) {
 			imgXScale = MOVE_DIR;
 		}
 		
 		collision();
 		
-		whip.step();
+		tongue.step();
 		
 	break;
 	case STATE.TONGETIED:
 	
-		grappleLength = min(point_distance(x, y, grappleX, grappleY), whip.length);
+		grappleLength = min(point_distance(x, y, grappleX, grappleY), tongue.length);
 		changeGL = false;
 		var ang = point_direction(x, y, grappleX, grappleY);
 		
@@ -57,7 +57,7 @@ switch (state) {
 		if (y >= grappleY) {
 			
 			if (keyboard_check(ord("S")) || keyboard_check(ord("W"))) {
-				var newGrappleLength = min(grappleLength + grappleVSpeed * (keyboard_check(ord("S")) - keyboard_check(ord("W"))), whip.length);
+				var newGrappleLength = min(grappleLength + grappleVSpeed * (keyboard_check(ord("S")) - keyboard_check(ord("W"))), tongue.length);
 				var lenDelta = grappleLength - newGrappleLength
 				grappleLength = newGrappleLength;
 				if (lenDelta < 0 && (!place_meeting(x, y + 1, oGround))) {
@@ -71,20 +71,19 @@ switch (state) {
 			
 		}
 		
+		// If you jump, exit tonguetied state
 		if (preCoyTime > 0 && y >= grappleY) {
 			
 			imgAng = 0;
 			imgYScale = 1;
 			
 			hSpeed = walkSpeed * MOVE_DIR;
-			if (MOVE_DIR != 0 && whip.allIn) {
-				imgXScale = MOVE_DIR;
-			}
+			imgXScale = betterSign(grappleX - x);
 			
 			jump();
 			collision();
 			state = STATE.NORMAL
-			whip.step();
+			tongue.step();
 		}
 		else {
 			collisionGrapple();
@@ -106,7 +105,7 @@ switch (state) {
 				imgYScale = (imgAng > 90 && imgAng < 270) ? -1 : 1;
 			}
 			
-			whip.grapple();
+			tongue.grapple();
 		}
 		
 	break;
@@ -114,6 +113,6 @@ switch (state) {
 		throw("Something went horribly wrong");
 }
 
-if (bbox_top > room_height + whip.length || place_meeting(x, y, oEnemy)) {
+if (bbox_top > room_height + tongue.length || place_meeting(x, y, oEnemy)) {
 	die();
 }

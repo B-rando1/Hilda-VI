@@ -1,14 +1,14 @@
-function Whip(_carry, _x, _y) constructor {
+function Tongue(_carry, _x, _y) constructor {
 	
 	x = _x;
 	y = _y;
-	scale = 1;
+	dir = 1;
 	angle = 0;
 	
 	carry = _carry;
 	var linkNum = 50;
 	offset = 12;
-	head = new Link(x, y, 0, self, 0, linkNum);
+	head = new Node(x, y, 0, self, 0, linkNum);
 	
 	length = linkNum * head.length + offset;
 	
@@ -16,15 +16,37 @@ function Whip(_carry, _x, _y) constructor {
 	allOut = false;
 	allIn = true;
 	
+	tongueBuffer = 0;
+	tongueBufferMax = 20;
+	
 	step = function() {
 		
-		var newScale = sign(mouse_x - carry.x);
-		newScale = (newScale == 0) ? 1 : newScale;
-		x = carry.x + 12 * newScale - 2 * (newScale == 1);
+		if (TONGUE_PRESSED) {
+			tongueBuffer = tongueBufferMax;
+		}
+		if (TONGUE_DOWN) {
+			tongueBuffer = max(tongueBuffer - 1, 0);
+		}
+		else {
+			tongueBuffer = 0;
+		}
+		
+		if (allIn) {
+			updateDir(betterSign(mouse_x - carry.x));
+			var newAng = point_direction(x, y, mouse_x, mouse_y);
+			head.updateAng(angle_difference(newAng, angle));
+			angle = newAng;
+		}
+		else if (!goOut) {
+			updateDir(carry.imgXScale);
+		}
+		
+		x = carry.x + 12 * dir - 2 * (dir == 1);
 		y = carry.y;
 		
-		if ((mouse_check_button_pressed(mb_right) || keyboard_check_pressed(vk_alt)) && allIn) {
-			carry.imgXScale = newScale;
+		if (allIn && tongueBuffer > 0) {
+			tongueBuffer = 0;
+			carry.imgXScale = dir;
 			out();
 		}
 		else if (goOut) {
@@ -32,18 +54,6 @@ function Whip(_carry, _x, _y) constructor {
 		}
 		else if (!allIn) {
 			in();
-		}
-		else {
-			
-			var newAng = point_direction(x, y, mouse_x, mouse_y);
-			head.updateAng(angle_difference(newAng, angle));
-			angle = newAng;
-			
-			if (newScale != scale) {
-				head.reset(angle, newScale, 0);
-				scale = newScale;
-			}
-			
 		}
 		
 		if (!allIn) {
@@ -107,7 +117,7 @@ function Whip(_carry, _x, _y) constructor {
 	setIn = function() {
 		allIn = true;
 		allOut = false;
-		head.reset(angle, scale, 0);
+		head.reset(angle, dir, 0);
 	}
 	
 	startGrapple = function(_x, _y) {
@@ -127,9 +137,16 @@ function Whip(_carry, _x, _y) constructor {
 		return head.collisions(_obj);
 	}
 	
+	updateDir = function(_newDir) {
+		if (_newDir != dir) {
+			head.reset(angle, _newDir, 0);
+			dir = _newDir;
+		}
+	}
+	
 }
 
-function Link(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
+function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 	
 	x = _x;
 	y = _y;
@@ -142,7 +159,7 @@ function Link(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 	var angDiff = (_nodesDone < 2) ? 0 : 30;
 	var nextX = x + lengthdir_x(length, angle);
 	var nextY = y + lengthdir_y(length, angle);
-	next = (_nodesLeft > 0) ? new Link(nextX, nextY, _angle + angDiff, self, _nodesDone + 1, _nodesLeft - 1) : undefined;
+	next = (_nodesLeft > 0) ? new Node(nextX, nextY, _angle + angDiff, self, _nodesDone + 1, _nodesLeft - 1) : undefined;
 	
 	draw = function() {
 		

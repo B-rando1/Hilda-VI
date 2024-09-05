@@ -1,18 +1,15 @@
 {
   "$GMObject":"",
-  "%Name":"oGround",
+  "%Name":"pGround",
   "eventList":[],
   "managed":true,
-  "name":"oGround",
+  "name":"pGround",
   "overriddenProperties":[],
   "parent":{
     "name":"Objects",
     "path":"folders/Objects.yy",
   },
-  "parentObjectId":{
-    "name":"pGround",
-    "path":"objects/pGround/pGround.yy",
-  },
+  "parentObjectId":null,
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
@@ -30,10 +27,7 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":{
-    "name":"sGround",
-    "path":"sprites/sGround/sGround.yy",
-  },
+  "spriteId":null,
   "spriteMaskId":null,
   "visible":true,
 }

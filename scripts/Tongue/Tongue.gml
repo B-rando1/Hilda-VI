@@ -175,7 +175,7 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 	reset = function(_angle, _scale, _nodesDone) {
 		angle = _angle;
 		var angDiff = (_nodesDone < 2) ? 0 : 30 * _scale;
-		updatePos()
+		updatePos();
 		if (!is_undefined(next)) {
 			next.reset(_angle + angDiff, _scale, _nodesDone + 1);
 		}
@@ -183,7 +183,7 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 	
 	out = function() {
 		
-		var angDiff = lerp(0, angle_difference(prev.angle, angle), 0.8)
+		var angDiff = lerp(0, angle_difference(prev.angle, angle), 0.8);
 		angle += angDiff;
 		updatePos();
 		

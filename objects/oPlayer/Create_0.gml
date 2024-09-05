@@ -4,7 +4,7 @@ jumpSpeed = 10;
 grav = 0.39;
 fallGrav = 0.7;
 
-#macro ON_GROUND place_meeting(x, y + 1, oGround)
+#macro ON_GROUND place_meeting(x, y + 1, pGround)
 
 #macro MOVE_DIR (keyboard_check(ord("D")) - keyboard_check(ord("A")))
 #macro JUMP_PRESSED (mouse_check_button_pressed(mb_left) || keyboard_check_pressed(vk_space))

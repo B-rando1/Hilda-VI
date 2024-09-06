@@ -97,12 +97,6 @@ function Tongue(_carry, _x, _y) constructor {
 		allIn = false;
 		head.out();
 		
-		colls = head.collisions(oGround);
-		if (ds_list_size(colls) > 0) {
-			setOut();
-		}
-		ds_list_destroy(colls);
-		
 	}
 	
 	in = function() {
@@ -194,8 +188,11 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 			setOut();
 		}
 		
-		if (collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oGround, false, true)) {
+		if (collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oGround, false, true) != noone) {
 			startGrapple(x + lengthdir_x(length / 2, angle), y + lengthdir_y(length / 2, angle));
+		}
+		else if (collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oNonStick, false, true) != noone) {
+			setOut();
 		}
 		
 	}

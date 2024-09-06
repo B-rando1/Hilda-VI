@@ -74,7 +74,7 @@ switch (state) {
 		}
 		
 		// If you jump, exit tonguetied state
-		if (preCoyTime > 0 && (y >= grappleY || place_meeting(x + 1, y, oGround) || place_meeting(x - 1, y, oGround))) {
+		if (preCoyTime > 0 && (y >= grappleY || place_meeting(x + 1, y, pGround) || place_meeting(x - 1, y, pGround))) {
 			
 			hSpeed = walkSpeed * MOVE_DIR;
 			imgXScale = betterSign(grappleX - x);
@@ -92,7 +92,7 @@ switch (state) {
 				imgYScale = 1;
 				imgXScale = (x > grappleX) ? -1 : 1;
 			}
-			else if (place_meeting(x - 1, y, oGround) || place_meeting(x + 1, y, oGround)) {
+			else if (place_meeting(x - 1, y, pGround) || place_meeting(x + 1, y, pGround)) {
 				imgXScale = 1;
 				imgAng = 90;
 				imgYScale = (x > grappleX) ? -1 : 1;

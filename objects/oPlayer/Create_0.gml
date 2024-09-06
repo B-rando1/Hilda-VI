@@ -58,16 +58,16 @@ jump = function() {
 
 collision = function() {
 	
-	if (place_meeting(x + hSpeed, y, oGround)) {
-		while (!place_meeting(x + sign(hSpeed), y, oGround)) {
+	if (place_meeting(x + hSpeed, y, pGround)) {
+		while (!place_meeting(x + sign(hSpeed), y, pGround)) {
 			x += sign(hSpeed);
 		}
 		hSpeed = 0;
 	}
 	x += hSpeed;
 
-	if (place_meeting(x, y + vSpeed, oGround)) {
-		while (!place_meeting(x, y + sign(vSpeed), oGround)) {
+	if (place_meeting(x, y + vSpeed, pGround)) {
+		while (!place_meeting(x, y + sign(vSpeed), pGround)) {
 			y += sign(vSpeed);
 		}
 		vSpeed = 0;
@@ -93,7 +93,7 @@ collisionGrapple = function() {
 		var sqrtPart = sqrt(max(sqr(grappleLength) - sqr(y - grappleY), 0));
 		var circX = (x > grappleX) ? grappleX + sqrtPart : grappleX - sqrtPart;
 		
-		if (!place_meeting(circX, y, oGround)) {
+		if (!place_meeting(circX, y, pGround)) {
 			x = circX;
 			y = y;
 		}
@@ -125,7 +125,7 @@ collisionGrapple = function() {
 		}
 	
 		var ang = point_direction(x, y, grappleX, grappleY);
-		if (!place_meeting(grappleX - lengthdir_x(grappleLength, ang), grappleY - lengthdir_y(grappleLength, ang), oGround)) {
+		if (!place_meeting(grappleX - lengthdir_x(grappleLength, ang), grappleY - lengthdir_y(grappleLength, ang), pGround)) {
 			x = grappleX - lengthdir_x(grappleLength, ang);
 			y = grappleY - lengthdir_y(grappleLength, ang);
 		}
@@ -134,7 +134,7 @@ collisionGrapple = function() {
 			var sqrtPart = sqrt(max(sqr(grappleLength) - sqr(x - grappleX), 0));
 			var circY = (y > grappleY) ? grappleY + sqrtPart : grappleY - sqrtPart;
 			
-			if (place_meeting(x + sign(grappleX - x), y, oGround) && !place_meeting(x, circY, oGround)) {
+			if (place_meeting(x + sign(grappleX - x), y, pGround) && !place_meeting(x, circY, pGround)) {
 				y = circY;
 			}
 			else {

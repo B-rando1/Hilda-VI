@@ -11,16 +11,16 @@ else {
 	vSpeed += grav;
 }
 
-if (place_meeting(x + hSpeed, y, oGround)) {
-	while (!place_meeting(x + sign(hSpeed), y, oGround)) {
+if (place_meeting(x + hSpeed, y, pGround)) {
+	while (!place_meeting(x + sign(hSpeed), y, pGround)) {
 		x += sign(hSpeed);
 	}
 	hSpeed = 0;
 }
 x += hSpeed;
 
-if (place_meeting(x, y + vSpeed, oGround)) {
-	while (!place_meeting(x, y + sign(vSpeed), oGround)) {
+if (place_meeting(x, y + vSpeed, pGround)) {
+	while (!place_meeting(x, y + sign(vSpeed), pGround)) {
 		y += sign(vSpeed);
 	}
 	vSpeed = 0;

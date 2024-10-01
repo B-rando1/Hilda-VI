@@ -27,7 +27,9 @@ postCoyTime = max(postCoyTime - 1, 0);
 switch (state) {
 	case STATE.NORMAL:
 	
-		hSpeed = walkSpeed * MOVE_DIR;
+		var ax = getAccel(hSpeed, MOVE_DIR * walkSpeed, walkAccel);
+		hSpeed = (hSpeed + ax) * walkDecel;
+	
 		if (MOVE_DIR != 0 && tongue.allIn) {
 			imgXScale = MOVE_DIR;
 		}
@@ -76,7 +78,7 @@ switch (state) {
 		// If you jump, exit tonguetied state
 		if (preCoyTime > 0 && (y >= grappleY || place_meeting(x + 1, y, pGround) || place_meeting(x - 1, y, pGround))) {
 			
-			hSpeed = walkSpeed * MOVE_DIR;
+			//hSpeed = walkSpeed * MOVE_DIR;
 			imgXScale = betterSign(grappleX - x);
 			
 			jump();

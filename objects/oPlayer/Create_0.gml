@@ -1,4 +1,6 @@
-walkSpeed = 3;
+walkAccel = 1.0;
+walkDecel = 0.8;
+walkSpeed = 3 / walkDecel;
 jumpSpeed = 10;
 
 grav = 0.39;
@@ -6,11 +8,11 @@ fallGrav = 0.7;
 
 #macro ON_GROUND place_meeting(x, y + 1, pGround)
 
-#macro MOVE_DIR (keyboard_check(ord("D")) - keyboard_check(ord("A")))
-#macro JUMP_PRESSED (mouse_check_button_pressed(mb_left) || keyboard_check_pressed(vk_space))
-#macro JUMP_DOWN (mouse_check_button(mb_left) || keyboard_check(vk_space))
-#macro TONGUE_PRESSED (mouse_check_button_pressed(mb_right) || keyboard_check_pressed(vk_alt))
-#macro TONGUE_DOWN (mouse_check_button(mb_right) || keyboard_check(vk_alt))
+#macro MOVE_DIR (gamepad_is_connected(0) ? gamepad_button_check(0, gp_padr) - gamepad_button_check(0, gp_padl) : (keyboard_check(ord("D")) - keyboard_check(ord("A"))))
+#macro JUMP_PRESSED (mouse_check_button_pressed(mb_left) || keyboard_check_pressed(vk_space) || (gamepad_is_connected(0) && (gamepad_button_check_pressed(0, gp_shoulderr) || gamepad_button_check_pressed(0, gp_shoulderl))))
+#macro JUMP_DOWN (mouse_check_button(mb_left) || keyboard_check(vk_space) || (gamepad_is_connected(0) && (gamepad_button_check(0, gp_shoulderr) || gamepad_button_check(0, gp_shoulderl))))
+#macro TONGUE_PRESSED (mouse_check_button_pressed(mb_right) || keyboard_check_pressed(vk_alt) || (gamepad_is_connected(0) && (gamepad_button_check_pressed(0, gp_shoulderrb) || gamepad_button_check_pressed(0, gp_shoulderlb))))
+#macro TONGUE_DOWN (mouse_check_button(mb_right) || keyboard_check(vk_alt) || (gamepad_is_connected(0) && (gamepad_button_check(0, gp_shoulderrb) || gamepad_button_check(0, gp_shoulderlb))))
 
 jumpUp = false;
 
@@ -41,19 +43,32 @@ grappleX = 0;
 grappleY = 0;
 grappleLength = 0;
 changeGL = false;
-grappleHAccel = 0.2;
-grappleVSpeed = 2.5;
+grappleHAccel = 0.25;
+grappleVSpeed = 3;
 
 tongue = new Tongue(self, x, y);
 
 jump = function() {
+	
 	imgAng = 0;
 	imgYScale = 1;
-	vSpeed = -jumpSpeed;
 	jumpUp = true;
 	postCoyTime = 0;
 	preCoyTime = 0;
+	
+	if (state == STATE.TONGETIED && !ON_GROUND && y >= grappleY) {
+		var pullVel = lengthdir_y(jumpSpeed, point_direction(x, y, grappleX, grappleY));
+		var closeVel = (-jumpSpeed - pullVel) * (1 / (10 * sqr(grappleLength / tongue.length) + 1));
+		show_debug_message("pullVel: " + string(pullVel));
+		show_debug_message("closeVel: " + string(closeVel));
+		vSpeed += pullVel + closeVel;
+	}
+	else {
+		vSpeed = -jumpSpeed;
+	}
+	
 	state = STATE.NORMAL;
+	
 }
 
 collision = function() {
@@ -159,6 +174,20 @@ collisionGrapple = function() {
 	vSpeed = y - yprevious;
 	hSpeed = x - xprevious;
 
+}
+
+getAccel = function(_current, _target, _accel) {
+	if (_target - _current > 0) {
+		if (_target - (_current + _accel) < 0)
+			return _target - _current;
+		return _accel;
+	}
+	else if (_target - _current < 0) {
+		if (_target - (_current - _accel) > 0)
+			return _target - _current;
+		return -_accel;
+	}
+	return 0;
 }
 
 die = function() {

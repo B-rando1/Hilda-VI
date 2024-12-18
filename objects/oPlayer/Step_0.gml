@@ -1,6 +1,11 @@
 if (ON_GROUND) {
-	safeX = x;
-	safeY = y;
+	if (place_meeting(x, y + 1, oCheckpoint)) {
+		safeX = x;
+		safeY = y;
+		with (instance_place(x, y, oCheckpoint)) {
+			activate();
+		}
+	}
 	postCoyTime = postCoyTimeMax;
 	if (JUMP_PRESSED || preCoyTime > 0) {
 		jump();

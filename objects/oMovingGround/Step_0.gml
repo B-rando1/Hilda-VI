@@ -1,0 +1,67 @@
+var carryPlayer = false;
+if (collision_rectangle(bbox_left, bbox_top - 1, bbox_right, bbox_top, oPlayer, false, true) != noone) {
+	carryPlayer = true;
+}
+
+if (carryPlayer) {
+	
+	with (oPlayer) {
+		move(other.hSpeed, other.vSpeed);
+	}
+	x += hSpeed;
+	y += vSpeed;
+	
+	with (oPlayer) {
+		while (place_meeting(x, y, other)) {
+			y -= 0.1;
+		}
+		if (place_meeting(x, y, pGround)) {
+			die();
+		}
+		if (bbox_right > other.bbox_left && bbox_left < other.bbox_right) {
+			while (!place_meeting(x, y + 0.1, pGround)) {
+				y += 0.1;
+			}
+		}
+	}
+}
+else {
+	
+	if (place_meeting(x + hSpeed, y, oPlayer)) {
+		while (place_meeting(x + hSpeed, y, oPlayer)) {
+			oPlayer.x += sign(hSpeed);
+		}
+		with (oPlayer) {
+			if (place_meeting(x, y, pGround)) {
+				show_debug_message("Player pushed into wall (vertical)")
+				die();
+			}
+		}
+	}
+	x += hSpeed;
+	if (place_meeting(x, y + vSpeed, oPlayer)) {
+		while (place_meeting(x, y + vSpeed, oPlayer)) {
+			oPlayer.y += sign(vSpeed);
+		}
+		with (oPlayer) {
+			if (place_meeting(x, y, pGround)) {
+				show_debug_message("Player pushed into wall (vertical)")
+				die();
+			}
+		}
+	}
+	y += vSpeed;
+}
+
+if (oPlayer.state == STATE.TONGETIED && oPlayer.grappleID == id) {
+	oPlayer.grappleX += hSpeed;
+	oPlayer.grappleY += vSpeed;
+}
+
+// Needs to go last
+progress += dir;
+if ((progress < 0) || (progress > period * 60 / 2)) {
+	hSpeed *= -1;
+	vSpeed *= -1;
+	dir *= -1;
+}

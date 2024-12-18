@@ -115,13 +115,14 @@ function Tongue(_carry, _x, _y) constructor {
 		head.reset(angle, dir, 0);
 	}
 	
-	startGrapple = function(_x, _y) {
+	startGrapple = function(_x, _y, _id) {
 		
 		var dist = point_distance(carry.x, carry.y, _x, _y);
 		if (dist < length - 1) {
 			carry.state = STATE.TONGETIED;
 			carry.grappleX = _x;
 			carry.grappleY = _y;
+			carry.grappleID = _id;
 			carry.jumpUp = false;
 			setOut();
 		}
@@ -188,8 +189,9 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 			setOut();
 		}
 		
-		if (collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oGround, false, true) != noone) {
-			startGrapple(x + lengthdir_x(length / 2, angle), y + lengthdir_y(length / 2, angle));
+		var grappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oGround, false, true);
+		if (grappleID != noone) {
+			startGrapple(x + lengthdir_x(length / 2, angle), y + lengthdir_y(length / 2, angle), grappleID);
 		}
 		else if (collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oNonStick, false, true) != noone) {
 			setOut();
@@ -250,8 +252,8 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 		prev.setIn();
 	}
 	
-	startGrapple = function(_x, _y) {
-		prev.startGrapple(_x, _y);
+	startGrapple = function(_x, _y, _id) {
+		prev.startGrapple(_x, _y, _id);
 	}
 	
 	collisions = function(_obj) {

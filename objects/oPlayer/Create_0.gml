@@ -41,6 +41,8 @@ state = STATE.NORMAL;
 
 grappleX = 0;
 grappleY = 0;
+grappleID = noone;
+
 grappleLength = 0;
 changeGL = false;
 grappleHAccel = 0.25;
@@ -71,23 +73,38 @@ jump = function() {
 	
 }
 
+move = function(_hSpeed, _vSpeed) {
+	
+	if (place_meeting(x + _hSpeed, y, pGround) && _hSpeed != 0) {
+		while (!place_meeting(x + sign(_hSpeed), y, pGround)) {
+			x += sign(_hSpeed) * 0.1;
+		}
+		_hSpeed = 0;
+	}
+	x += _hSpeed;
+
+	if (place_meeting(x, y + _vSpeed, pGround) && _vSpeed != 0) {
+		while (!place_meeting(x, y + sign(_vSpeed), pGround)) {
+			y += sign(_vSpeed) * 0.1;
+		}
+		_vSpeed = 0;
+	}
+	y += _vSpeed;
+	
+	if (place_meeting(x, y, pGround)) {
+		show_debug_message("stuck in wall in move function");
+		die();
+	}
+	
+	return [_hSpeed, _vSpeed];
+	
+}
+
 collision = function() {
 	
-	if (place_meeting(x + hSpeed, y, pGround)) {
-		while (!place_meeting(x + sign(hSpeed), y, pGround)) {
-			x += sign(hSpeed);
-		}
-		hSpeed = 0;
-	}
-	x += hSpeed;
-
-	if (place_meeting(x, y + vSpeed, pGround)) {
-		while (!place_meeting(x, y + sign(vSpeed), pGround)) {
-			y += sign(vSpeed);
-		}
-		vSpeed = 0;
-	}
-	y += vSpeed;
+	speedVec = move(hSpeed, vSpeed)
+	hSpeed = speedVec[0];
+	vSpeed = speedVec[1];
 	
 }
 

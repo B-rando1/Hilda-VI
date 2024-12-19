@@ -4,5 +4,6 @@
     {"name":"oCheckpoint","order":2,"path":"objects/oCheckpoint/oCheckpoint.yy",},
     {"name":"oMovingGround","order":1,"path":"objects/oMovingGround/oMovingGround.yy",},
     {"name":"sCheckpoint","order":1,"path":"sprites/sCheckpoint/sCheckpoint.yy",},
+    {"name":"sMovingGround","order":2,"path":"sprites/sMovingGround/sMovingGround.yy",},
   ],
 }

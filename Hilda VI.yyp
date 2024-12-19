@@ -53,6 +53,7 @@
     {"id":{"name":"sDeathHalf","path":"sprites/sDeathHalf/sDeathHalf.yy",},},
     {"id":{"name":"sEnemy","path":"sprites/sEnemy/sEnemy.yy",},},
     {"id":{"name":"sGround","path":"sprites/sGround/sGround.yy",},},
+    {"id":{"name":"sMovingGround","path":"sprites/sMovingGround/sMovingGround.yy",},},
     {"id":{"name":"sNonStick","path":"sprites/sNonStick/sNonStick.yy",},},
     {"id":{"name":"sPlayer","path":"sprites/sPlayer/sPlayer.yy",},},
   ],

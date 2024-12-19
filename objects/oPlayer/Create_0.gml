@@ -1,3 +1,5 @@
+depth --;
+
 walkAccel = 1.0;
 walkDecel = 0.8;
 walkSpeed = 3 / walkDecel;

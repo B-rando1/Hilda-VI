@@ -1,61 +1,73 @@
-var carryPlayer = false;
-if (collision_rectangle(bbox_left, bbox_top - 1, bbox_right, bbox_top, oPlayer, false, true) != noone) {
-	carryPlayer = true;
-}
+with (myGround) {
+	hSpeed = other.hSpeed;
+	vSpeed = other.vSpeed;
+	
+	if (object_is_ancestor(object_index, pGround)) {
+		
+		var carryPlayer = false;
+		if (collision_rectangle(bbox_left, bbox_top - 1, bbox_right, bbox_top, oPlayer, false, true) != noone) {
+			carryPlayer = true;
+		}
 
-if (carryPlayer) {
+		if (carryPlayer) {
 	
-	with (oPlayer) {
-		move(other.hSpeed, other.vSpeed);
-	}
-	x += hSpeed;
-	y += vSpeed;
+			with (oPlayer) {
+				move(other.hSpeed, other.vSpeed);
+			}
+			x += hSpeed;
+			y += vSpeed;
 	
-	with (oPlayer) {
-		while (place_meeting(x, y, other)) {
-			y -= 0.1;
-		}
-		if (place_meeting(x, y, pGround)) {
-			die();
-		}
-		if (bbox_right > other.bbox_left && bbox_left < other.bbox_right) {
-			while (!place_meeting(x, y + 0.1, pGround)) {
-				y += 0.1;
+			with (oPlayer) {
+				while (place_meeting(x, y, other)) {
+					y -= 0.1;
+				}
+				if (place_meeting(x, y, pGround)) {
+					die();
+				}
+				if (bbox_right > other.bbox_left && bbox_left < other.bbox_right) {
+					while (!place_meeting(x, y + 0.1, pGround)) {
+						y += 0.1;
+					}
+				}
 			}
 		}
-	}
-}
-else {
+		else {
 	
-	if (place_meeting(x + hSpeed, y, oPlayer)) {
-		while (place_meeting(x + hSpeed, y, oPlayer)) {
-			oPlayer.x += sign(hSpeed);
-		}
-		with (oPlayer) {
-			if (place_meeting(x, y, pGround)) {
-				show_debug_message("Player pushed into wall (vertical)")
-				die();
+			if (place_meeting(x + hSpeed, y, oPlayer)) {
+				while (place_meeting(x + hSpeed, y, oPlayer)) {
+					oPlayer.x += sign(hSpeed);
+				}
+				with (oPlayer) {
+					if (place_meeting(x, y, pGround)) {
+						show_debug_message("Player pushed into wall (vertical)")
+						die();
+					}
+				}
 			}
-		}
-	}
-	x += hSpeed;
-	if (place_meeting(x, y + vSpeed, oPlayer)) {
-		while (place_meeting(x, y + vSpeed, oPlayer)) {
-			oPlayer.y += sign(vSpeed);
-		}
-		with (oPlayer) {
-			if (place_meeting(x, y, pGround)) {
-				show_debug_message("Player pushed into wall (vertical)")
-				die();
+			x += hSpeed;
+			if (place_meeting(x, y + vSpeed, oPlayer)) {
+				while (place_meeting(x, y + vSpeed, oPlayer)) {
+					oPlayer.y += sign(vSpeed);
+				}
+				with (oPlayer) {
+					if (place_meeting(x, y, pGround)) {
+						show_debug_message("Player pushed into wall (vertical)")
+						die();
+					}
+				}
 			}
+			y += vSpeed;
 		}
-	}
-	y += vSpeed;
-}
 
-if (oPlayer.state == STATE.TONGETIED && oPlayer.grappleID == id) {
-	oPlayer.grappleX += hSpeed;
-	oPlayer.grappleY += vSpeed;
+		if (oPlayer.state == STATE.TONGETIED && oPlayer.grappleID == id) {
+			oPlayer.grappleX += hSpeed;
+			oPlayer.grappleY += vSpeed;
+		}
+	}
+	else {
+		x += hSpeed;
+		y += vSpeed;
+	}
 }
 
 // Needs to go last

@@ -1,5 +1,5 @@
 {
-  "$GMProject":"",
+  "$GMProject":"v1",
   "%Name":"Hilda VI",
   "AudioGroups":[
     {"$GMAudioGroup":"","%Name":"audiogroup_default","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
@@ -26,11 +26,12 @@
     {"$GMFolder":"","%Name":"Tile Sets","folderPath":"folders/Tile Sets.yy","name":"Tile Sets","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Timelines","folderPath":"folders/Timelines.yy","name":"Timelines","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
+  "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[],
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.1100.0.713",
+    "IDEVersion":"2024.13.0.190",
   },
   "name":"Hilda VI",
   "resources":[
@@ -38,7 +39,6 @@
     {"id":{"name":"oCheckpoint","path":"objects/oCheckpoint/oCheckpoint.yy",},},
     {"id":{"name":"oDeath","path":"objects/oDeath/oDeath.yy",},},
     {"id":{"name":"oDeathHalf","path":"objects/oDeathHalf/oDeathHalf.yy",},},
-    {"id":{"name":"oEnemy","path":"objects/oEnemy/oEnemy.yy",},},
     {"id":{"name":"oGround","path":"objects/oGround/oGround.yy",},},
     {"id":{"name":"oMovingGround","path":"objects/oMovingGround/oMovingGround.yy",},},
     {"id":{"name":"oNonStick","path":"objects/oNonStick/oNonStick.yy",},},
@@ -51,7 +51,6 @@
     {"id":{"name":"sCheckpoint","path":"sprites/sCheckpoint/sCheckpoint.yy",},},
     {"id":{"name":"sDeath","path":"sprites/sDeath/sDeath.yy",},},
     {"id":{"name":"sDeathHalf","path":"sprites/sDeathHalf/sDeathHalf.yy",},},
-    {"id":{"name":"sEnemy","path":"sprites/sEnemy/sEnemy.yy",},},
     {"id":{"name":"sGround","path":"sprites/sGround/sGround.yy",},},
     {"id":{"name":"sMovingGround","path":"sprites/sMovingGround/sMovingGround.yy",},},
     {"id":{"name":"sNonStick","path":"sprites/sNonStick/sNonStick.yy",},},

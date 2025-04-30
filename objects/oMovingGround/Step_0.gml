@@ -60,8 +60,13 @@ with (myGround) {
 		}
 
 		if (oPlayer.state == STATE.TONGETIED && oPlayer.grappleID == id) {
-			oPlayer.grappleX += hSpeed;
-			oPlayer.grappleY += vSpeed;
+			with (oPlayer) {
+				grappleX += other.hSpeed;
+				grappleY += other.vSpeed;
+				var amt_moved = move(0, other.vSpeed);
+				xprevious += amt_moved[0];
+				yprevious += amt_moved[1];
+			}
 		}
 	}
 	else {

@@ -8,6 +8,7 @@ if (ON_GROUND) {
 	}
 	postCoyTime = postCoyTimeMax;
 	if (JUMP_PRESSED || preCoyTime > 0) {
+		show_debug_message("jump 1")
 		jump();
 	}
 }
@@ -17,6 +18,7 @@ else {
 	}
 	if (!jumpUp && JUMP_PRESSED) {
 		if (postCoyTime > 0) {
+			show_debug_message("jump 2")
 			jump();
 		}
 		else {
@@ -86,9 +88,9 @@ switch (state) {
 			//hSpeed = walkSpeed * MOVE_DIR;
 			imgXScale = betterSign(grappleX - x);
 			
+			show_debug_message("jump 3")
 			jump();
 			collision();
-			state = STATE.NORMAL;
 			tongue.step();
 		}
 		else {

@@ -1,4 +1,4 @@
-depth += 2;
+depth ++;
 active = false;
 
 activate = function() {

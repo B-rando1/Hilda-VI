@@ -1,4 +1,4 @@
-depth += 1;
+depth --;
 
 walkAccel = 1.0;
 walkDecel = 0.8;
@@ -63,6 +63,8 @@ jump = function() {
 	if (state == STATE.TONGETIED && !ON_GROUND && y >= grappleY) {
 		var pullVel = lengthdir_y(jumpSpeed, point_direction(x, y, grappleX, grappleY));
 		var closeVel = (-jumpSpeed - pullVel) * (1 / (10 * sqr(grappleLength / tongue.length) + 1));
+		show_debug_message("pullVel: " + string(pullVel));
+		show_debug_message("closeVel: " + string(closeVel));
 		vSpeed += pullVel + closeVel;
 	}
 	else {

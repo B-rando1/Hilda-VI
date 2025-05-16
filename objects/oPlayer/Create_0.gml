@@ -221,4 +221,8 @@ die = function() {
 	state = STATE.NORMAL;
 	tongue.setIn();
 	
+	with (oEnemy) {
+		reset();
+	}
+	
 }

@@ -1,6 +1,7 @@
 enum EnemyState {
 	idle,
-	attack
+	attack,
+	dying
 }
 
 room_goto_next();

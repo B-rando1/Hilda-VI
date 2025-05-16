@@ -1,3 +1,5 @@
+tongue.killEnemies();
+
 if (ON_GROUND) {
 	if (place_meeting(x, y + 1, oCheckpoint)) {
 		safeX = x;
@@ -121,6 +123,6 @@ switch (state) {
 hSpeed = clamp(hSpeed, -maxSpeed, maxSpeed);
 vSpeed = clamp(vSpeed, -maxSpeed, maxSpeed);
 
-if (bbox_top > room_height + tongue.length || place_meeting(x, y, oDeath)) {
+if (bbox_top > room_height + tongue.length || place_meeting(x, y, oDeath) || place_meeting(x, y, oEnemy)) {
 	die();
 }

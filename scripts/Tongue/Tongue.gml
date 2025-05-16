@@ -120,6 +120,20 @@ function Tongue(_carry, _x, _y) constructor {
 	
 	}
 	
+	killEnemies = function() {
+		if (!allIn) {
+			colls = collisions(oEnemy);
+			for (var i = 0; i < ds_list_size(colls); i++) {
+				ds_list_find_value(colls, i).die();
+			}
+			ds_list_destroy(colls);
+		}
+	}
+	
+	collisions = function(_obj) {
+		return head.collisions(_obj);
+	}
+	
 	updateDir = function(_newDir) {
 		if (_newDir != dir) {
 			head.reset(angle, _newDir, 0);
@@ -241,5 +255,22 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 	
 	startGrapple = function(_x, _y, _id) {
 		prev.startGrapple(_x, _y, _id);
+	}
+	
+	collisions = function(_obj) {
+		colls = ds_list_create();
+		with (_obj) {
+			if (collision_line(other.x, other.y, other.x + lengthdir_x(other.length, other.angle), other.y + lengthdir_y(other.length, other.angle), self, false, false)) {
+				ds_list_add(other.colls, self);
+			}
+		}
+		if (!is_undefined(next)) {
+			var nextColls = next.collisions(_obj);
+			for (var i = 0; i < ds_list_size(nextColls); i ++) {
+				ds_list_add(colls, ds_list_find_value(nextColls, i));
+			}
+			ds_list_destroy(nextColls);
+		}
+		return colls;
 	}
 }

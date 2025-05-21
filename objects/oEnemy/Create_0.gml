@@ -6,24 +6,37 @@ reset = function() {
 
 	hSpeed = 0;
 	vSpeed = 0;
+	mySpeed = 0;
+	
+	sprite_index = sEnemy;
+	imgAng = 0;
 	
 	// Blinking
 	blinkTimer = 0;
-	blinkFrames = [120, 160];
-	blinkTimeTotal = 200;
-	blinkLength = 8;
+	
+	spikeFrame = -1.0;
+	spikeDir = 0.0;
 }
 
 reset();
 
+anchorX = x;
+anchorY = y;
+distanceThreshold = 150;
 
-mySpeed = 0;
 myAccel = 0.5;
-
-imgAng = 0;
 
 maxSpeed = 6;
 attackAng = 0;
+
+blinkFrames = [120, 160];
+blinkTimeTotal = 200;
+blinkLength = 8;
+
+getStuck = function() {
+	spikeDir = -0.25;
+	state = EnemyState.stuck;
+}
 
 die = function() {
 	if (state == EnemyState.dying) return;
@@ -31,4 +44,5 @@ die = function() {
 	sprite_index = sEnemyDie;
 	image_index = 0;
 	image_speed = 0;
+	spikeDir = -1;
 }

@@ -116,6 +116,9 @@ function Tongue(_carry, _x, _y) constructor {
 			carry.grappleID = _id;
 			carry.jumpUp = false;
 			setOut();
+			if (_id.object_index == oEnemy) {
+				_id.getStuck();
+			}
 		}
 	
 	}
@@ -190,7 +193,10 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 			setOut();
 		}
 		
-		var grappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oGround, false, true);
+		var grappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oEnemy, false, true);
+		if (grappleID == noone) {
+			grappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oGround, false, true);
+		}
 		if (grappleID != noone) {
 			startGrapple(x + lengthdir_x(length / 2, angle), y + lengthdir_y(length / 2, angle), grappleID);
 		}

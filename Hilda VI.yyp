@@ -57,6 +57,8 @@
     {"id":{"name":"sEnemy","path":"sprites/sEnemy/sEnemy.yy",},},
     {"id":{"name":"sEnemyDie","path":"sprites/sEnemyDie/sEnemyDie.yy",},},
     {"id":{"name":"sEnemyEyes","path":"sprites/sEnemyEyes/sEnemyEyes.yy",},},
+    {"id":{"name":"sEnemyEyesScared","path":"sprites/sEnemyEyesScared/sEnemyEyesScared.yy",},},
+    {"id":{"name":"sEnemySpike","path":"sprites/sEnemySpike/sEnemySpike.yy",},},
     {"id":{"name":"sGround","path":"sprites/sGround/sGround.yy",},},
     {"id":{"name":"sMovingGround","path":"sprites/sMovingGround/sMovingGround.yy",},},
     {"id":{"name":"sNonStick","path":"sprites/sNonStick/sNonStick.yy",},},

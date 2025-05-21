@@ -7,9 +7,11 @@
     {"name":"oStartup","order":4,"path":"objects/oStartup/oStartup.yy",},
     {"name":"Startup","order":1,"path":"rooms/Startup/Startup.yy",},
     {"name":"sCheckpoint","order":1,"path":"sprites/sCheckpoint/sCheckpoint.yy",},
-    {"name":"sEnemy","order":4,"path":"sprites/sEnemy/sEnemy.yy",},
+    {"name":"sEnemy","order":7,"path":"sprites/sEnemy/sEnemy.yy",},
     {"name":"sEnemyDie","order":5,"path":"sprites/sEnemyDie/sEnemyDie.yy",},
     {"name":"sEnemyEyes","order":6,"path":"sprites/sEnemyEyes/sEnemyEyes.yy",},
+    {"name":"sEnemyEyesScared","order":9,"path":"sprites/sEnemyEyesScared/sEnemyEyesScared.yy",},
+    {"name":"sEnemySpike","order":8,"path":"sprites/sEnemySpike/sEnemySpike.yy",},
     {"name":"sMovingGround","order":2,"path":"sprites/sMovingGround/sMovingGround.yy",},
   ],
 }

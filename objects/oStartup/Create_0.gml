@@ -1,6 +1,7 @@
 enum EnemyState {
 	idle,
 	attack,
+	stuck,
 	dying
 }
 

@@ -69,6 +69,9 @@ jump = function() {
 		vSpeed = -jumpSpeed;
 	}
 	
+	if (grappleID != noone && instance_exists(grappleID) && grappleID.object_index == oEnemy) {
+		grappleID.state = EnemyState.dying;
+	}
 	state = STATE.NORMAL;
 	
 }
@@ -205,6 +208,14 @@ getAccel = function(_current, _target, _accel) {
 		return -_accel;
 	}
 	return 0;
+}
+
+moveGrapple = function(moveX, moveY) {
+	grappleX += moveX;
+	grappleY += moveY;
+	var amt_moved = move(0, moveY);
+	xprevious += amt_moved[0];
+	yprevious += amt_moved[1];
 }
 
 die = function() {

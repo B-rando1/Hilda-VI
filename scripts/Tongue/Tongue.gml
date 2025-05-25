@@ -6,6 +6,7 @@ function Tongue(_carry, _x, _y) constructor {
 	angle = 0;
 	
 	carry = _carry;
+	grappleID = noone;
 	var linkNum = 50;
 	offset = 12;
 	head = new Node(x, y, 0, self, 0, linkNum);
@@ -37,9 +38,6 @@ function Tongue(_carry, _x, _y) constructor {
 			head.updateAng(angle_difference(newAng, angle));
 			angle = newAng;
 		}
-		else if (!goOut) {
-			updateDir(carry.imgXScale);
-		}
 		
 		x = carry.x + 12 * dir - 2 * (dir == 1);
 		y = carry.y;
@@ -62,7 +60,6 @@ function Tongue(_carry, _x, _y) constructor {
 		angle = point_direction(carry.x, carry.y, carry.grappleX, carry.grappleY);
 		var dist = point_distance(carry.x, carry.y, carry.grappleX, carry.grappleY) - offset;
 		
-		// TODO: get better mouth tracking abilities.
 		x = carry.x + lengthdir_x(offset, angle)
 		y = carry.y + lengthdir_y(offset, angle);
 		
@@ -90,8 +87,13 @@ function Tongue(_carry, _x, _y) constructor {
 		
 	}
 	
-	in = function() {
+	in = function() {		
 		head.in(angle, 1);
+		var endPos = head.getEndPos();
+		if (grappleID != noone && instance_exists(grappleID) && grappleID.object_index == oEnemy) {
+			grappleID.x = endPos.x;
+			grappleID.y = endPos.y;
+		}
 	}
 	
 	setOut = function() {
@@ -103,6 +105,7 @@ function Tongue(_carry, _x, _y) constructor {
 		allIn = true;
 		allOut = false;
 		goOut = false;
+		grappleID = noone;
 		head.reset(angle, dir, 0);
 	}
 	
@@ -113,6 +116,7 @@ function Tongue(_carry, _x, _y) constructor {
 			carry.state = STATE.TONGETIED;
 			carry.grappleX = _x;
 			carry.grappleY = _y;
+			grappleID = _id;
 			carry.grappleID = _id;
 			carry.jumpUp = false;
 			setOut();
@@ -142,6 +146,10 @@ function Tongue(_carry, _x, _y) constructor {
 			head.reset(angle, _newDir, 0);
 			dir = _newDir;
 		}
+	}
+	
+	getGrappleID = function() {
+		return grappleID;
 	}
 	
 }
@@ -198,7 +206,12 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 			grappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oGround, false, true);
 		}
 		if (grappleID != noone) {
-			startGrapple(x + lengthdir_x(length / 2, angle), y + lengthdir_y(length / 2, angle), grappleID);
+			if (grappleID.object_index == oEnemy) {
+				startGrapple(grappleID.x, grappleID.y, grappleID);
+			}
+			else {
+				startGrapple(x + lengthdir_x(length / 2, angle), y + lengthdir_y(length / 2, angle), grappleID);
+			}
 		}
 		else if (collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oNonStick, false, true) != noone) {
 			setOut();
@@ -207,7 +220,6 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 	}
 	
 	in = function(_angle, _dir) {
-		
 		angle += angle_difference(_angle + 90 * _dir, angle) / 3;
 		updatePos();
 			
@@ -279,4 +291,12 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 		}
 		return colls;
 	}
+	
+	getEndPos = function() {
+		if (is_undefined(next)) {
+			return {x: x, y: y};
+		}
+		return next.getEndPos();
+	}
+	
 }

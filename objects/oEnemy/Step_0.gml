@@ -1,3 +1,10 @@
+if (keyboard_check(vk_shift)) {
+	game_set_speed(1, gamespeed_fps);
+}
+else {
+	game_set_speed(60, gamespeed_fps);
+}
+
 if (state == EnemyState.dying) {
 	hSpeed = lerp(hSpeed, 0, 0.1);
 	vSpeed = lerp(vSpeed, 0, 0.1);
@@ -62,3 +69,7 @@ if (place_meeting(x, y + vSpeed, oGround)) {
 	vSpeed = 0;
 }
 y += vSpeed;
+
+if (state == EnemyState.stuck) {
+	oPlayer.moveGrapple(x - xprevious, y - yprevious);
+}

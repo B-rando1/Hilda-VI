@@ -128,7 +128,7 @@ if (bbox_top > room_height + tongue.length || place_meeting(x, y, oDeath)) {
 }
 else if (place_meeting(x, y, oEnemy)) {
 	with (instance_place(x, y, oEnemy)) {
-		if (state == EnemyState.attack) {
+		if (state != EnemyState.dying) {
 			other.die();
 		}
 	}

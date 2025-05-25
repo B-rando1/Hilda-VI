@@ -10,6 +10,8 @@ reset = function() {
 	
 	sprite_index = sEnemy;
 	imgAng = 0;
+	image_xscale = 1;
+	image_yscale = 1;
 	
 	// Blinking
 	blinkTimer = 0;
@@ -27,6 +29,7 @@ distanceThreshold = 150;
 myAccel = 0.5;
 
 maxSpeed = 6;
+maxFleeSpeed = 3;
 attackAng = 0;
 
 blinkFrames = [120, 160];
@@ -41,8 +44,7 @@ getStuck = function() {
 die = function() {
 	if (state == EnemyState.dying) return;
 	state = EnemyState.dying;
-	sprite_index = sEnemyDie;
-	image_index = 0;
-	image_speed = 0;
 	spikeDir = -1;
+	hSpeed = 0;
+	vSpeed = 0;
 }

@@ -230,6 +230,7 @@ die = function() {
 	imgXScale = 1;
 	imgYScale = 1;
 	state = STATE.NORMAL;
+	grappleID = noone;
 	tongue.setIn();
 	
 	with (oEnemy) {

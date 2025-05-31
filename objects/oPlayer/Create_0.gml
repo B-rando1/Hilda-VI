@@ -51,6 +51,8 @@ grappleHAccel = 0.25;
 grappleVSpeed = 3;
 
 tongue = new Tongue(self, x, y);
+instance_create_depth(0, 0, depth, oTongueDrawer);
+inMouth = noone;
 
 jump = function() {
 	
@@ -232,6 +234,7 @@ die = function() {
 	state = STATE.NORMAL;
 	grappleID = noone;
 	tongue.setIn();
+	inMouth = noone;
 	
 	with (oEnemy) {
 		reset();

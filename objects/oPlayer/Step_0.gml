@@ -44,6 +44,10 @@ switch (state) {
 		collision();
 		
 		tongue.step();
+		if (inMouth != noone && TONGUE_PRESSED) {
+			inMouth.launch(point_direction(tongue.x, tongue.y, mouse_x, mouse_y));
+			inMouth = noone;
+		}
 		
 	break;
 	case STATE.TONGETIED:

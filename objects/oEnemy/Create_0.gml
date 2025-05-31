@@ -24,7 +24,7 @@ reset();
 
 anchorX = x;
 anchorY = y;
-distanceThreshold = 150;
+distanceThreshold = 300;
 
 myAccel = 0.5;
 
@@ -36,9 +36,9 @@ blinkFrames = [120, 160];
 blinkTimeTotal = 200;
 blinkLength = 8;
 
-getStuck = function() {
+getGrabbed = function() {
 	spikeDir = -0.25;
-	state = EnemyState.stuck;
+	state = EnemyState.grabbed;
 }
 
 die = function() {

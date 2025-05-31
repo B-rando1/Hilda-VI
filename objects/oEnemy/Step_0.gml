@@ -1,12 +1,8 @@
-if (keyboard_check(vk_shift)) {
-	game_set_speed(1, gamespeed_fps);
-}
-else {
-	game_set_speed(60, gamespeed_fps);
+if (place_meeting(x, y, oSpike)) {
+	instance_destroy();
 }
 
 var playerDist = point_distance(anchorX, anchorY, oPlayer.x, oPlayer.y);
-
 
 if (state == EnemyState.idle && playerDist < distanceThreshold) {
 	state = EnemyState.attack;
@@ -37,8 +33,10 @@ else if (state == EnemyState.attack) {
 	vSpeed = lengthdir_y(mySpeed, attackAng);
 	imgAng = attackAng + 90;
 }
-else if (state == EnemyState.stuck) {
-	hSpeed = 0.75 * sin(19 * current_time / 8000)  + 0.25 * sin(50 * current_time / 1000);
+else if (state == EnemyState.grabbed) {
+	var returnXDist = anchorX - x;
+	var returnXSpeed = maxSpeed * (returnXDist / distanceThreshold) / 2;
+	hSpeed = returnXSpeed + 0.75 * sin(19 * current_time / 8000)  + 0.25 * sin(50 * current_time / 1000);
 	vSpeed = max(-maxFleeSpeed, vSpeed - myAccel) + 0.4 * sin(23 * current_time / 12000) + 0.1 * sin(70 * current_time / 900);
 	imgAng = -2 * hSpeed;
 }
@@ -78,6 +76,6 @@ if (place_meeting(x, y + vSpeed, oGround)) {
 }
 y += vSpeed;
 
-if (state == EnemyState.stuck) {
+if (state == EnemyState.grabbed) {
 	oPlayer.moveGrapple(x - xprevious, y - yprevious);
 }

@@ -22,11 +22,16 @@ function Tongue(_carry, _x, _y) constructor {
 	
 	step = function() {
 		
-		if (TONGUE_PRESSED) {
-			tongueBuffer = tongueBufferMax;
-		}
-		if (TONGUE_DOWN) {
-			tongueBuffer = max(tongueBuffer - 1, 0);
+		if (carry.inMouth == noone) {
+			if (TONGUE_PRESSED) {
+				tongueBuffer = tongueBufferMax;
+			}
+			if (TONGUE_DOWN) {
+				tongueBuffer = max(tongueBuffer - 1, 0);
+			}
+			else {
+				tongueBuffer = 0;
+			}
 		}
 		else {
 			tongueBuffer = 0;
@@ -37,6 +42,9 @@ function Tongue(_carry, _x, _y) constructor {
 			var newAng = point_direction(x, y, mouse_x, mouse_y);
 			head.updateAng(angle_difference(newAng, angle));
 			angle = newAng;
+		}
+		else if (!goOut) {
+			dir = carry.imgXScale;
 		}
 		
 		x = carry.x + 12 * dir - 2 * (dir == 1);
@@ -90,7 +98,7 @@ function Tongue(_carry, _x, _y) constructor {
 	in = function() {		
 		head.in(angle, 1);
 		var endPos = head.getEndPos();
-		if (grappleID != noone && instance_exists(grappleID) && grappleID.object_index == oEnemy) {
+		if (grappleID != noone && instance_exists(grappleID) && (grappleID.object_index == oEnemy || grappleID.object_index == oSpike)) {
 			grappleID.x = endPos.x;
 			grappleID.y = endPos.y;
 		}
@@ -112,19 +120,58 @@ function Tongue(_carry, _x, _y) constructor {
 	startGrapple = function(_x, _y, _id) {
 		
 		var dist = point_distance(carry.x, carry.y, _x, _y);
-		if (dist < length - 1) {
-			carry.state = STATE.TONGETIED;
-			carry.grappleX = _x;
-			carry.grappleY = _y;
-			grappleID = _id;
-			carry.grappleID = _id;
-			carry.jumpUp = false;
-			setOut();
-			if (_id.object_index == oEnemy) {
-				_id.getStuck();
-			}
+		if (dist >= length - 1) {
+			return;
+		}
+		
+		carry.state = STATE.TONGETIED;
+		carry.grappleX = _x;
+		carry.grappleY = _y;
+		grappleID = _id;
+		carry.grappleID = _id;
+		carry.jumpUp = false;
+		setOut();
+		if (_id.object_index == oEnemy) {
+			_id.getGrabbed();
+		}
+		else if (_id.object_index == oSpike) {
+			_id.state = SpikeState.grabbed;
 		}
 	
+	}
+	
+	startReelIn = function(_x, _y, _id) {
+		
+		var dist = point_distance(carry.x, carry.y, _x, _y);
+		if (dist >= length - 1) {
+			return;
+		}
+		
+		carry.grappleX = _x;
+		carry.grappleY = _y;
+		grappleID = _id;
+		carry.grappleID = _id;
+		setOut();
+		if (_id.object_index == oEnemy) {
+			_id.getGrabbed();
+		}
+		else if (_id.object_index == oSpike) {
+			_id.state = SpikeState.grabbed;
+		}
+		
+		angle = point_direction(carry.x, carry.y, carry.grappleX, carry.grappleY);
+		
+		x = carry.x + lengthdir_x(offset, angle)
+		y = carry.y + lengthdir_y(offset, angle);
+		
+		if (dist > length) {
+			show_debug_message("grapple length too long");
+		}
+		
+		var dev = radtodeg(arccos(clamp(dist / length, 0, 1)));
+		
+		head.line(angle, dev, 1, carry.grappleX, carry.grappleY);
+		
 	}
 	
 	killEnemies = function() {
@@ -203,11 +250,18 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 		
 		var grappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oEnemy, false, true);
 		if (grappleID == noone) {
+			grappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oSpike, false, true);
+		}
+		if (grappleID == noone) {
 			grappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oGround, false, true);
 		}
 		if (grappleID != noone) {
 			if (grappleID.object_index == oEnemy) {
 				startGrapple(grappleID.x, grappleID.y, grappleID);
+			}
+			else if  (grappleID.object_index == oSpike) {
+				startReelIn(grappleID.x, grappleID.y, grappleID);
+				
 			}
 			else {
 				startGrapple(x + lengthdir_x(length / 2, angle), y + lengthdir_y(length / 2, angle), grappleID);
@@ -273,6 +327,10 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 	
 	startGrapple = function(_x, _y, _id) {
 		prev.startGrapple(_x, _y, _id);
+	}
+	
+	startReelIn = function(_x, _y, _id) {
+		prev.startReelIn(_x, _y, _id);
 	}
 	
 	collisions = function(_obj) {

@@ -1,5 +1,3 @@
-//tongue.killEnemies();
-
 if (ON_GROUND) {
 	if (place_meeting(x, y + 1, oCheckpoint)) {
 		safeX = x;
@@ -72,7 +70,7 @@ switch (state) {
 		if (y >= grappleY) {
 			
 			if (keyboard_check(ord("S")) || keyboard_check(ord("W"))) {
-				var newGrappleLength = min(grappleLength + grappleVSpeed * (keyboard_check(ord("S")) - keyboard_check(ord("W"))), tongue.length);
+				var newGrappleLength = clamp(grappleLength + grappleVSpeed * (keyboard_check(ord("S")) - keyboard_check(ord("W"))), grappleVSpeed, tongue.length);
 				var lenDelta = grappleLength - newGrappleLength;
 				grappleLength = newGrappleLength;
 				if (lenDelta < 0 && (!ON_GROUND)) {
@@ -133,6 +131,13 @@ if (bbox_top > room_height + tongue.length || place_meeting(x, y, oDeath)) {
 else if (place_meeting(x, y, oEnemy)) {
 	with (instance_place(x, y, oEnemy)) {
 		if (state != EnemyState.dying) {
+			other.die();
+		}
+	}
+}
+else if (place_meeting(x, y, oSpike)) {
+	with (instance_place(x, y, oSpike)) {
+		if (state == SpikeState.flying && killsThrower) {
 			other.die();
 		}
 	}

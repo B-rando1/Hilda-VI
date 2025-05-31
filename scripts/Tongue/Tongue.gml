@@ -13,6 +13,8 @@ function Tongue(_carry, _x, _y) constructor {
 	
 	length = linkNum * head.length + offset;
 	
+	wallHitCount = 0;
+	
 	goOut = false;
 	allOut = false;
 	allIn = true;
@@ -51,6 +53,7 @@ function Tongue(_carry, _x, _y) constructor {
 		y = carry.y;
 		
 		if (allIn && tongueBuffer > 0) {
+			wallHitCount = 0;
 			tongueBuffer = 0;
 			carry.imgXScale = dir;
 			out();
@@ -91,14 +94,20 @@ function Tongue(_carry, _x, _y) constructor {
 		
 		goOut = true;
 		allIn = false;
-		head.out();
+		var hitNonStick = head.out();
+		if (hitNonStick) {
+			wallHitCount ++;
+			if (wallHitCount > 2) {
+				setOut();
+			}
+		}
 		
 	}
 	
 	in = function() {		
 		head.in(angle, 1);
 		var endPos = head.getEndPos();
-		if (grappleID != noone && instance_exists(grappleID) && (grappleID.object_index == oEnemy || grappleID.object_index == oSpike)) {
+		if (grappleID != noone && instance_exists(grappleID) && (grappleID.object_index == oEnemy || (grappleID.object_index == oSpike && grappleID.state != SpikeState.stuck))) {
 			grappleID.x = endPos.x;
 			grappleID.y = endPos.y;
 		}
@@ -134,7 +143,7 @@ function Tongue(_carry, _x, _y) constructor {
 		if (_id.object_index == oEnemy) {
 			_id.getGrabbed();
 		}
-		else if (_id.object_index == oSpike) {
+		else if (_id.object_index == oSpike && _id.state != SpikeState.stuck) {
 			_id.state = SpikeState.grabbed;
 		}
 	
@@ -155,7 +164,7 @@ function Tongue(_carry, _x, _y) constructor {
 		if (_id.object_index == oEnemy) {
 			_id.getGrabbed();
 		}
-		else if (_id.object_index == oSpike) {
+		else if (_id.object_index == oSpike && _id.state != SpikeState.stuck) {
 			_id.state = SpikeState.grabbed;
 		}
 		
@@ -241,8 +250,10 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 		angle += angDiff;
 		updatePos();
 		
+		var hitNonStick = false;
+		
 		if (!is_undefined(next)) {
-			next.out();
+			hitNonStick = next.out();
 		}
 		else if (abs(angle_difference(prev.angle, angle)) < 1) {
 			setOut();
@@ -250,7 +261,7 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 		
 		var grappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oEnemy, false, true);
 		if (grappleID == noone) {
-			grappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oSpike, false, true);
+			grappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oSpike, true, true);
 		}
 		if (grappleID == noone) {
 			grappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oGround, false, true);
@@ -260,7 +271,12 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 				startGrapple(grappleID.x, grappleID.y, grappleID);
 			}
 			else if  (grappleID.object_index == oSpike) {
-				startReelIn(grappleID.x, grappleID.y, grappleID);
+				if (grappleID.state != SpikeState.stuck) {
+					startReelIn(grappleID.x, grappleID.y, grappleID);
+				}
+				else {
+					startGrapple(x, y, grappleID);
+				}
 				
 			}
 			else {
@@ -268,8 +284,10 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 			}
 		}
 		else if (collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oNonStick, false, true) != noone) {
-			setOut();
+			hitNonStick = true;
 		}
+		
+		return hitNonStick;
 		
 	}
 	

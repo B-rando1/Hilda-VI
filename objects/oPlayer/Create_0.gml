@@ -234,6 +234,10 @@ die = function() {
 	state = STATE.NORMAL;
 	grappleID = noone;
 	tongue.setIn();
+	
+	if (inMouth != noone) {
+		instance_destroy(inMouth);
+	}
 	inMouth = noone;
 	
 	with (oEnemy) {

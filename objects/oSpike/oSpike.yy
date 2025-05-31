@@ -29,6 +29,7 @@
   "physicsStartAwake":true,
   "properties":[
     {"$GMObjectProperty":"v1","%Name":"state","filters":[],"listItems":[],"multiselect":false,"name":"state","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"SpikeState.idle","varType":4,},
+    {"$GMObjectProperty":"v1","%Name":"generator","filters":[],"listItems":[],"multiselect":false,"name":"generator","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"noone","varType":4,},
   ],
   "resourceType":"GMObject",
   "resourceVersion":"2.0",

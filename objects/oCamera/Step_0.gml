@@ -1,3 +1,12 @@
+var newCWidth = cWidth;
+var newCHeight = cHeight;
+if (keyboard_check(vk_shift)) {
+	newCWidth *= 2;
+	newCHeight *= 2;
+}
+camera = camera_create_view(x - newCWidth / 2, y - newCHeight / 2, newCWidth, newCHeight);
+view_camera[0] = camera;
+
 if (follow != noone && instance_exists(follow)) {
 	xTo = clamp(follow.x, cWidth / 2, room_width - cWidth / 2);
 	yTo = clamp(follow.y, cHeight / 2, room_height - cHeight / 2);

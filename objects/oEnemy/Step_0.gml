@@ -1,5 +1,12 @@
-if (place_meeting(x, y, oSpike)) {
+if (place_meeting(x, y, oDeath)) {
 	instance_destroy();
+}
+else if (place_meeting(x, y, oSpike)) {
+	with (instance_place(x, y, oSpike)) {
+		if (state == SpikeState.flying) {
+			instance_destroy(other);
+		}
+	}
 }
 
 var playerDist = point_distance(anchorX, anchorY, oPlayer.x, oPlayer.y);
@@ -42,6 +49,7 @@ else if (state == EnemyState.grabbed) {
 }
 else if (state == EnemyState.dying) {
 	if (place_meeting(x, y, oPlayer)) {
+		oPlayer.inMouth = instance_create_depth(x, y, depth, oSpike, {state: SpikeState.mouth});
 		instance_destroy();
 	}
 	var scale = min(image_xscale, lerp(image_xscale, playerDist / (2 * oPlayer.tongue.length) + 0.5, 0.8));
@@ -60,16 +68,16 @@ if (spikeFrame < 0 || spikeFrame >= sprite_get_number(sEnemySpike)) {
 }
 
 // Collide and move
-if (place_meeting(x + hSpeed, y, oGround)) {
-	while (!place_meeting(x + sign(hSpeed), y, oGround)) {
+if (place_meeting(x + hSpeed, y, pGround)) {
+	while (!place_meeting(x + sign(hSpeed), y, pGround)) {
 		x += sign(hSpeed);
 	}
 	hSpeed = 0;
 }
 x += hSpeed;
 
-if (place_meeting(x, y + vSpeed, oGround)) {
-	while (!place_meeting(x, y + sign(vSpeed), oGround)) {
+if (place_meeting(x, y + vSpeed, pGround)) {
+	while (!place_meeting(x, y + sign(vSpeed), pGround)) {
 		y += sign(vSpeed);
 	}
 	vSpeed = 0;

@@ -18,11 +18,15 @@ switch (state) {
 		break;
 	}
 	case SpikeState.flying: {
+		if (!killsThrower && !place_meeting(x, y, oPlayer)) {
+			killsThrower = true;
+		}
+		
 		vSpeed += grav;
 		image_angle = point_direction(0, 0, hSpeed, vSpeed);
 		
-		if (collision_line(x, y, x + hSpeed, y + vSpeed, pGround, true, true)) {
-			while (!place_meeting(x, y, pGround)) {
+		if (collision_line(x, y, x + hSpeed, y + vSpeed, pGround, true, true)) || collision_line(x, y, x + hSpeed, y + vSpeed, oDeath, true, true) {
+			while (!place_meeting(x, y, pGround) && place_meeting(x, y, oDeath)) {
 				x += lengthdir_x(1, image_angle);
 				y += lengthdir_y(1, image_angle);
 			}
@@ -34,8 +38,11 @@ switch (state) {
 			y += vSpeed;
 		}
 		
-		if (place_meeting(x, y, pGround)) {
-			state = SpikeState.stuck;
+		if (place_meeting(x, y, pGround) || place_meeting(x, y, oDeath)) {
+			getStuck();
+		}
+		if (y > room_height) {
+			instance_destroy();
 		}
 		break;
 	}

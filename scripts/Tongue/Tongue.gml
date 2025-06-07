@@ -187,7 +187,7 @@ function Tongue(_carry, _x, _y) constructor {
 		if (!allIn) {
 			colls = collisions(oEnemy);
 			for (var i = 0; i < ds_list_size(colls); i++) {
-				ds_list_find_value(colls, i).die();
+				ds_list_find_value(colls, i).startBeingEated();
 			}
 			ds_list_destroy(colls);
 		}

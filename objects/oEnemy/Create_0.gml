@@ -41,10 +41,14 @@ getGrabbed = function() {
 	state = EnemyState.grabbed;
 }
 
-die = function() {
-	if (state == EnemyState.dying) return;
-	state = EnemyState.dying;
+startBeingEaten = function() {
+	if (state == EnemyState.beingEaten) return;
+	state = EnemyState.beingEaten;
 	spikeDir = -1;
 	hSpeed = 0;
 	vSpeed = 0;
+}
+
+startDying = function() {
+	instance_destroy();
 }

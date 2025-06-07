@@ -1,5 +1,8 @@
-cWidth = 720;
-cHeight = 576;
+cWidthNormal = 720;
+cHeightNormal = 576;
+
+cWidth = cWidthNormal;
+cHeight = cHeightNormal;
 
 if (follow != noone && instance_exists(follow)) {
 	if (follow != noone && instance_exists(follow)) {

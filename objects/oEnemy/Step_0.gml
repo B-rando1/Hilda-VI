@@ -1,10 +1,10 @@
 if (place_meeting(x, y, oDeath)) {
-	instance_destroy();
+	startDying();
 }
 else if (place_meeting(x, y, oSpike)) {
 	with (instance_place(x, y, oSpike)) {
 		if (state == SpikeState.flying) {
-			instance_destroy(other);
+			other.startDying();
 		}
 	}
 }
@@ -47,10 +47,10 @@ else if (state == EnemyState.grabbed) {
 	vSpeed = max(-maxFleeSpeed, vSpeed - myAccel) + 0.4 * sin(23 * current_time / 12000) + 0.1 * sin(70 * current_time / 900);
 	imgAng = -2 * hSpeed;
 }
-else if (state == EnemyState.dying) {
+else if (state == EnemyState.beingEaten) {
 	if (place_meeting(x, y, oPlayer)) {
 		oPlayer.inMouth = instance_create_depth(x, y, depth, oSpike, {state: SpikeState.mouth});
-		instance_destroy();
+		instance_destroy(); // Don't replace with startDying()
 	}
 	var scale = min(image_xscale, lerp(image_xscale, playerDist / (2 * oPlayer.tongue.length) + 0.5, 0.8));
 	image_xscale = scale;

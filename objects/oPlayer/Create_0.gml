@@ -72,7 +72,7 @@ jump = function() {
 	}
 	
 	if (grappleID != noone && instance_exists(grappleID) && grappleID.object_index == oEnemy) {
-		grappleID.state = EnemyState.dying;
+		grappleID.state = EnemyState.beingEaten;
 	}
 	state = STATE.NORMAL;
 	
@@ -244,4 +244,8 @@ die = function() {
 		reset();
 	}
 	
+}
+
+check_instance_place = function (_x, _y, _obj) {
+	return instance_place(_x, _y, _obj);
 }

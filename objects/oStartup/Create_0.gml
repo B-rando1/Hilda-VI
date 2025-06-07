@@ -2,6 +2,7 @@ enum EnemyState {
 	idle,
 	attack,
 	grabbed,
+	beingEaten,
 	dying
 }
 

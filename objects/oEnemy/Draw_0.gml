@@ -15,7 +15,7 @@ if (state == EnemyState.idle) {
 	}
 }
 
-if (state == EnemyState.grabbed || state == EnemyState.dying) {
+if (state == EnemyState.grabbed || state == EnemyState.beingEaten) {
 	draw_sprite_ext(sEnemyEyesScared, 0, x, y, image_xscale, image_yscale, imgAng, c_white, image_alpha);
 }
 else if (draw_eyes) {

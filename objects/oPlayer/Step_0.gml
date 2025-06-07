@@ -10,6 +10,15 @@ if (ON_GROUND) {
 	if (JUMP_PRESSED || preCoyTime > 0) {
 		jump();
 	}
+	if (MOVE_DIR == 0) {
+		image_speed = 0;
+	}
+	else {
+		if (image_speed == 0) {
+			image_index ++;
+		}
+		image_speed = 1;
+	}
 }
 else {
 	if (!JUMP_DOWN || vSpeed > 0) {
@@ -24,6 +33,8 @@ else {
 		}
 	}
 	vSpeed += jumpUp ? grav : fallGrav;
+	image_speed = 0;
+	image_index = 0;
 }
 
 preCoyTime = max(preCoyTime - 1, 0);
@@ -130,7 +141,7 @@ if (bbox_top > room_height + tongue.length || place_meeting(x, y, oDeath)) {
 }
 else if (place_meeting(x, y, oEnemy)) {
 	with (instance_place(x, y, oEnemy)) {
-		if (state != EnemyState.dying) {
+		if (state != EnemyState.beingEaten) {
 			other.die();
 		}
 	}

@@ -1,10 +1,16 @@
-var newCWidth = cWidth;
-var newCHeight = cHeight;
-if (keyboard_check(vk_shift)) {
-	newCWidth *= 2;
-	newCHeight *= 2;
+var cWidthTarget = cWidthNormal;
+var cHeightTarget = cHeightNormal;
+
+var zoomArea = oPlayer.check_instance_place(x, y, oZoomArea);
+if (zoomArea != noone) {
+	cWidthTarget *= zoomArea.mult;
+	cHeightTarget *= zoomArea.mult;
 }
-camera = camera_create_view(x - newCWidth / 2, y - newCHeight / 2, newCWidth, newCHeight);
+
+cWidth = lerp(cWidth, cWidthTarget, 0.05);
+cHeight = lerp(cHeight, cHeightTarget, 0.05);
+
+camera = camera_create_view(x - cWidth / 2, y - cHeight / 2, cWidth, cHeight);
 view_camera[0] = camera;
 
 if (follow != noone && instance_exists(follow)) {

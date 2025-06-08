@@ -1,5 +1,7 @@
 function Tongue(_carry, _x, _y) constructor {
 	
+	isTongue = true;
+	
 	x = _x;
 	y = _y;
 	dir = 1;
@@ -7,8 +9,8 @@ function Tongue(_carry, _x, _y) constructor {
 	
 	carry = _carry;
 	grappleID = noone;
-	var linkNum = 50;
-	offset = 12;
+	var linkNum = 51;
+	offset = 16;
 	head = new Node(x, y, 0, self, 0, linkNum);
 	
 	length = linkNum * head.length + offset;
@@ -49,7 +51,7 @@ function Tongue(_carry, _x, _y) constructor {
 			dir = carry.imgXScale;
 		}
 		
-		x = carry.x + 12 * dir - 2 * (dir == 1);
+		x = carry.x + offset * dir - 2 * (dir == 1);
 		y = carry.y;
 		
 		if (allIn && tongueBuffer > 0) {
@@ -69,22 +71,21 @@ function Tongue(_carry, _x, _y) constructor {
 	grapple = function() {
 		
 		angle = point_direction(carry.x, carry.y, carry.grappleX, carry.grappleY);
-		var dist = point_distance(carry.x, carry.y, carry.grappleX, carry.grappleY) - offset;
 		
-		x = carry.x + lengthdir_x(offset, angle)
+		x = carry.x + lengthdir_x(offset, angle) - lengthdir_x(1, angle) - 1;
 		y = carry.y + lengthdir_y(offset, angle);
+		var dist = point_distance(x, y, carry.grappleX, carry.grappleY);
 		
 		if (dist > length) {
 			show_debug_message("grapple length too long");
 		}
 		
-		var dev = radtodeg(arccos(clamp(dist / length, 0, 1)));
+		var dev = radtodeg(arccos(clamp(1.05 * dist / length, 0, 1)));
 		
 		head.line(angle, dev, 1, carry.grappleX, carry.grappleY);
 	}
 	
 	draw = function() {
-		
 		if (allIn) return;
 		draw_set_colour(make_color_rgb(255, 125, 199));
 		head.draw();
@@ -173,6 +174,8 @@ function Tongue(_carry, _x, _y) constructor {
 		x = carry.x + lengthdir_x(offset, angle)
 		y = carry.y + lengthdir_y(offset, angle);
 		
+		angle = point_direction(x, y, carry.grappleX, carry.grappleY);
+		
 		if (dist > length) {
 			show_debug_message("grapple length too long");
 		}
@@ -211,6 +214,7 @@ function Tongue(_carry, _x, _y) constructor {
 }
 
 function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
+	isTongue = false;
 	
 	x = _x;
 	y = _y;
@@ -331,8 +335,14 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 	}
 	
 	updatePos = function() {
-		x = prev.x + lengthdir_x(length, prev.angle);
-		y = prev.y + lengthdir_y(length, prev.angle);
+		if (prev.isTongue) {
+			x = prev.x;
+			y = prev.y;
+		}
+		else {
+			x = prev.x + lengthdir_x(length, prev.angle);
+			y = prev.y + lengthdir_y(length, prev.angle);
+		}
 	}
 	
 	setOut = function() {

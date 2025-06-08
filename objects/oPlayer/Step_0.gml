@@ -141,7 +141,7 @@ if (bbox_top > room_height + tongue.length || place_meeting(x, y, oDeath)) {
 }
 else if (place_meeting(x, y, oEnemy)) {
 	with (instance_place(x, y, oEnemy)) {
-		if (state != EnemyState.beingEaten) {
+		if (state != EnemyState.beingEaten && state != EnemyState.dying) {
 			other.die();
 		}
 	}
@@ -152,4 +152,11 @@ else if (place_meeting(x, y, oSpike)) {
 			other.die();
 		}
 	}
+}
+
+if (inMouth == noone) {
+	sprite_index = sPlayer;
+}
+else {
+	sprite_index = sPlayerMouthFull;
 }

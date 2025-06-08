@@ -14,6 +14,7 @@ if (state == EnemyState.idle) {
 		}
 	}
 }
+draw_eyes = draw_eyes && state != EnemyState.dying;
 
 if (state == EnemyState.grabbed || state == EnemyState.beingEaten) {
 	draw_sprite_ext(sEnemyEyesScared, 0, x, y, image_xscale, image_yscale, imgAng, c_white, image_alpha);
@@ -21,6 +22,6 @@ if (state == EnemyState.grabbed || state == EnemyState.beingEaten) {
 else if (draw_eyes) {
 	draw_sprite_ext(sEnemyEyes, 0, x, y, image_xscale, image_yscale, imgAng, c_white, image_alpha);
 }
-else {
+else if (state != EnemyState.dying) {
 	draw_sprite_ext(sEnemyEyes, 1, x, y, image_xscale, image_yscale, imgAng, c_white, image_alpha);
 }

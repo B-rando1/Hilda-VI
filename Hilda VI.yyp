@@ -68,6 +68,7 @@
     {"id":{"name":"sMovingGround","path":"sprites/sMovingGround/sMovingGround.yy",},},
     {"id":{"name":"sNonStick","path":"sprites/sNonStick/sNonStick.yy",},},
     {"id":{"name":"sPlayer","path":"sprites/sPlayer/sPlayer.yy",},},
+    {"id":{"name":"sPlayerMouthFull","path":"sprites/sPlayerMouthFull/sPlayerMouthFull.yy",},},
     {"id":{"name":"sSpike","path":"sprites/sSpike/sSpike.yy",},},
   ],
   "resourceType":"GMProject",

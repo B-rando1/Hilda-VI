@@ -21,6 +21,10 @@ switch (state) {
 		if (!killsThrower && !place_meeting(x, y, oPlayer)) {
 			killsThrower = true;
 		}
+		flyingCounter ++;
+		if (flyingCounter > 60) {
+			instance_destroy();
+		}
 		
 		vSpeed += grav;
 		image_angle = point_direction(0, 0, hSpeed, vSpeed);

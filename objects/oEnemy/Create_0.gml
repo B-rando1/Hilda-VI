@@ -50,5 +50,9 @@ startBeingEaten = function() {
 }
 
 startDying = function() {
-	instance_destroy();
+	if (state == EnemyState.dying) return;
+	state = EnemyState.dying;
+	sprite_index = sEnemyDie;
+	image_index = 0;
+	spikeDir = -1;
 }

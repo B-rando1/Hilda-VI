@@ -18,6 +18,7 @@
     {"name":"sEnemyEyesScared","order":9,"path":"sprites/sEnemyEyesScared/sEnemyEyesScared.yy",},
     {"name":"sEnemySpike","order":8,"path":"sprites/sEnemySpike/sEnemySpike.yy",},
     {"name":"sMovingGround","order":2,"path":"sprites/sMovingGround/sMovingGround.yy",},
+    {"name":"sPlayerMouthFull","order":13,"path":"sprites/sPlayerMouthFull/sPlayerMouthFull.yy",},
     {"name":"sSpike","order":10,"path":"sprites/sSpike/sSpike.yy",},
   ],
 }

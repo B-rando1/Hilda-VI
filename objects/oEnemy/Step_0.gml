@@ -1,11 +1,10 @@
 if (place_meeting(x, y, oDeath)) {
 	startDying();
 }
-else if (place_meeting(x, y, oSpike)) {
-	with (instance_place(x, y, oSpike)) {
-		if (state == SpikeState.flying) {
-			other.startDying();
-		}
+else {
+	var spike = instance_place(x, y, oSpike);
+	if (spike != noone && spike.state == SpikeState.flying) {
+		startDying();
 	}
 }
 
@@ -55,6 +54,11 @@ else if (state == EnemyState.beingEaten) {
 	var scale = min(image_xscale, lerp(image_xscale, playerDist / (2 * oPlayer.tongue.length) + 0.5, 0.8));
 	image_xscale = scale;
 	image_yscale = scale;
+}
+else if (state == EnemyState.dying) {
+	if (image_index == sprite_get_number(sEnemyDie) - 1) {
+		instance_destroy();
+	}
 }
 	
 // Blinking stuff

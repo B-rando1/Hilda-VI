@@ -4,6 +4,7 @@ launchSpeed = 25;
 grav = 0.2;
 depth += 10;
 
+flyingCounter = 0;
 killsThrower = false;
 
 launch = function(_angle) {

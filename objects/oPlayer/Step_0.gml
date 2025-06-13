@@ -165,13 +165,20 @@ throwTrajectory = [];
 if (inMouth != noone && THROW_DOWN) {
 	var trajX = inMouth.x;
 	var trajY = inMouth.y;
+	array_push(throwTrajectory, {x: trajX, y: trajY});
 	var _angle = point_direction(inMouth.x, inMouth.y, mouse_x, mouse_y);
 	var trajHSpeed = lengthdir_x(inMouth.launchSpeed, _angle);
 	var trajVSpeed = lengthdir_y(inMouth.launchSpeed, _angle);
+	
 	for (var i = 0; i < 20; i ++) {
-		array_push(throwTrajectory, {x: trajX, y: trajY});
 		trajX += trajHSpeed;
 		trajY += trajVSpeed;
+		
+		array_push(throwTrajectory, {x: trajX, y: trajY});
 		trajVSpeed += inMouth.grav;
+		var lastPoint = throwTrajectory[array_length(throwTrajectory)-1];
+		if (collision_line(lastPoint.x, lastPoint.y, trajX, trajY, pGround, false, true) || collision_line(lastPoint.x, lastPoint.y, trajX, trajY, oDeath, false, true)) {
+			break;
+		}
 	}
 }

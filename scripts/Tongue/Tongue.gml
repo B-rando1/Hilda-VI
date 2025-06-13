@@ -26,16 +26,11 @@ function Tongue(_carry, _x, _y) constructor {
 	
 	step = function() {
 		
-		if (carry.inMouth == noone) {
-			if (TONGUE_PRESSED) {
-				tongueBuffer = tongueBufferMax;
-			}
-			if (TONGUE_DOWN) {
-				tongueBuffer = max(tongueBuffer - 1, 0);
-			}
-			else {
-				tongueBuffer = 0;
-			}
+		if (TONGUE_PRESSED) {
+			tongueBuffer = tongueBufferMax;
+		}
+		if (TONGUE_DOWN) {
+			tongueBuffer = max(tongueBuffer - 1, 0);
 		}
 		else {
 			tongueBuffer = 0;
@@ -55,6 +50,10 @@ function Tongue(_carry, _x, _y) constructor {
 		y = carry.y;
 		
 		if (allIn && tongueBuffer > 0) {
+			if (carry.inMouth != noone) {
+				carry.inMouth.beDiscarded();
+				carry.inMouth = noone;
+			}
 			wallHitCount = 0;
 			tongueBuffer = 0;
 			carry.imgXScale = dir;
@@ -190,7 +189,7 @@ function Tongue(_carry, _x, _y) constructor {
 		if (!allIn) {
 			colls = collisions(oEnemy);
 			for (var i = 0; i < ds_list_size(colls); i++) {
-				ds_list_find_value(colls, i).startBeingEated();
+				ds_list_find_value(colls, i).startBeingEaten();
 			}
 			ds_list_destroy(colls);
 		}
@@ -275,13 +274,14 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 				startGrapple(grappleID.x, grappleID.y, grappleID);
 			}
 			else if  (grappleID.object_index == oSpike) {
-				if (grappleID.state != SpikeState.stuck) {
-					startReelIn(grappleID.x, grappleID.y, grappleID);
+				if (grappleID.state != SpikeState.mouth && grappleID.state != SpikeState.discarded) {
+					if (grappleID.state != SpikeState.stuck) {
+						startReelIn(grappleID.x, grappleID.y, grappleID);
+					}
+					else {
+						startGrapple(x, y, grappleID);
+					}
 				}
-				else {
-					startGrapple(x, y, grappleID);
-				}
-				
 			}
 			else {
 				startGrapple(x + lengthdir_x(length / 2, angle), y + lengthdir_y(length / 2, angle), grappleID);

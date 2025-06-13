@@ -20,3 +20,9 @@ getStuck = function() {
 		generator.instance = noone;
 	}
 }
+
+beDiscarded = function() {
+	state = SpikeState.discarded;
+	hspeed = oPlayer.hSpeed - 4 * oPlayer.imgXScale;
+	vSpeed = oPlayer.vSpeed + 5;
+}

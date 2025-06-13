@@ -37,6 +37,7 @@
   "resources":[
     {"id":{"name":"oCamera","path":"objects/oCamera/oCamera.yy",},},
     {"id":{"name":"oCheckpoint","path":"objects/oCheckpoint/oCheckpoint.yy",},},
+    {"id":{"name":"oControl","path":"objects/oControl/oControl.yy",},},
     {"id":{"name":"oDeath","path":"objects/oDeath/oDeath.yy",},},
     {"id":{"name":"oDeathHalf","path":"objects/oDeathHalf/oDeathHalf.yy",},},
     {"id":{"name":"oEnemy","path":"objects/oEnemy/oEnemy.yy",},},
@@ -65,6 +66,8 @@
     {"id":{"name":"sEnemyEyesScared","path":"sprites/sEnemyEyesScared/sEnemyEyesScared.yy",},},
     {"id":{"name":"sEnemySpike","path":"sprites/sEnemySpike/sEnemySpike.yy",},},
     {"id":{"name":"sGround","path":"sprites/sGround/sGround.yy",},},
+    {"id":{"name":"sMouseAim","path":"sprites/sMouseAim/sMouseAim.yy",},},
+    {"id":{"name":"sMouseTongue","path":"sprites/sMouseTongue/sMouseTongue.yy",},},
     {"id":{"name":"sMovingGround","path":"sprites/sMovingGround/sMovingGround.yy",},},
     {"id":{"name":"sNonStick","path":"sprites/sNonStick/sNonStick.yy",},},
     {"id":{"name":"sPlayer","path":"sprites/sPlayer/sPlayer.yy",},},

@@ -53,8 +53,8 @@ switch (state) {
 		collision();
 		
 		tongue.step();
-		if (inMouth != noone && TONGUE_PRESSED) {
-			inMouth.launch(point_direction(tongue.x, tongue.y, mouse_x, mouse_y));
+		if (inMouth != noone && THROW_RELEASED) {
+			inMouth.launch(point_direction(inMouth.x, inMouth.y, mouse_x, mouse_y));
 			inMouth = noone;
 		}
 		
@@ -159,4 +159,19 @@ if (inMouth == noone) {
 }
 else {
 	sprite_index = sPlayerMouthFull;
+}
+
+throwTrajectory = [];
+if (inMouth != noone && THROW_DOWN) {
+	var trajX = inMouth.x;
+	var trajY = inMouth.y;
+	var _angle = point_direction(inMouth.x, inMouth.y, mouse_x, mouse_y);
+	var trajHSpeed = lengthdir_x(inMouth.launchSpeed, _angle);
+	var trajVSpeed = lengthdir_y(inMouth.launchSpeed, _angle);
+	for (var i = 0; i < 20; i ++) {
+		array_push(throwTrajectory, {x: trajX, y: trajY});
+		trajX += trajHSpeed;
+		trajY += trajVSpeed;
+		trajVSpeed += inMouth.grav;
+	}
 }

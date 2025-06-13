@@ -11,7 +11,8 @@ enum SpikeState {
 	grabbed,
 	mouth,
 	flying,
-	stuck
+	stuck,
+	discarded
 }
 
 room_goto_next();

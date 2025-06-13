@@ -11,8 +11,8 @@ switch (state) {
 		break;
 	}
 	case SpikeState.mouth: {
-		var dir = oPlayer.image_xscale;
-		x = oPlayer.x + 12 * dir - 2 * (dir == 1)
+		var dir = oPlayer.imgXScale;
+		x = oPlayer.x + dir - (dir == 1)
 		y = oPlayer.y;
 		image_angle = (dir == 1) ? 0 : 180;
 		break;
@@ -51,6 +51,16 @@ switch (state) {
 		break;
 	}
 	case SpikeState.stuck: {
+		break;
+	}
+	case SpikeState.discarded: {
+		image_xscale -= 0.02;
+		image_yscale -= 0.02;
+		image_alpha -= 0.04;
+		if (image_alpha <= 0) {
+			instance_destroy();
+		}
+		vspeed += grav;
 		break;
 	}
 }

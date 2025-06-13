@@ -2,6 +2,7 @@
   "FolderOrderSettings":[],
   "ResourceOrderSettings":[
     {"name":"oCheckpoint","order":2,"path":"objects/oCheckpoint/oCheckpoint.yy",},
+    {"name":"oControl","order":9,"path":"objects/oControl/oControl.yy",},
     {"name":"oEnemy","order":3,"path":"objects/oEnemy/oEnemy.yy",},
     {"name":"oMovingGround","order":1,"path":"objects/oMovingGround/oMovingGround.yy",},
     {"name":"oObjectGenerator","order":6,"path":"objects/oObjectGenerator/oObjectGenerator.yy",},
@@ -17,6 +18,8 @@
     {"name":"sEnemyEyes","order":6,"path":"sprites/sEnemyEyes/sEnemyEyes.yy",},
     {"name":"sEnemyEyesScared","order":9,"path":"sprites/sEnemyEyesScared/sEnemyEyesScared.yy",},
     {"name":"sEnemySpike","order":8,"path":"sprites/sEnemySpike/sEnemySpike.yy",},
+    {"name":"sMouseAim","order":15,"path":"sprites/sMouseAim/sMouseAim.yy",},
+    {"name":"sMouseTongue","order":14,"path":"sprites/sMouseTongue/sMouseTongue.yy",},
     {"name":"sMovingGround","order":2,"path":"sprites/sMovingGround/sMovingGround.yy",},
     {"name":"sPlayerMouthFull","order":13,"path":"sprites/sPlayerMouthFull/sPlayerMouthFull.yy",},
     {"name":"sSpike","order":10,"path":"sprites/sSpike/sSpike.yy",},

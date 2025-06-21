@@ -15,6 +15,10 @@ launch = function(_angle) {
 }
 
 getStuck = function() {
+	if (place_meeting(x, y, oOrb)) {
+		instance_destroy();
+	}
+	
 	state = SpikeState.stuck;
 	if (generator != noone) {
 		generator.instance = noone;

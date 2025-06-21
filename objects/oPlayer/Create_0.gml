@@ -8,7 +8,7 @@ jumpSpeed = 10;
 grav = 0.39;
 fallGrav = 0.7;
 
-#macro ON_GROUND place_meeting(x, y + 1, pGround)
+#macro ON_GROUND (place_meeting(x, y + 1, pGround) || (!place_meeting(x, y, oOneWayWall) && place_meeting(x, y + 1, oOneWayWall)))
 
 #macro MOVE_DIR (gamepad_is_connected(0) ? gamepad_button_check(0, gp_padr) - gamepad_button_check(0, gp_padl) : (keyboard_check(ord("D")) - keyboard_check(ord("A"))))
 #macro JUMP_PRESSED (keyboard_check_pressed(vk_space) || (gamepad_is_connected(0) && (gamepad_button_check_pressed(0, gp_shoulderr) || gamepad_button_check_pressed(0, gp_shoulderl))))
@@ -82,17 +82,18 @@ jump = function() {
 }
 
 move = function(_hSpeed, _vSpeed) {
+	var collideWithOneWay = (_vSpeed > 0 && !place_meeting(x, y, oOneWayWall));
 	
-	if (place_meeting(x + _hSpeed, y, pGround) && _hSpeed != 0) {
-		while (!place_meeting(x + sign(_hSpeed), y, pGround)) {
+	if ((place_meeting(x + _hSpeed, y, pGround) || (collideWithOneWay && place_meeting(x + _hSpeed, y, oOneWayWall))) && _hSpeed != 0) {
+		while (!place_meeting(x + sign(_hSpeed), y, pGround) && (!collideWithOneWay || !place_meeting(x + sign(_hSpeed), y, oOneWayWall))) {
 			x += sign(_hSpeed) * 0.1;
 		}
 		_hSpeed = 0;
 	}
 	x += _hSpeed;
 
-	if (place_meeting(x, y + _vSpeed, pGround) && _vSpeed != 0) {
-		while (!place_meeting(x, y + sign(_vSpeed), pGround)) {
+	if ((place_meeting(x, y + _vSpeed, pGround) || (collideWithOneWay && place_meeting(x, y + _vSpeed, oOneWayWall))) && _vSpeed != 0) {
+		while (!place_meeting(x, y + sign(_vSpeed), pGround) && (!collideWithOneWay || !place_meeting(x, y + sign(_vSpeed), oOneWayWall))) {
 			y += sign(_vSpeed) * 0.1;
 		}
 		_vSpeed = 0;

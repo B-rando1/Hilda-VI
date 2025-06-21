@@ -264,6 +264,9 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 		
 		var grappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oEnemy, false, true);
 		if (grappleID == noone) {
+			grappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oOrb, true, true);
+		}
+		if (grappleID == noone) {
 			grappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oSpike, true, true);
 		}
 		if (grappleID == noone) {
@@ -283,7 +286,11 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 					}
 				}
 			}
+			else if (grappleID.object_index == oOrb) {
+				grappleID.trigger();
+			}
 			else {
+				
 				startGrapple(x + lengthdir_x(length / 2, angle), y + lengthdir_y(length / 2, angle), grappleID);
 			}
 		}

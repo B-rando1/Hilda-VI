@@ -182,3 +182,8 @@ if (inMouth != noone && THROW_DOWN) {
 		}
 	}
 }
+
+var orb = collision_rectangle(bbox_left - 1, bbox_top - 1, bbox_right + 1, bbox_bottom + 1, oOrb, true, true);
+if (orb != noone) {
+	orb.trigger();
+}

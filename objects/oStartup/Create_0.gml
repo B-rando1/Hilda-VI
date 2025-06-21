@@ -15,4 +15,6 @@ enum SpikeState {
 	discarded
 }
 
+instance_create_depth(0, 0, depth, oFade, {newRoom: room_next(room), fade: 1, crossedOver: true});
+
 room_goto_next();

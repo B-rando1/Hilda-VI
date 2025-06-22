@@ -35,6 +35,7 @@ safeY = y;
 imgAng = 0;
 imgXScale = 1;
 imgYScale = 1;
+mixUnif = shader_get_uniform(shPlayerYellow, "u_mix");
 
 enum STATE {
 	NORMAL,

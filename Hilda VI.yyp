@@ -62,6 +62,7 @@
     {"id":{"name":"rmTemplate","path":"rooms/rmTemplate/rmTemplate.yy",},},
     {"id":{"name":"Tongue","path":"scripts/Tongue/Tongue.yy",},},
     {"id":{"name":"Utils","path":"scripts/Utils/Utils.yy",},},
+    {"id":{"name":"shPlayerYellow","path":"shaders/shPlayerYellow/shPlayerYellow.yy",},},
     {"id":{"name":"sArea","path":"sprites/sArea/sArea.yy",},},
     {"id":{"name":"sCheckpoint","path":"sprites/sCheckpoint/sCheckpoint.yy",},},
     {"id":{"name":"sDeath","path":"sprites/sDeath/sDeath.yy",},},

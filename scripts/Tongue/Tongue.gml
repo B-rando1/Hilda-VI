@@ -84,9 +84,9 @@ function Tongue(_carry, _x, _y) constructor {
 		head.line(angle, dev, 1, carry.grappleX, carry.grappleY);
 	}
 	
-	draw = function() {
+	draw = function(color) {
 		if (allIn) return;
-		draw_set_colour(make_color_rgb(255, 125, 199));
+		draw_set_colour(color);
 		head.draw();
 	}
 	

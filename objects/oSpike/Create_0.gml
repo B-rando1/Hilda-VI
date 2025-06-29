@@ -30,3 +30,4 @@ beDiscarded = function() {
 	hspeed = oPlayer.hSpeed - 4 * oPlayer.imgXScale;
 	vSpeed = oPlayer.vSpeed + 5;
 }
+

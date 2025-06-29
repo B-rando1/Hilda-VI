@@ -1,10 +1,24 @@
-var cWidthTarget = cWidthNormal;
-var cHeightTarget = cHeightNormal;
+cWidthTarget = cWidthNormal;
+cHeightTarget = cHeightNormal;
 
-var zoomArea = oPlayer.check_instance_place(x, y, oZoomArea);
-if (zoomArea != noone) {
-	cWidthTarget *= zoomArea.mult;
-	cHeightTarget *= zoomArea.mult;
+inMouthTimer = max(inMouthTimer - 1, 0);
+
+if (oPlayer.inMouth != noone && THROW_DOWN) {
+	inMouthTimer = 5;
+}
+
+if (inMouthTimer > 0) {
+	cWidthTarget *= 2.5;
+	cHeightTarget *= 2.5;
+}
+else {
+	with (oSpike) {
+		if (state == SpikeState.flying) {
+			other.cWidthTarget *= 2.5;
+			other.cHeightTarget *= 2.5;
+			break;
+		}
+	}
 }
 
 cWidth = lerp(cWidth, cWidthTarget, 0.05);

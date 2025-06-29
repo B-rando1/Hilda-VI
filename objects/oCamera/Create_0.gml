@@ -1,5 +1,7 @@
 cWidthNormal = 720;
 cHeightNormal = 576;
+cWidthTarget = cWidthNormal;
+cHeightTarget = cHeightNormal;
 
 cWidth = cWidthNormal;
 cHeight = cHeightNormal;
@@ -16,6 +18,8 @@ else {
 }
 x = xTo;
 y = yTo;
+
+inMouthTimer = 0;
 
 camera = camera_create_view(x - cWidth / 2, y - cHeight / 2, cWidth, cHeight);
 view_camera[0] = camera;

@@ -51,6 +51,13 @@ startBeingEaten = function() {
 
 startDying = function() {
 	if (state == EnemyState.dying) return;
+	if (state == EnemyState.grabbed || state == EnemyState.beingEaten) {
+		with (oPlayer) {
+			grappleID = noone;
+			tongue.grappleID = noone;
+			jump()
+		}
+	}
 	state = EnemyState.dying;
 	sprite_index = sEnemyDie;
 	image_index = 0;

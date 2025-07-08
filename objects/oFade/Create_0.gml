@@ -8,4 +8,4 @@ if (crossedOver) {
 	glowAmt *= -1;
 	fadeAmt *= -1;
 }
-depth -= 30;
+depth -= 150;

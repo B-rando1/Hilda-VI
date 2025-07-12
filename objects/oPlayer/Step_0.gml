@@ -136,7 +136,7 @@ switch (state) {
 hSpeed = clamp(hSpeed, -maxSpeed, maxSpeed);
 vSpeed = clamp(vSpeed, -maxSpeed, maxSpeed);
 
-if (bbox_top > room_height + tongue.length || place_meeting(x, y, oDeath)) {
+if (bbox_top > room_height + tongue.length || place_meeting(x, y, oPoison)) {
 	die();
 }
 else if (place_meeting(x, y, oEnemy)) {
@@ -177,7 +177,7 @@ if (inMouth != noone && THROW_DOWN) {
 		array_push(throwTrajectory, {x: trajX, y: trajY});
 		trajVSpeed += inMouth.grav;
 		var lastPoint = throwTrajectory[array_length(throwTrajectory)-1];
-		if (collision_line(lastPoint.x, lastPoint.y, trajX, trajY, pGround, false, true) || collision_line(lastPoint.x, lastPoint.y, trajX, trajY, oDeath, false, true) || collision_line(lastPoint.x, lastPoint.y, trajX, trajY, oCloud, false, true)) {
+		if (collision_line(lastPoint.x, lastPoint.y, trajX, trajY, pGround, false, true) || collision_line(lastPoint.x, lastPoint.y, trajX, trajY, oPoison, false, true) || collision_line(lastPoint.x, lastPoint.y, trajX, trajY, oCloud, false, true)) {
 			break;
 		}
 	}

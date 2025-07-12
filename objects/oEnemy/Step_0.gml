@@ -1,4 +1,4 @@
-if (place_meeting(x, y, oDeath)) {
+if (place_meeting(x, y, oPoison)) {
 	startDying();
 }
 else {

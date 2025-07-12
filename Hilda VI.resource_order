@@ -34,6 +34,8 @@
     {"name":"sOneWayWall","order":17,"path":"sprites/sOneWayWall/sOneWayWall.yy",},
     {"name":"sOrb","order":16,"path":"sprites/sOrb/sOrb.yy",},
     {"name":"sPlayerMouthFull","order":13,"path":"sprites/sPlayerMouthFull/sPlayerMouthFull.yy",},
+    {"name":"sPoison","order":21,"path":"sprites/sPoison/sPoison.yy",},
+    {"name":"sPoisonLines","order":22,"path":"sprites/sPoisonLines/sPoisonLines.yy",},
     {"name":"sSpike","order":10,"path":"sprites/sSpike/sSpike.yy",},
     {"name":"sTileset","order":19,"path":"sprites/sTileset/sTileset.yy",},
   ],

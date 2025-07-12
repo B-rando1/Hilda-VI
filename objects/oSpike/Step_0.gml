@@ -40,8 +40,8 @@ switch (state) {
 		vSpeed += grav;
 		image_angle = point_direction(0, 0, hSpeed, vSpeed);
 		
-		if (collision_line(x, y, x + hSpeed, y + vSpeed, pGround, true, true) != noone || collision_line(x, y, x + hSpeed, y + vSpeed, oDeath, true, true) != noone || collision_line(x, y, x + hSpeed, y + vSpeed, oCloud, true, true) != noone || (vSpeed > 0 && collision_line(x, y, x + hSpeed, y + vSpeed, oOneWayWall, true, true) != noone)) {
-			while (!place_meeting(x, y, pGround) && place_meeting(x, y, oDeath)) {
+		if (collision_line(x, y, x + hSpeed, y + vSpeed, pGround, true, true) != noone || collision_line(x, y, x + hSpeed, y + vSpeed, oPoison, true, true) != noone || collision_line(x, y, x + hSpeed, y + vSpeed, oCloud, true, true) != noone || (vSpeed > 0 && collision_line(x, y, x + hSpeed, y + vSpeed, oOneWayWall, true, true) != noone)) {
+			while (!place_meeting(x, y, pGround) && place_meeting(x, y, oPoison)) {
 				x += lengthdir_x(1, image_angle);
 				y += lengthdir_y(1, image_angle);
 			}
@@ -53,7 +53,7 @@ switch (state) {
 			y += vSpeed;
 		}
 		
-		if (place_meeting(x, y, pGround) || place_meeting(x, y, oDeath) || place_meeting(x, y, oCloud)) || (vSpeed > 0 &&  place_meeting(x, y, oOneWayWall)) {
+		if (place_meeting(x, y, pGround) || place_meeting(x, y, oPoison) || place_meeting(x, y, oCloud)) || (vSpeed > 0 &&  place_meeting(x, y, oOneWayWall)) {
 			getStuck();
 		}
 		if (y > room_height) {

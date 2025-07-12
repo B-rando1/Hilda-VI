@@ -59,5 +59,3 @@ switch (left + right + top + bottom) {
 		linesFrame = 15
 		break;
 }
-
-show_debug_message(linesFrame)

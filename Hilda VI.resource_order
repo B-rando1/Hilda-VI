@@ -36,7 +36,11 @@
     {"name":"sPlayerMouthFull","order":13,"path":"sprites/sPlayerMouthFull/sPlayerMouthFull.yy",},
     {"name":"sPoison","order":21,"path":"sprites/sPoison/sPoison.yy",},
     {"name":"sPoisonLines","order":22,"path":"sprites/sPoisonLines/sPoisonLines.yy",},
+    {"name":"sSandDune","order":28,"path":"sprites/sSandDune/sSandDune.yy",},
     {"name":"sSpike","order":10,"path":"sprites/sSpike/sSpike.yy",},
     {"name":"sTileset","order":19,"path":"sprites/sTileset/sTileset.yy",},
+    {"name":"sTrees_1","order":23,"path":"sprites/sTrees_1/sTrees_1.yy",},
+    {"name":"sTrees_2","order":26,"path":"sprites/sTrees_2/sTrees_2.yy",},
+    {"name":"sTrees_3","order":27,"path":"sprites/sTrees_3/sTrees_3.yy",},
   ],
 }

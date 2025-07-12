@@ -6,6 +6,12 @@ cHeightTarget = cHeightNormal;
 cWidth = cWidthNormal;
 cHeight = cHeightNormal;
 
+// Get layer IDs
+trees_1 = layer_get_id("Trees_1");
+trees_2 = layer_get_id("Trees_2");
+trees_3 = layer_get_id("Trees_3");
+sandDune = layer_get_id("SandDune");
+
 if (follow != noone && instance_exists(follow)) {
 	if (follow != noone && instance_exists(follow)) {
 		xTo = clamp(follow.x, cWidth / 2, room_width - cWidth / 2);

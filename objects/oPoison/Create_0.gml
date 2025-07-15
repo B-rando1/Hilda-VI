@@ -1,5 +1,3 @@
-depth -= 140;
-
 offset = 20 + 34;
 setSprite = false;
 

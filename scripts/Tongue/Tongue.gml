@@ -95,6 +95,7 @@ function Tongue(_carry, _x, _y) constructor {
 		goOut = true;
 		allIn = false;
 		var hitNonStick = head.out();
+		hitNonStick = head.out() || hitNonStick;
 		if (hitNonStick) {
 			wallHitCount ++;
 			if (wallHitCount > 2) {

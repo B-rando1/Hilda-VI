@@ -1,5 +1,7 @@
 depth += 1;
 
+global.timeScale = 1;
+
 walkAccel = 1.0;
 walkDecel = 0.8;
 walkSpeed = 3 / walkDecel;
@@ -83,23 +85,28 @@ jump = function() {
 }
 
 move = function(_hSpeed, _vSpeed) {
+	
+	var scaledHSpeed = _hSpeed * global.timeScale;
+	var scaledVSpeed = _vSpeed * global.timeScale;
 	var collideWithOneWay = (_vSpeed > 0 && !place_meeting(x, y, oOneWayWall));
 	
-	if ((place_meeting(x + _hSpeed, y, pGround) || (collideWithOneWay && place_meeting(x + _hSpeed, y, oOneWayWall))) && _hSpeed != 0) {
-		while (!place_meeting(x + sign(_hSpeed), y, pGround) && (!collideWithOneWay || !place_meeting(x + sign(_hSpeed), y, oOneWayWall))) {
-			x += sign(_hSpeed) * 0.1;
+	if ((place_meeting(x + scaledHSpeed, y, pGround) || (collideWithOneWay && place_meeting(x + scaledHSpeed, y, oOneWayWall))) && scaledHSpeed != 0) {
+		while (!place_meeting(x + sign(scaledHSpeed), y, pGround) && (!collideWithOneWay || !place_meeting(x + sign(scaledHSpeed), y, oOneWayWall))) {
+			x += sign(scaledHSpeed) * 0.1;
 		}
 		_hSpeed = 0;
+		scaledHSpeed = 0;
 	}
-	x += _hSpeed;
+	x += scaledHSpeed;
 
-	if ((place_meeting(x, y + _vSpeed, pGround) || (collideWithOneWay && place_meeting(x, y + _vSpeed, oOneWayWall))) && _vSpeed != 0) {
-		while (!place_meeting(x, y + sign(_vSpeed), pGround) && (!collideWithOneWay || !place_meeting(x, y + sign(_vSpeed), oOneWayWall))) {
-			y += sign(_vSpeed) * 0.1;
+	if ((place_meeting(x, y + scaledVSpeed, pGround) || (collideWithOneWay && place_meeting(x, y + scaledVSpeed, oOneWayWall))) && scaledVSpeed != 0) {
+		while (!place_meeting(x, y + sign(scaledVSpeed), pGround) && (!collideWithOneWay || !place_meeting(x, y + sign(scaledVSpeed), oOneWayWall))) {
+			y += sign(scaledVSpeed) * 0.1;
 		}
 		_vSpeed = 0;
+		scaledVSpeed = 0;
 	}
-	y += _vSpeed;
+	y += scaledVSpeed;
 	
 	if (place_meeting(x, y, pGround)) {
 		show_debug_message("stuck in wall in move function");
@@ -112,7 +119,7 @@ move = function(_hSpeed, _vSpeed) {
 
 collision = function() {
 	
-	speedVec = move(hSpeed, vSpeed)
+	speedVec = move(hSpeed, vSpeed);
 	hSpeed = speedVec[0];
 	vSpeed = speedVec[1];
 	

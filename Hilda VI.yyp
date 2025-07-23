@@ -97,11 +97,11 @@
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
     {"roomId":{"name":"rmStartup","path":"rooms/rmStartup/rmStartup.yy",},},
+    {"roomId":{"name":"rmLevel5","path":"rooms/rmLevel5/rmLevel5.yy",},},
     {"roomId":{"name":"rmLevel1","path":"rooms/rmLevel1/rmLevel1.yy",},},
     {"roomId":{"name":"rmLevel2","path":"rooms/rmLevel2/rmLevel2.yy",},},
     {"roomId":{"name":"rmLevel3","path":"rooms/rmLevel3/rmLevel3.yy",},},
     {"roomId":{"name":"rmLevel4","path":"rooms/rmLevel4/rmLevel4.yy",},},
-    {"roomId":{"name":"rmLevel5","path":"rooms/rmLevel5/rmLevel5.yy",},},
     {"roomId":{"name":"rmPlayground","path":"rooms/rmPlayground/rmPlayground.yy",},},
     {"roomId":{"name":"rmTemplate","path":"rooms/rmTemplate/rmTemplate.yy",},},
   ],

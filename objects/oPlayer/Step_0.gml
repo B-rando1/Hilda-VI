@@ -1,3 +1,10 @@
+if (THROW_DOWN && !ON_GROUND && inMouth != noone) {
+	global.timeScale = 0.2;
+}
+else {
+	global.timeScale = 1;
+}
+
 if (ON_GROUND) {
 	if (place_meeting(x, y + 1, oCheckpoint)) {
 		safeX = x;
@@ -17,7 +24,7 @@ if (ON_GROUND) {
 		if (image_speed == 0) {
 			image_index ++;
 		}
-		image_speed = 1;
+		image_speed = global.timeScale;
 	}
 }
 else {
@@ -32,13 +39,13 @@ else {
 			preCoyTime = preCoyTimeMax;
 		}
 	}
-	vSpeed += jumpUp ? grav : fallGrav;
+	vSpeed += (jumpUp ? grav : fallGrav) * global.timeScale;
 	image_speed = 0;
 	image_index = 0;
 }
 
-preCoyTime = max(preCoyTime - 1, 0);
-postCoyTime = max(postCoyTime - 1, 0);
+preCoyTime = max(preCoyTime - global.timeScale, 0);
+postCoyTime = max(postCoyTime - global.timeScale, 0);
 
 switch (state) {
 	case STATE.NORMAL:

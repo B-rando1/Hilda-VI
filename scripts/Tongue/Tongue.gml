@@ -24,6 +24,8 @@ function Tongue(_carry, _x, _y) constructor {
 	tongueBuffer = 0;
 	tongueBufferMax = 20;
 	
+	stayedOutFor = 0;
+	
 	step = function() {
 		
 		if (TONGUE_PRESSED) {
@@ -94,11 +96,21 @@ function Tongue(_carry, _x, _y) constructor {
 		
 		goOut = true;
 		allIn = false;
-		var hitNonStick = head.out();
-		hitNonStick = head.out() || hitNonStick;
+		var data = head.out();
+		var hitNonStick = data.hitNonStick;
+		var allOutNow = data.allOutNow;
+		data = head.out();
+		hitNonStick = hitNonStick || data.hitNonStick;
+		allOutNow = allOutNow || data.allOutNow;
 		if (hitNonStick) {
 			wallHitCount ++;
 			if (wallHitCount > 2) {
+				setOut();
+			}
+		}
+		if (allOutNow) {
+			stayedOutFor ++;
+			if (stayedOutFor > 12) {
 				setOut();
 			}
 		}
@@ -121,6 +133,7 @@ function Tongue(_carry, _x, _y) constructor {
 	
 	setIn = function() {
 		allIn = true;
+		stayedOutFor = 0;
 		allOut = false;
 		goOut = false;
 		grappleID = noone;
@@ -255,13 +268,14 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 		updatePos();
 		
 		var hitNonStick = false;
+		var allOutNow = false;
 		
 		if (!is_undefined(next)) {
-			hitNonStick = next.out();
+			var data = next.out();
+			hitNonStick = data.hitNonStick;
+			allOutNow = data.allOutNow;
 		}
-		else if (abs(angle_difference(prev.angle, angle)) < 1) {
-			setOut();
-		}
+		allOutNow = allOutNow || (abs(angle_difference(prev.angle, angle)) < 1)
 		
 		var grappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oEnemy, false, true);
 		if (grappleID == noone) {
@@ -299,7 +313,7 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 			hitNonStick = true;
 		}
 		
-		return hitNonStick;
+		return {hitNonStick, allOutNow};
 		
 	}
 	

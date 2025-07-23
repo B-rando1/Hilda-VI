@@ -13,7 +13,7 @@ if (inMouthTimer > 0) {
 }
 else {
 	with (oSpike) {
-		if (state == SpikeState.flying) {
+		if (state == SpikeState.flying && flyingCounter < 40) {
 			other.cWidthTarget *= 2.5;
 			other.cHeightTarget *= 2.5;
 			break;

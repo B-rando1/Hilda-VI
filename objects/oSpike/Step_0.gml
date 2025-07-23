@@ -23,7 +23,7 @@ switch (state) {
 	case SpikeState.mouth: {
 		vSpeed = 0;
 		var dir = oPlayer.imgXScale;
-		x = oPlayer.x + dir - (dir == 1)
+		x = oPlayer.x + dir - (dir == 1);
 		y = oPlayer.y;
 		image_angle = (dir == 1) ? 0 : 180;
 		break;
@@ -32,12 +32,19 @@ switch (state) {
 		if (!killsThrower && !place_meeting(x, y, oPlayer)) {
 			killsThrower = true;
 		}
-		flyingCounter ++;
+		flyingCounter += global.timeScale;
+		if (flyingCounter > 60 && generator != noone) {
+			generator.instance = noone;
+			generator = noone;
+		}
 			
 		vSpeed += grav;
 		image_angle = point_direction(0, 0, hSpeed, vSpeed);
 		
-		if (collision_line(x, y, x + hSpeed, y + vSpeed, pGround, true, true) != noone || collision_line(x, y, x + hSpeed, y + vSpeed, oPoison, true, true) != noone || collision_line(x, y, x + hSpeed, y + vSpeed, oCloud, true, true) != noone || (vSpeed > 0 && collision_line(x, y, x + hSpeed, y + vSpeed, oOneWayWall, true, true) != noone)) {
+		var scaledHSpeed = hSpeed * global.timeScale;
+		var scaledVSpeed = vSpeed * global.timeScale;
+		
+		if (collision_line(x, y, x + scaledHSpeed, y + scaledVSpeed, pGround, true, true) != noone || collision_line(x, y, x + scaledHSpeed, y + scaledVSpeed, oPoison, true, true) != noone || collision_line(x, y, x + scaledHSpeed, y + scaledVSpeed, oCloud, true, true) != noone || (scaledVSpeed > 0 && collision_line(x, y, x + scaledHSpeed, y + scaledVSpeed, oOneWayWall, true, true) != noone)) {
 			while (!place_meeting(x, y, pGround) && place_meeting(x, y, oPoison)) {
 				x += lengthdir_x(1, image_angle);
 				y += lengthdir_y(1, image_angle);
@@ -46,8 +53,8 @@ switch (state) {
 			y += lengthdir_y(5, image_angle);
 		}
 		else {
-			x += hSpeed;
-			y += vSpeed;
+			x += scaledHSpeed;
+			y += scaledVSpeed;
 		}
 		
 		if (place_meeting(x, y, pGround) || place_meeting(x, y, oPoison) || place_meeting(x, y, oCloud)) || (vSpeed > 0 &&  place_meeting(x, y, oOneWayWall)) {

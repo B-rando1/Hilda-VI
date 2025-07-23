@@ -55,7 +55,7 @@ startDying = function() {
 		with (oPlayer) {
 			grappleID = noone;
 			tongue.grappleID = noone;
-			jump()
+			jump();
 		}
 	}
 	state = EnemyState.dying;

@@ -8,6 +8,8 @@ else {
 	}
 }
 
+image_speed = global.timeScale;
+
 var playerDist = point_distance(anchorX, anchorY, oPlayer.x, oPlayer.y);
 
 if (state == EnemyState.idle && playerDist < distanceThreshold) {
@@ -27,13 +29,13 @@ if (state == EnemyState.idle) {
 	var returnAng = point_direction(x, y, anchorX, anchorY);
 	var returnSpeed = maxSpeed * (returnDist / distanceThreshold) / 2;
 	mySpeed = max(mySpeed - myAccel, 0);
-	hSpeed = lengthdir_x(mySpeed, attackAng) + lengthdir_x(returnSpeed, returnAng) + 0.75 * sin(19 * current_time / 8000)  + 0.25 * sin(50 * current_time / 1000);
-	vSpeed = lengthdir_y(mySpeed, attackAng) + lengthdir_y(returnSpeed, returnAng) + 0.4 * sin(23 * current_time / 12000) + 0.1 * sin(70 * current_time / 900);
+	hSpeed = lengthdir_x(mySpeed, attackAng) + lengthdir_x(returnSpeed, returnAng) + 0.75 * sin(19 * current_time * global.timeScale / 8000)  + 0.25 * sin(50 * current_time * global.timeScale / 1000);
+	vSpeed = lengthdir_y(mySpeed, attackAng) + lengthdir_y(returnSpeed, returnAng) + 0.4 * sin(23 * current_time * global.timeScale / 12000) + 0.1 * sin(70 * current_time * global.timeScale / 900);
 	imgAng = -2 * hSpeed;
 }
 else if (state == EnemyState.attack) {
 	var playerAng = point_direction(x, y, oPlayer.x, oPlayer.y);
-	mySpeed = min(mySpeed + myAccel, maxSpeed);
+	mySpeed = min(mySpeed + myAccel * global.timeScale, maxSpeed);
 	attackAng = attackAng + lerp(0, angle_difference(playerAng, attackAng), 0.15);
 	hSpeed = lengthdir_x(mySpeed, attackAng);
 	vSpeed = lengthdir_y(mySpeed, attackAng);
@@ -62,8 +64,8 @@ else if (state == EnemyState.dying) {
 }
 	
 // Blinking stuff
-blinkTimer = (blinkTimer + 1) % blinkTimeTotal;
-spikeFrame += spikeDir;
+blinkTimer = (blinkTimer + global.timeScale) % blinkTimeTotal;
+spikeFrame += spikeDir * global.timeScale;
 if (spikeFrame < 0 || spikeFrame >= sprite_get_number(sEnemySpike)) {
 	if (spikeDir > 0) {
 		spikeFrame = sprite_get_number(sEnemySpike) - 1;
@@ -72,21 +74,26 @@ if (spikeFrame < 0 || spikeFrame >= sprite_get_number(sEnemySpike)) {
 }
 
 // Collide and move
-if (place_meeting(x + hSpeed, y, pGround)) {
-	while (!place_meeting(x + sign(hSpeed), y, pGround)) {
-		x += sign(hSpeed);
+var scaledHSpeed = hSpeed * global.timeScale;
+var scaledVSpeed = vSpeed * global.timeScale;
+
+if (place_meeting(x + scaledHSpeed, y, pGround)) {
+	while (!place_meeting(x + sign(scaledHSpeed), y, pGround)) {
+		x += sign(scaledHSpeed);
 	}
+	scaledHSpeed = 0;
 	hSpeed = 0;
 }
-x += hSpeed;
+x += scaledHSpeed;
 
-if (place_meeting(x, y + vSpeed, pGround)) {
-	while (!place_meeting(x, y + sign(vSpeed), pGround)) {
-		y += sign(vSpeed);
+if (place_meeting(x, y + scaledVSpeed, pGround)) {
+	while (!place_meeting(x, y + sign(scaledVSpeed), pGround)) {
+		y += sign(scaledVSpeed);
 	}
+	scaledVSpeed = 0;
 	vSpeed = 0;
 }
-y += vSpeed;
+y += scaledVSpeed;
 
 if (state == EnemyState.grabbed) {
 	oPlayer.moveGrapple(x - xprevious, y - yprevious);

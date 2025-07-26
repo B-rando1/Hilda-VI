@@ -99,9 +99,39 @@ function Tongue(_carry, _x, _y) constructor {
 		var data = head.out();
 		var hitNonStick = data.hitNonStick;
 		var allOutNow = data.allOutNow;
+		var grappleID = data.grappleID;
+		var grappleX = data.grappleX;
+		var grappleY = data.grappleY;
 		data = head.out();
 		hitNonStick = hitNonStick || data.hitNonStick;
 		allOutNow = allOutNow || data.allOutNow;
+		
+		if (grappleID == noone) {
+			grappleID = data.grappleID; // TODO: could be more granular with this.
+			grappleX = data.grappleX;
+			grappleY = data.grappleY;
+		}
+		if (grappleID != noone) {
+			if (grappleID.object_index == oEnemy) {
+				startGrapple(grappleID.x, grappleID.y, grappleID);
+			}
+			else if  (grappleID.object_index == oSpike) {
+				if (grappleID.state != SpikeState.mouth && grappleID.state != SpikeState.discarded) {
+					if (grappleID.state != SpikeState.stuck) {
+						startReelIn(grappleID.x, grappleID.y, grappleID);
+					}
+					else {
+						startGrapple(grappleX, grappleY, grappleID);
+					}
+				}
+			}
+			else if (grappleID.object_index == oOrb) {
+				grappleID.trigger();
+			}
+			else {
+				startGrapple(grappleX + lengthdir_x(head.length / 2, angle), grappleY + lengthdir_y(head.length / 2, angle), grappleID);
+			}
+		}
 		if (hitNonStick) {
 			wallHitCount ++;
 			if (wallHitCount > 2) {
@@ -184,7 +214,7 @@ function Tongue(_carry, _x, _y) constructor {
 		
 		angle = point_direction(carry.x, carry.y, carry.grappleX, carry.grappleY);
 		
-		x = carry.x + lengthdir_x(offset, angle)
+		x = carry.x + lengthdir_x(offset, angle);
 		y = carry.y + lengthdir_y(offset, angle);
 		
 		angle = point_direction(x, y, carry.grappleX, carry.grappleY);
@@ -269,51 +299,43 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 		
 		var hitNonStick = false;
 		var allOutNow = false;
+		var grappleID = noone;
+		var grappleX = x;
+		var grappleY = y;
 		
 		if (!is_undefined(next)) {
 			var data = next.out();
 			hitNonStick = data.hitNonStick;
 			allOutNow = data.allOutNow;
+			grappleID = data.grappleID;
+			grappleX = data.grappleX;
+			grappleY = data.grappleY;
 		}
-		allOutNow = allOutNow || (abs(angle_difference(prev.angle, angle)) < 1)
+		allOutNow = allOutNow || (abs(angle_difference(prev.angle, angle)) < 1);
 		
-		var grappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oEnemy, false, true);
-		if (grappleID == noone) {
-			grappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oOrb, true, true);
+		var newGrappleID = noone;
+		if (newGrappleID == noone) {
+			newGrappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oEnemy, false, true);
 		}
-		if (grappleID == noone) {
-			grappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oSpike, true, true);
+		if (newGrappleID == noone) {
+			newGrappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oOrb, true, true);
 		}
-		if (grappleID == noone) {
-			grappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oGround, false, true);
+		if (newGrappleID == noone) {
+			newGrappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oSpike, true, true);
 		}
-		if (grappleID != noone) {
-			if (grappleID.object_index == oEnemy) {
-				startGrapple(grappleID.x, grappleID.y, grappleID);
-			}
-			else if  (grappleID.object_index == oSpike) {
-				if (grappleID.state != SpikeState.mouth && grappleID.state != SpikeState.discarded) {
-					if (grappleID.state != SpikeState.stuck) {
-						startReelIn(grappleID.x, grappleID.y, grappleID);
-					}
-					else {
-						startGrapple(x, y, grappleID);
-					}
-				}
-			}
-			else if (grappleID.object_index == oOrb) {
-				grappleID.trigger();
-			}
-			else {
-				
-				startGrapple(x + lengthdir_x(length / 2, angle), y + lengthdir_y(length / 2, angle), grappleID);
-			}
+		if (newGrappleID == noone) {
+			newGrappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oGround, false, true);
 		}
-		else if (collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oNonStick, false, true) != noone) {
+		if (newGrappleID == noone && collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oNonStick, false, true) != noone) {
 			hitNonStick = true;
 		}
+		if (newGrappleID != noone) {
+			grappleID = newGrappleID;
+			grappleX = x;
+			grappleY = y;
+		}
 		
-		return {hitNonStick, allOutNow};
+		return {hitNonStick, allOutNow, grappleID, grappleX, grappleY};
 		
 	}
 	

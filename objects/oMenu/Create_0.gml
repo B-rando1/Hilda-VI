@@ -31,11 +31,11 @@ changeMainFocused = function(newIdx) {
 	mainFocused = newIdx;
 }
 
-mainButtonTexts = ["Levels", "Settings", "Credits"];
+mainButtonTexts = ["Levels", "Settings", "Credits", "Exit Game"];
 mainButtons = [];
 for (var i = 0; i < array_length(mainButtonTexts); i++) {
 	array_push(mainButtons, new Button(
-		centerX, centerY + 100 * (i - 1),
+		centerX, centerY + 100 * i - 130,
 		mainButtonTexts[i], i, id, changeMainFocused
 	));
 }
@@ -51,6 +51,9 @@ handleMainButtonPressed = function() {
 			break;
 		case 2:
 			state = MenuState.credits;
+			break;
+		case 3:
+			game_end();
 			break;
 	}
 }

@@ -28,6 +28,7 @@ switch (state) {
 			levelButtons[i].draw();
 		}
 		
+		draw_set_color(c_white);
 		draw_set_halign(fa_center);
 		draw_set_font(fTextBox);
 		draw_text_transformed(centerX, room_height * 0.85, "Right-click or press Esc to go back.", 1/3, 1/3, 0);

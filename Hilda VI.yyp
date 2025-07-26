@@ -68,6 +68,7 @@
     {"id":{"name":"rmStartup","path":"rooms/rmStartup/rmStartup.yy",},},
     {"id":{"name":"rmTemplate","path":"rooms/rmTemplate/rmTemplate.yy",},},
     {"id":{"name":"Button","path":"scripts/Button/Button.yy",},},
+    {"id":{"name":"SaveFile","path":"scripts/SaveFile/SaveFile.yy",},},
     {"id":{"name":"Tongue","path":"scripts/Tongue/Tongue.yy",},},
     {"id":{"name":"Utils","path":"scripts/Utils/Utils.yy",},},
     {"id":{"name":"shPlayerYellow","path":"shaders/shPlayerYellow/shPlayerYellow.yy",},},

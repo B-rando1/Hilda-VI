@@ -25,6 +25,7 @@
     {"name":"rmStartup","order":1,"path":"rooms/rmStartup/rmStartup.yy",},
     {"name":"rmTemplate","order":3,"path":"rooms/rmTemplate/rmTemplate.yy",},
     {"name":"Button","order":1,"path":"scripts/Button/Button.yy",},
+    {"name":"SaveFile","order":2,"path":"scripts/SaveFile/SaveFile.yy",},
     {"name":"sArea","order":11,"path":"sprites/sArea/sArea.yy",},
     {"name":"sCheckpoint","order":1,"path":"sprites/sCheckpoint/sCheckpoint.yy",},
     {"name":"sCloud","order":18,"path":"sprites/sCloud/sCloud.yy",},

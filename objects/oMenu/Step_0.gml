@@ -58,9 +58,9 @@ switch (state) {
 		}
 		break;
 	case MenuState.credits:
-	if (MENU_BACK) {
-		state = MenuState.main;
-	}
+		if (MENU_BACK) {
+			state = MenuState.main;
+		}
 		break;
 }
 prevMouseX = mouse_x;

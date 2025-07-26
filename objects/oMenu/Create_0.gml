@@ -16,7 +16,7 @@ centerY = room_height / 2;
 prevMouseX = mouse_x;
 prevMouseY = mouse_y;
 
-unlockedLevel = 0; // TODO: get from save file
+unlockedLevel = global.settings.unlockedLevel;
 
 // Main buttons
 mainFocused = -1;

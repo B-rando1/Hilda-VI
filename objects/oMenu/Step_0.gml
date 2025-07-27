@@ -11,10 +11,10 @@ switch (state) {
 				mainButtons[i].step();
 			}
 		} else {
-			if (keyboard_check_pressed(ord("W")) || keyboard_check_pressed(vk_up)) {
+			if (keyboard_check_pressed(ord("W")) || keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("A")) || keyboard_check_pressed(vk_left)) {
 				changeMainFocused(mainFocused - 1);
 			}
-			if (keyboard_check_pressed(ord("S")) || keyboard_check_pressed(vk_down)) {
+			if (keyboard_check_pressed(ord("S")) || keyboard_check_pressed(vk_down) || keyboard_check_pressed(ord("D")) || keyboard_check_pressed(vk_right)) {
 				changeMainFocused(mainFocused + 1);
 			}
 		}

@@ -35,7 +35,7 @@ mainButtonTexts = ["Levels", "Settings", "Credits", "Exit Game"];
 mainButtons = [];
 for (var i = 0; i < array_length(mainButtonTexts); i++) {
 	array_push(mainButtons, new Button(
-		centerX, centerY + 100 * i - 130,
+		centerX + 160 * (i - 1.5), centerY + 30 * (i - 1.5),
 		mainButtonTexts[i], i, id, changeMainFocused
 	));
 }

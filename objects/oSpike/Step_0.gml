@@ -77,7 +77,9 @@ switch (state) {
 		if (image_alpha <= 0) {
 			instance_destroy();
 		}
-		vspeed += grav;
+		vSpeed += grav;
+		x += hSpeed;
+		y += vSpeed
 		break;
 	}
 }

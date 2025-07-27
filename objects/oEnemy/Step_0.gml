@@ -1,3 +1,5 @@
+image_speed = global.pause ? 0 : global.timeScale;
+
 if (global.pause) return;
 
 if (place_meeting(x, y, oPoison)) {
@@ -10,7 +12,6 @@ else {
 	}
 }
 
-image_speed = global.pause ? 0 : global.timeScale;
 
 var playerDist = point_distance(anchorX, anchorY, oPlayer.x, oPlayer.y);
 

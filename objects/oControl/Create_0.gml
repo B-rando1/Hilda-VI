@@ -9,15 +9,18 @@ depth -= 150;
 pause = function() {
 	global.pause = true;
 	
+	window_set_cursor(cr_default);
+	
 	var centerX = oCamera.x;
 	var centerY = oCamera.y;
 	var scale = oCamera.cWidth / oCamera.cWidthNormal;
 	for (var i = 0; i < array_length(menuButtons); i++) {
-		menuButtons[i].update(centerX, centerY + 90 * i * scale - 100 * scale, scale);
+		menuButtons[i].update(centerX + 160 * (i - 1.5) * scale, centerY + 30 * (i - 1.5) * scale, scale);
 	}
 }
 
 unPause = function() {
+	window_set_cursor(cr_none);
 	global.pause = false;
 }
 
@@ -53,7 +56,7 @@ handleMenuButtonPressed = function() {
 			//TODO
 			break;
 		case 2:
-			room_restart();
+			instance_create_depth(0, 0, depth, oFade, {newRoom: room});
 			break;
 		case 3:
 			instance_create_depth(0, 0, depth, oFade, {newRoom: rmMenu});

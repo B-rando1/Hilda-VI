@@ -5,10 +5,11 @@ if (keyboard_check(vk_anykey) || mouseActive) {
 	noMoveTimer = min(noMoveTimer + 1, 120);
 }
 
-if (THROW_DOWN && oPlayer.inMouth != noone) {
+if (global.pause) {
+	cursor_sprite = -1;
+} else if (THROW_DOWN && oPlayer.inMouth != noone) {
 	cursor_sprite = sMouseAim;
-}
-else {
+} else {
 	cursor_sprite = sMouseTongue;
 }
 
@@ -19,10 +20,10 @@ if (global.pause) {
 			menuButtons[i].step();
 		}
 	} else {
-		if (keyboard_check_pressed(ord("W")) || keyboard_check_pressed(vk_up)) {
+		if (keyboard_check_pressed(ord("W")) || keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("A")) || keyboard_check_pressed(vk_left)) {
 			changeMenuFocused(menuFocused - 1);
 		}
-		if (keyboard_check_pressed(ord("S")) || keyboard_check_pressed(vk_down)) {
+		if (keyboard_check_pressed(ord("S")) || keyboard_check_pressed(vk_down) || keyboard_check_pressed(ord("D")) || keyboard_check_pressed(vk_right)) {
 			changeMenuFocused(menuFocused + 1);
 		}
 	}

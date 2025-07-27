@@ -24,5 +24,5 @@ trigger = function() {
 	if (nextLevelCode > global.settings.unlockedLevel) {
 		updateSave("unlockedLevel", nextLevelCode);
 	}
-	instance_create_depth(0, 0, depth, oFade, {newRoom: room_next(room)});
+	instance_create_depth(0, 0, depth, oFade, {newRoom: room_next(room), fromOrb: true});
 }

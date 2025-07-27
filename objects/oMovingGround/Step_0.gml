@@ -1,3 +1,5 @@
+if (global.pause) return;
+
 with (myGround) {
 	hSpeed = other.hSpeed;
 	vSpeed = other.vSpeed;

@@ -1,3 +1,5 @@
+if (global.pause) return;
+
 cWidthTarget = cWidthNormal;
 cHeightTarget = cHeightNormal;
 

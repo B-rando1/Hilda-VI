@@ -1,3 +1,5 @@
+if (global.pause) return;
+
 switch (state) {
 	case SpikeState.idle: {
 		vSpeed += grav;

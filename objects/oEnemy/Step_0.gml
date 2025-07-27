@@ -1,3 +1,5 @@
+if (global.pause) return;
+
 if (place_meeting(x, y, oPoison)) {
 	startDying();
 }
@@ -8,7 +10,7 @@ else {
 	}
 }
 
-image_speed = global.timeScale;
+image_speed = global.pause ? 0 : global.timeScale;
 
 var playerDist = point_distance(anchorX, anchorY, oPlayer.x, oPlayer.y);
 

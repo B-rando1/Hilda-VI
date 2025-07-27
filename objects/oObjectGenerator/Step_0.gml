@@ -1,3 +1,5 @@
+if (global.pause) return;
+
 if (instance != noone && instance_exists(instance)) {
 	return;
 }

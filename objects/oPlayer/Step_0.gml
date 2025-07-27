@@ -1,3 +1,5 @@
+if (global.pause) return;
+
 if (THROW_DOWN && !ON_GROUND && inMouth != noone) {
 	global.timeScale = 0.2;
 }
@@ -24,7 +26,7 @@ if (ON_GROUND) {
 		if (image_speed == 0) {
 			image_index ++;
 		}
-		image_speed = global.timeScale;
+		image_speed = global.pause ? 0 : global.timeScale;
 	}
 }
 else {

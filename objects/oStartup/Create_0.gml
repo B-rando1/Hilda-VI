@@ -16,6 +16,7 @@ enum SpikeState {
 }
 
 loadSave();
+global.pause = false;
 
 instance_create_depth(0, 0, depth, oFade, {newRoom: room_next(room), crossedOver: true});
 

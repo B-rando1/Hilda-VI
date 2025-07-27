@@ -10,10 +10,6 @@ switch (state) {
 			for (var i = 0; i < array_length(mainButtons); i++) {
 				mainButtons[i].step();
 			}
-			if (MENU_BACK) {
-				changeMainFocused(0);
-				state = MenuState.opening;
-			}
 		} else {
 			if (keyboard_check_pressed(ord("W")) || keyboard_check_pressed(vk_up)) {
 				changeMainFocused(mainFocused - 1);
@@ -23,6 +19,10 @@ switch (state) {
 			}
 		}
 		
+		if (MENU_BACK) {
+			changeMainFocused(0);
+			state = MenuState.opening;
+		}
 		if (MENU_SELECT) {
 			handleMainButtonPressed();
 		}
@@ -31,10 +31,6 @@ switch (state) {
 		if (mouseActive) {
 			for (var i = 0; i < array_length(levelButtons); i++) {
 				levelButtons[i].step();
-			}
-			if (MENU_BACK) {
-				changeLevelFocused(0);
-				state = MenuState.main;
 			}
 		} else {
 			if (keyboard_check_pressed(ord("W")) || keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("S")) || keyboard_check_pressed(vk_down)) {
@@ -48,6 +44,10 @@ switch (state) {
 			}
 		}
 		
+		if (MENU_BACK) {
+			changeLevelFocused(0);
+			state = MenuState.main;
+		}
 		if (MENU_SELECT) {
 			handleLevelButtonPressed();
 		}

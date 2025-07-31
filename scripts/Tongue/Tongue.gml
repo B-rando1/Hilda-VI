@@ -96,12 +96,14 @@ function Tongue(_carry, _x, _y) constructor {
 		
 		goOut = true;
 		allIn = false;
+		
 		var data = head.out();
 		var hitNonStick = data.hitNonStick;
 		var allOutNow = data.allOutNow;
 		var grappleID = data.grappleID;
 		var grappleX = data.grappleX;
 		var grappleY = data.grappleY;
+		
 		data = head.out();
 		hitNonStick = hitNonStick || data.hitNonStick;
 		allOutNow = allOutNow || data.allOutNow;
@@ -133,10 +135,7 @@ function Tongue(_carry, _x, _y) constructor {
 			}
 		}
 		if (hitNonStick) {
-			wallHitCount ++;
-			if (wallHitCount > 2) {
-				setOut();
-			}
+			setOut();
 		}
 		if (allOutNow) {
 			stayedOutFor ++;
@@ -326,8 +325,14 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 		if (newGrappleID == noone) {
 			newGrappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oGround, false, true);
 		}
-		if (newGrappleID == noone && collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oNonStick, false, true) != noone) {
-			hitNonStick = true;
+		if (newGrappleID == noone) {
+			var nonStick = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oNonStick, false, true);
+			var collX = x + lengthdir_x(length / 2, angle);
+			var collY = y + lengthdir_y(length / 2, angle);
+			var tol = 4;
+			if (nonStick != noone && collX > nonStick.bbox_left + tol && collX < nonStick.bbox_right - tol && collY > nonStick.bbox_top + tol && collY < nonStick.bbox_bottom - tol) {
+				hitNonStick = true;
+			}
 		}
 		if (newGrappleID != noone) {
 			grappleID = newGrappleID;

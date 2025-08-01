@@ -8,6 +8,7 @@ depth -= 150;
 
 pause = function() {
 	global.pause = true;
+	oPlayer.aiming = false;
 	
 	window_set_cursor(cr_default);
 	

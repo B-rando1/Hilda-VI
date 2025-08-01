@@ -17,6 +17,7 @@ fallGrav = 0.7;
 #macro JUMP_DOWN (keyboard_check(vk_space) || (gamepad_is_connected(0) && (gamepad_button_check(0, gp_shoulderr) || gamepad_button_check(0, gp_shoulderl))))
 #macro TONGUE_PRESSED (mouse_check_button_pressed(mb_left) || keyboard_check_pressed(vk_alt) || (gamepad_is_connected(0) && (gamepad_button_check_pressed(0, gp_shoulderrb) || gamepad_button_check_pressed(0, gp_shoulderlb))))
 #macro TONGUE_DOWN (mouse_check_button(mb_left) || keyboard_check(vk_alt) || (gamepad_is_connected(0) && (gamepad_button_check(0, gp_shoulderrb) || gamepad_button_check(0, gp_shoulderlb))))
+#macro THROW_PRESSED (mouse_check_button_pressed(mb_right) || keyboard_check_pressed(vk_shift) || (gamepad_is_connected(0) && gamepad_button_check_pressed(0, gp_face3)))
 #macro THROW_DOWN (mouse_check_button(mb_right) || keyboard_check(vk_shift) || (gamepad_is_connected(0) && (gamepad_button_check(0, gp_face3))))
 #macro THROW_RELEASED (mouse_check_button_released(mb_right) || keyboard_check_released(vk_shift) || (gamepad_is_connected(0) && (gamepad_button_check_released(0, gp_face3))))
 
@@ -58,6 +59,7 @@ grappleVSpeed = 3;
 tongue = new Tongue(self, x, y);
 instance_create_depth(0, 0, depth, oTongueDrawer);
 inMouth = noone;
+aiming = false;
 throwTrajectory = [];
 
 jump = function() {
@@ -80,6 +82,7 @@ jump = function() {
 	if (grappleID != noone && instance_exists(grappleID) && grappleID.object_index == oEnemy) {
 		grappleID.state = EnemyState.beingEaten;
 	}
+	aiming = false;
 	state = STATE.NORMAL;
 	
 }

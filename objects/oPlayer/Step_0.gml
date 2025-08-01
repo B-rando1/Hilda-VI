@@ -1,6 +1,6 @@
 if (global.pause) return;
 
-if (THROW_DOWN && !ON_GROUND && inMouth != noone) {
+if (aiming && !ON_GROUND && inMouth != noone) {
 	global.timeScale = 0.2;
 }
 else {
@@ -59,10 +59,14 @@ switch (state) {
 			imgXScale = MOVE_DIR;
 		}
 		
+		if (inMouth != noone && THROW_PRESSED) {
+			aiming = true;
+		}
+		
 		collision();
 		
 		tongue.step();
-		if (inMouth != noone && THROW_RELEASED) {
+		if (inMouth != noone && aiming && THROW_RELEASED) {
 			inMouth.launch(point_direction(inMouth.x, inMouth.y, mouse_x, mouse_y));
 			inMouth = noone;
 		}
@@ -171,7 +175,7 @@ else {
 }
 
 throwTrajectory = [];
-if (inMouth != noone && THROW_DOWN) {
+if (inMouth != noone && aiming) {
 	var trajX = inMouth.x;
 	var trajY = inMouth.y;
 	array_push(throwTrajectory, {x: trajX, y: trajY});

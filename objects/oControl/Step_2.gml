@@ -7,7 +7,7 @@ if (keyboard_check(vk_anykey) || mouseActive) {
 
 if (global.pause) {
 	cursor_sprite = -1;
-} else if (THROW_DOWN && oPlayer.inMouth != noone) {
+} else if (oPlayer.aiming && oPlayer.inMouth != noone) {
 	cursor_sprite = sMouseAim;
 } else {
 	cursor_sprite = sMouseTongue;

@@ -108,6 +108,7 @@ function Tongue(_carry, _x, _y) constructor {
 		hitNonStick = hitNonStick || data.hitNonStick;
 		allOutNow = allOutNow || data.allOutNow;
 		
+		
 		if (grappleID == noone) {
 			grappleID = data.grappleID; // TODO: could be more granular with this.
 			grappleX = data.grappleX;
@@ -139,7 +140,7 @@ function Tongue(_carry, _x, _y) constructor {
 		}
 		if (allOutNow) {
 			stayedOutFor ++;
-			if (stayedOutFor > 12) {
+			if (stayedOutFor > 0 && !TONGUE_DOWN || stayedOutFor > 8) {
 				setOut();
 			}
 		}
@@ -310,7 +311,9 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 			grappleX = data.grappleX;
 			grappleY = data.grappleY;
 		}
-		allOutNow = allOutNow || (abs(angle_difference(prev.angle, angle)) < 1);
+		else {
+			allOutNow = abs(angle_difference(prev.angle, angle)) < 1;
+		}
 		
 		var newGrappleID = noone;
 		if (newGrappleID == noone) {

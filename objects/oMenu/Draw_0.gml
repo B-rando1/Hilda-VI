@@ -61,8 +61,26 @@ switch (state) {
 		draw_text_transformed(centerX, room_height * 0.2, "Credits", 1/3, 1/3, 0);
 		
 		draw_set_font(fTextBox);
-		draw_set_halign(fa_left);
-		draw_text_transformed(120, room_height * 0.2 + 50, "A game by Brandon Bosman and his brother Zac", 1/3, 1/3, 0);
+		draw_text_transformed(centerX, room_height * 0.2 + 30, "A game by Brandon Bosman and his brother Zac", 1/3, 1/3, 0);
+		
+		draw_set_font(fH4);
+		draw_text_transformed(centerX, room_height * 0.2 + 60, "Music from ZapSplat:", 1/3, 1/3, 0);
+		draw_set_font(fTextBox);
+		draw_text_transformed(centerX, room_height * 0.2 + 80, "Game music - action, fast paced Euro style house, rave, pumping with electronic wobble bass synth elements", 1/4, 1/4, 0);
+		draw_text_transformed(centerX, room_height * 0.2 + 100, "Game music, action, urban groove, electro breakbeat with a funky electronic bass and record scratching", 1/4, 1/4, 0);
+		draw_text_transformed(centerX, room_height * 0.2 + 120, "Game music, action, fun and funky electronic disco with wah guitars, electro bass and drums", 1/4, 1/4, 0);
+		
+		draw_set_font(fH4);
+		draw_text_transformed(centerX, room_height * 0.2 + 150, "Sound Effects from FreeSound:", 1/3, 1/3, 0);
+		draw_set_font(fTextBox);
+		draw_text_transformed(centerX, room_height * 0.2 + 170, "CARTOON LICK 1.wav by kebermaknaan -- https://freesound.org/s/474365/ -- License: Attribution 4.0", 1/4, 1/4, 0);
+		draw_text_transformed(centerX, room_height * 0.2 + 190, "Footsteps-Tile-Jump-06-From.wav by DWOBoyle -- https://freesound.org/s/458283/ -- License: Attribution 4.0", 1/4, 1/4, 0);
+		draw_text_transformed(centerX, room_height * 0.2 + 210, "Jump to grass.WAV by 14FPanskaBubik_Lukas -- https://freesound.org/s/418553/ -- License: Creative Commons 0", 1/4, 1/4, 0);
+		draw_text_transformed(centerX, room_height * 0.2 + 230, "C-SPENCE_KICK01.wav by HUMANOISEMAKER -- https://freesound.org/s/157409/ -- License: Creative Commons 0", 1/4, 1/4, 0);
+		draw_text_transformed(centerX, room_height * 0.2 + 250, "Light Wing Flap by TurboFool -- https://freesound.org/s/561009/ -- License: Creative Commons 0", 1/4, 1/4, 0);
+		draw_text_transformed(centerX, room_height * 0.2 + 270, "#5 Cardboard Scratch.wav by LittleLuigi -- https://freesound.org/s/364782/ -- License: Creative Commons 0", 1/4, 1/4, 0);
+		draw_text_transformed(centerX, room_height * 0.2 + 290, "shimmer_synth_2.wav by wangzhuokun -- https://freesound.org/s/434599/ -- License: Creative Commons 0", 1/4, 1/4, 0);
+		draw_text_transformed(centerX, room_height * 0.2 + 310, "menu click 1 by Tissman -- https://freesound.org/s/531852/ -- License: Creative Commons 0", 1/4, 1/4, 0);
 		
 		draw_set_halign(fa_center);
 		draw_text_transformed(centerX, room_height * 0.85, "Right-click or press Esc to go back.", 1/3, 1/3, 0);

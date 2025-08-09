@@ -19,8 +19,6 @@ if (!global.pause) {
 		}
 	}
 
-	show_debug_message(nearestEnemies);
-
 	var gain = 3;
 	var mult = 0.000008;
 	if (numEnemies == 0) {

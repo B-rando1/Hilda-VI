@@ -37,6 +37,7 @@
   "resources":[
     {"id":{"name":"fH1","path":"fonts/fH1/fH1.yy",},},
     {"id":{"name":"fH2","path":"fonts/fH2/fH2.yy",},},
+    {"id":{"name":"fH4","path":"fonts/fH4/fH4.yy",},},
     {"id":{"name":"fTextBox","path":"fonts/fTextBox/fTextBox.yy",},},
     {"id":{"name":"oCamera","path":"objects/oCamera/oCamera.yy",},},
     {"id":{"name":"oCheckpoint","path":"objects/oCheckpoint/oCheckpoint.yy",},},

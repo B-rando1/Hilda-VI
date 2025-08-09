@@ -3,6 +3,7 @@
   "ResourceOrderSettings":[
     {"name":"fH1","order":3,"path":"fonts/fH1/fH1.yy",},
     {"name":"fH2","order":2,"path":"fonts/fH2/fH2.yy",},
+    {"name":"fH4","order":4,"path":"fonts/fH4/fH4.yy",},
     {"name":"oCheckpoint","order":2,"path":"objects/oCheckpoint/oCheckpoint.yy",},
     {"name":"oCloud","order":13,"path":"objects/oCloud/oCloud.yy",},
     {"name":"oControl","order":9,"path":"objects/oControl/oControl.yy",},

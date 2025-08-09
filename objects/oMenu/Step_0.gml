@@ -20,6 +20,7 @@ switch (state) {
 		}
 		
 		if (MENU_BACK) {
+			audio_play_sound(sndMenu_select, 10, false);
 			changeMainFocused(0);
 			state = MenuState.opening;
 		}
@@ -45,6 +46,7 @@ switch (state) {
 		}
 		
 		if (MENU_BACK) {
+			audio_play_sound(sndMenu_select, 10, false);
 			changeLevelFocused(0);
 			state = MenuState.main;
 		}
@@ -54,11 +56,13 @@ switch (state) {
 		break;
 	case MenuState.settings:
 		if (MENU_BACK) {
+			audio_play_sound(sndMenu_select, 10, false);
 			state = MenuState.main;
 		}
 		break;
 	case MenuState.credits:
 		if (MENU_BACK) {
+			audio_play_sound(sndMenu_select, 10, false);
 			state = MenuState.main;
 		}
 		break;

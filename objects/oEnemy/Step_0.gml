@@ -7,7 +7,8 @@ if (place_meeting(x, y, oPoison)) {
 }
 else {
 	var spike = instance_place(x, y, oSpike);
-	if (spike != noone && spike.state == SpikeState.flying) {
+	if (spike != noone && spike.state == SpikeState.flying && state != EnemyState.dying) {
+		audio_play_sound(sndSpike_hit_thing, 12, false);
 		startDying();
 	}
 }
@@ -54,6 +55,7 @@ else if (state == EnemyState.grabbed) {
 else if (state == EnemyState.beingEaten) {
 	if (place_meeting(x, y, oPlayer)) {
 		oPlayer.inMouth = instance_create_depth(x, y, depth, oSpike, {state: SpikeState.mouth});
+		audio_play_sound(sndSpike_hit_thing, 12, false);
 		instance_destroy(); // Don't replace with startDying()
 	}
 	var scale = min(image_xscale, lerp(image_xscale, playerDist / (2 * oPlayer.tongue.length) + 0.5, 0.8));

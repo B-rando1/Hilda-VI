@@ -2,6 +2,8 @@ triggered = false;
 
 trigger = function() {
 	if (triggered) return;
+	
+	audio_play_sound(sndLevel_end, 50, false);
 	triggered = true;
 	var nextLevelCode = 0;
 	switch (room) {

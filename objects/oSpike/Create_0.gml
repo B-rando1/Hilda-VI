@@ -19,6 +19,7 @@ getStuck = function() {
 		instance_destroy();
 	}
 	
+	audio_play_sound(sndSpike_land, 9, false, 6);
 	state = SpikeState.stuck;
 	if (generator != noone) {
 		generator.instance = noone;

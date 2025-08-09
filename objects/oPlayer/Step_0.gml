@@ -1,5 +1,8 @@
 if (global.pause) return;
 
+prevHSpeed = hSpeed;
+prevVSpeed = vSpeed;
+
 if (aiming && !ON_GROUND && inMouth != noone) {
 	global.timeScale = 0.2;
 }
@@ -69,6 +72,7 @@ switch (state) {
 		if (inMouth != noone && aiming && THROW_RELEASED) {
 			inMouth.launch(point_direction(inMouth.x, inMouth.y, mouse_x, mouse_y));
 			inMouth = noone;
+			aiming = false;
 		}
 		
 	break;
@@ -155,6 +159,7 @@ if (bbox_top > room_height + tongue.length || place_meeting(x, y, oPoison)) {
 else if (place_meeting(x, y, oEnemy)) {
 	with (instance_place(x, y, oEnemy)) {
 		if (state != EnemyState.beingEaten && state != EnemyState.dying) {
+			audio_play_sound(sndSpike_hit_thing, 12, false);
 			other.die();
 		}
 	}
@@ -162,6 +167,7 @@ else if (place_meeting(x, y, oEnemy)) {
 else if (place_meeting(x, y, oSpike)) {
 	with (instance_place(x, y, oSpike)) {
 		if (state == SpikeState.flying && killsThrower) {
+			audio_play_sound(sndSpike_hit_thing, 12, false);
 			other.die();
 		}
 	}
@@ -200,3 +206,25 @@ var orb = collision_rectangle(bbox_left - 1, bbox_top - 1, bbox_right + 1, bbox_
 if (orb != noone) {
 	orb.trigger();
 }
+
+if (TOUCHING_GROUND_H && !wasHittingWallH) {
+	var endSpeedH = min(prevHSpeed, maxSpeed);
+	if (endSpeedH < maxSpeed) {
+		audio_play_sound(sndLand, 10, false, (4 / maxSpeed) * endSpeedH);
+	}
+	else {
+		audio_play_sound(sndLand, 10, false, 6);
+	}
+}
+if (TOUCHING_GROUND_V && !wasHittingWallV) {
+	var endSpeedV = min(prevVSpeed, maxSpeed);
+	if (endSpeedV < maxSpeed) {
+		audio_play_sound(sndLand, 10, false, (4 / maxSpeed) * endSpeedV);
+	}
+	else {
+		audio_play_sound(sndLand, 10, false, 6);
+	}
+}
+
+wasHittingWallH = TOUCHING_GROUND_H;
+wasHittingWallV = TOUCHING_GROUND_V;

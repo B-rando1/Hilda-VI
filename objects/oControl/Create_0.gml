@@ -2,13 +2,23 @@ window_set_cursor(cr_none);
 prevMouseX = mouse_x;
 prevMouseY = mouse_y;
 
+bgSound = audio_play_sound(false ? sndLevelBonus : sndLevel, 100, true);
+enemySound1 = audio_play_sound(sndEnemy_fly, 60, true, 0);
+enemySound2 = audio_play_sound(sndEnemy_fly, 7, true, 0, 0.9);
+enemySound3 = audio_play_sound(sndEnemy_fly, 7, true, 0, 1.5);
+
+nearestEnemies = [noone, noone, noone];
+
 global.pause = false;
 noMoveTimer = 0;
 depth -= 150;
 
 pause = function() {
+	audio_play_sound(sndMenu_select, 10, false, 1/0.4);
 	global.pause = true;
 	oPlayer.aiming = false;
+	
+	audio_master_gain(0.4);
 	
 	window_set_cursor(cr_default);
 	
@@ -21,6 +31,8 @@ pause = function() {
 }
 
 unPause = function() {
+	audio_play_sound(sndMenu_select, 10, false);
+	audio_master_gain(1);
 	window_set_cursor(cr_none);
 	global.pause = false;
 }
@@ -49,6 +61,7 @@ for (var i = 0; i < array_length(menuButtonTexts); i++) {
 changeMenuFocused(0);
 
 handleMenuButtonPressed = function() {
+	audio_play_sound(sndMenu_select, 10, false);
 	switch (menuFocused) {
 		case 0:
 			unPause();

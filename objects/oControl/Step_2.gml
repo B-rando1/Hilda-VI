@@ -1,3 +1,50 @@
+if (instance_exists(oFade)) {
+	audio_sound_gain(bgSound, 1 - oFade.fade, 0);
+}
+
+if (!global.pause) {
+	var numEnemies = instance_number(oEnemy);
+	nearestEnemies = [noone, noone, noone];
+	with (oEnemy) {
+		var NE = other.nearestEnemies;
+		var dist = point_distance(oPlayer.x, oPlayer.y, x, y);
+		for (var i = 0; i < array_length(NE); i ++) {
+			if (NE[i] == noone || NE[i].dist > dist) {
+				for (var j = array_length(NE) - 1; j > i; j --) {
+					NE[j] = NE[j-1];
+				}
+				NE[i] = {id, dist};
+				break;
+			}
+		}
+	}
+
+	show_debug_message(nearestEnemies);
+
+	var gain = 3;
+	var mult = 0.000008;
+	if (numEnemies == 0) {
+		audio_sound_gain(enemySound1, 0, 0);
+		audio_sound_gain(enemySound2, 0, 0);
+		audio_sound_gain(enemySound3, 0, 0);
+	}
+	else if (numEnemies < 5) {
+		audio_sound_gain(enemySound1, gain / (mult * power(nearestEnemies[0].dist, 2) + 1), 0)
+		audio_sound_gain(enemySound2, 0, 0);
+		audio_sound_gain(enemySound3, 0, 0);
+	}
+	else if (numEnemies < 10) {
+		audio_sound_gain(enemySound1, gain / (mult * power(nearestEnemies[0].dist, 2) + 1), 0)
+		audio_sound_gain(enemySound2, gain / (mult * power(nearestEnemies[1].dist, 2) + 1), 0);
+		audio_sound_gain(enemySound3, 0, 0);
+	}
+	else {
+		audio_sound_gain(enemySound1, gain / (mult * power(nearestEnemies[0].dist, 2) + 1), 0)
+		audio_sound_gain(enemySound2, gain / (mult * power(nearestEnemies[1].dist, 2) + 1), 0);
+		audio_sound_gain(enemySound3, gain / (mult * power(nearestEnemies[2].dist, 2) + 1), 0);
+	}
+}
+
 var mouseActive = (mouse_x != prevMouseX || mouse_y != prevMouseY || mouse_check_button_pressed(mb_any));
 if (keyboard_check(vk_anykey) || mouseActive) {
 	noMoveTimer = 0;

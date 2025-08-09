@@ -1,3 +1,5 @@
+bgSound = audio_play_sound(sndMenu, 100, true);
+
 enum MenuState {
 	opening,
 	main,
@@ -42,6 +44,7 @@ for (var i = 0; i < array_length(mainButtonTexts); i++) {
 changeMainFocused(0);
 
 handleMainButtonPressed = function() {
+	audio_play_sound(sndMenu_select, 10, false);
 	switch (mainFocused) {
 		case 0:
 			state = MenuState.levels;
@@ -88,6 +91,7 @@ for (var i = 0; i < array_length(levelButtonTexts); i++) {
 changeLevelFocused(0);
 
 handleLevelButtonPressed = function() {
+	audio_play_sound(sndMenu_select, 10, false);
 	switch (levelFocused) {
 		case 0:
 			instance_create_depth(0, 0, depth, oFade, {newRoom: rmLevel1});

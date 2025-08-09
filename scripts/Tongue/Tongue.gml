@@ -26,6 +26,8 @@ function Tongue(_carry, _x, _y) constructor {
 	
 	stayedOutFor = 0;
 	
+	lickSounds = [sndLick1, sndLick2, sndLick3, sndLick4, sndLick5, sndLick6, sndLick7, sndLick8, sndLick9];
+	
 	step = function() {
 		
 		if (TONGUE_PRESSED) {
@@ -52,6 +54,8 @@ function Tongue(_carry, _x, _y) constructor {
 		y = carry.y;
 		
 		if (allIn && tongueBuffer > 0) {
+			var sndIdx = random_range(0, array_length(lickSounds) - 1);
+			audio_play_sound(lickSounds[sndIdx], 10, false, 1.5)
 			if (carry.inMouth != noone) {
 				carry.inMouth.beDiscarded();
 				carry.inMouth = noone;
@@ -318,6 +322,9 @@ function Node(_x, _y, _angle, _prev, _nodesDone, _nodesLeft) constructor {
 		var newGrappleID = noone;
 		if (newGrappleID == noone) {
 			newGrappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oEnemy, false, true);
+			if (newGrappleID != noone && newGrappleID.state == EnemyState.dying) {
+				newGrappleID = noone;
+			}
 		}
 		if (newGrappleID == noone) {
 			newGrappleID = collision_line(x, y, x + lengthdir_x(length, angle), y + lengthdir_y(length, angle), oOrb, true, true);

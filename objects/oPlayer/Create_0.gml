@@ -11,6 +11,8 @@ grav = 0.39;
 fallGrav = 0.7;
 
 #macro ON_GROUND (place_meeting(x, y + 1, pGround) || (!place_meeting(x, y, oOneWayWall) && place_meeting(x, y + 1, oOneWayWall)))
+#macro TOUCHING_GROUND_H (collision_rectangle(bbox_left - 1, bbox_top, bbox_right + 1, bbox_bottom, pGround, false, true) != noone)
+#macro TOUCHING_GROUND_V (collision_rectangle(bbox_left, bbox_top - 1, bbox_right, bbox_bottom + 1, pGround, false, true) != noone || (!place_meeting(x, y, oOneWayWall) && place_meeting(x, y + 1, oOneWayWall) && prevVSpeed > 0))
 
 #macro MOVE_DIR (gamepad_is_connected(0) ? gamepad_button_check(0, gp_padr) - gamepad_button_check(0, gp_padl) : (keyboard_check(ord("D")) - keyboard_check(ord("A"))))
 #macro JUMP_PRESSED (keyboard_check_pressed(vk_space) || (gamepad_is_connected(0) && (gamepad_button_check_pressed(0, gp_shoulderr) || gamepad_button_check_pressed(0, gp_shoulderl))))
@@ -31,6 +33,11 @@ postCoyTimeMax = 20;
 hSpeed = 0;
 vSpeed = 0;
 maxSpeed = 15;
+
+prevHSpeed = 0;
+prevVSpeed = 0;
+wasHittingWallH = TOUCHING_GROUND_H;
+wasHittingWallV = TOUCHING_GROUND_V;
 
 safeX = x;
 safeY = y;
@@ -63,6 +70,8 @@ aiming = false;
 throwTrajectory = [];
 
 jump = function() {
+	
+	audio_play_sound(sndJump, 10, false, 7);
 	
 	imgAng = 0;
 	imgYScale = 1;

@@ -22,6 +22,7 @@
     {"name":"rmLevel3","order":5,"path":"rooms/rmLevel3/rmLevel3.yy",},
     {"name":"rmLevel4","order":6,"path":"rooms/rmLevel4/rmLevel4.yy",},
     {"name":"rmLevel5","order":7,"path":"rooms/rmLevel5/rmLevel5.yy",},
+    {"name":"rmLevelBonus","order":9,"path":"rooms/rmLevelBonus/rmLevelBonus.yy",},
     {"name":"rmMenu","order":8,"path":"rooms/rmMenu/rmMenu.yy",},
     {"name":"rmStartup","order":1,"path":"rooms/rmStartup/rmStartup.yy",},
     {"name":"rmTemplate","order":3,"path":"rooms/rmTemplate/rmTemplate.yy",},

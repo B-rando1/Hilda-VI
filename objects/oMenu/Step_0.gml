@@ -10,13 +10,12 @@ switch (state) {
 			for (var i = 0; i < array_length(mainButtons); i++) {
 				mainButtons[i].step();
 			}
-		} else {
-			if (keyboard_check_pressed(ord("W")) || keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("A")) || keyboard_check_pressed(vk_left)) {
-				changeMainFocused(mainFocused - 1);
-			}
-			if (keyboard_check_pressed(ord("S")) || keyboard_check_pressed(vk_down) || keyboard_check_pressed(ord("D")) || keyboard_check_pressed(vk_right)) {
-				changeMainFocused(mainFocused + 1);
-			}
+		}
+		if (keyboard_check_pressed(ord("W")) || keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("A")) || keyboard_check_pressed(vk_left)) {
+			changeMainFocused(mainFocused - 1);
+		}
+		if (keyboard_check_pressed(ord("S")) || keyboard_check_pressed(vk_down) || keyboard_check_pressed(ord("D")) || keyboard_check_pressed(vk_right)) {
+			changeMainFocused(mainFocused + 1);
 		}
 		
 		if (MENU_BACK) {
@@ -33,16 +32,15 @@ switch (state) {
 			for (var i = 0; i < array_length(levelButtons); i++) {
 				levelButtons[i].step();
 			}
-		} else {
-			if (keyboard_check_pressed(ord("W")) || keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("S")) || keyboard_check_pressed(vk_down)) {
-				changeLevelFocused(levelFocused + (levelFocused < 3 ? 3 : -3));
-			}
-			if (keyboard_check_pressed(ord("A")) || keyboard_check_pressed(vk_left)) {
-				changeLevelFocused(levelFocused == 0 ? 2 : (levelFocused == 3 ? 5 : levelFocused - 1));
-			}
-			if (keyboard_check_pressed(ord("D")) || keyboard_check_pressed(vk_right)) {
-				changeLevelFocused(levelFocused == 2 ? 0 : (levelFocused == 5 ? 3 : levelFocused + 1));
-			}
+		}
+		if (keyboard_check_pressed(ord("W")) || keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("S")) || keyboard_check_pressed(vk_down)) {
+			changeLevelFocused(levelFocused + (levelFocused < 3 ? 3 : -3));
+		}
+		if (keyboard_check_pressed(ord("A")) || keyboard_check_pressed(vk_left)) {
+			changeLevelFocused(levelFocused == 0 ? 2 : (levelFocused == 3 ? 5 : levelFocused - 1));
+		}
+		if (keyboard_check_pressed(ord("D")) || keyboard_check_pressed(vk_right)) {
+			changeLevelFocused(levelFocused == 2 ? 0 : (levelFocused == 5 ? 3 : levelFocused + 1));
 		}
 		
 		if (MENU_BACK) {

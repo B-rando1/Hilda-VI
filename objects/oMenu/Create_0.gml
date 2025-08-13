@@ -109,7 +109,7 @@ handleLevelButtonPressed = function() {
 			instance_create_depth(0, 0, depth, oFade, {newRoom: rmLevel5});
 			break;
 		case 5:
-			// instance_create_depth(0, 0, depth, oFade, {newRoom: "TODO"});
+			instance_create_depth(0, 0, depth, oFade, {newRoom: rmLevelBonus});
 			break;
 	}
 }

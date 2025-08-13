@@ -210,16 +210,16 @@ if (orb != noone) {
 if (TOUCHING_GROUND_H && !wasHittingWallH) {
 	var endSpeedH = min(prevHSpeed, maxSpeed);
 	if (endSpeedH < maxSpeed) {
-		audio_play_sound(sndLand, 10, false, (4 / maxSpeed) * endSpeedH);
+		audio_play_sound(sndLand, 10, false, (2 / maxSpeed) * endSpeedH);
 	}
 	else {
-		audio_play_sound(sndLand, 10, false, 6);
+		audio_play_sound(sndLand, 10, false,6 );
 	}
 }
 if (TOUCHING_GROUND_V && !wasHittingWallV) {
 	var endSpeedV = min(prevVSpeed, maxSpeed);
 	if (endSpeedV < maxSpeed) {
-		audio_play_sound(sndLand, 10, false, (4 / maxSpeed) * endSpeedV);
+		audio_play_sound(sndLand, 10, false, (2 / maxSpeed) * endSpeedV);
 	}
 	else {
 		audio_play_sound(sndLand, 10, false, 6);

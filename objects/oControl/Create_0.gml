@@ -2,7 +2,7 @@ window_set_cursor(cr_none);
 prevMouseX = mouse_x;
 prevMouseY = mouse_y;
 
-bgSound = audio_play_sound(false ? sndLevelBonus : sndLevel, 100, true);
+bgSound = audio_play_sound(room == rmLevelBonus ? sndLevelBonus : sndLevel, 100, true);
 enemySound1 = audio_play_sound(sndEnemy_fly, 60, true, 0);
 enemySound2 = audio_play_sound(sndEnemy_fly, 7, true, 0, 0.9);
 enemySound3 = audio_play_sound(sndEnemy_fly, 7, true, 0, 1.5);

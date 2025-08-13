@@ -64,6 +64,7 @@
     {"id":{"name":"rmLevel3","path":"rooms/rmLevel3/rmLevel3.yy",},},
     {"id":{"name":"rmLevel4","path":"rooms/rmLevel4/rmLevel4.yy",},},
     {"id":{"name":"rmLevel5","path":"rooms/rmLevel5/rmLevel5.yy",},},
+    {"id":{"name":"rmLevelBonus","path":"rooms/rmLevelBonus/rmLevelBonus.yy",},},
     {"id":{"name":"rmMenu","path":"rooms/rmMenu/rmMenu.yy",},},
     {"id":{"name":"rmPlayground","path":"rooms/rmPlayground/rmPlayground.yy",},},
     {"id":{"name":"rmStartup","path":"rooms/rmStartup/rmStartup.yy",},},
@@ -131,6 +132,7 @@
     {"roomId":{"name":"rmLevel5","path":"rooms/rmLevel5/rmLevel5.yy",},},
     {"roomId":{"name":"rmPlayground","path":"rooms/rmPlayground/rmPlayground.yy",},},
     {"roomId":{"name":"rmTemplate","path":"rooms/rmTemplate/rmTemplate.yy",},},
+    {"roomId":{"name":"rmLevelBonus","path":"rooms/rmLevelBonus/rmLevelBonus.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[

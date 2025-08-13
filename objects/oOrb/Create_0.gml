@@ -6,6 +6,7 @@ trigger = function() {
 	audio_play_sound(sndLevel_end, 50, false);
 	triggered = true;
 	var nextLevelCode = 0;
+	var newRoom = room_next(room)
 	switch (room) {
 		case rmLevel1:
 			nextLevelCode = 1;
@@ -21,10 +22,11 @@ trigger = function() {
 			break;
 		case rmLevel5:
 			nextLevelCode = 5;
+			newRoom = rmMenu;
 			break;
 	}
 	if (nextLevelCode > global.settings.unlockedLevel) {
 		updateSave("unlockedLevel", nextLevelCode);
 	}
-	instance_create_depth(0, 0, depth, oFade, {newRoom: room_next(room), fromOrb: true});
+	instance_create_depth(0, 0, depth, oFade, {newRoom, fromOrb: true});
 }

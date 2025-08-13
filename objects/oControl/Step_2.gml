@@ -64,13 +64,12 @@ if (global.pause) {
 		for (var i = 0; i < array_length(menuButtons); i++) {
 			menuButtons[i].step();
 		}
-	} else {
-		if (keyboard_check_pressed(ord("W")) || keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("A")) || keyboard_check_pressed(vk_left)) {
-			changeMenuFocused(menuFocused - 1);
-		}
-		if (keyboard_check_pressed(ord("S")) || keyboard_check_pressed(vk_down) || keyboard_check_pressed(ord("D")) || keyboard_check_pressed(vk_right)) {
-			changeMenuFocused(menuFocused + 1);
-		}
+	}
+	if (keyboard_check_pressed(ord("W")) || keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("A")) || keyboard_check_pressed(vk_left)) {
+		changeMenuFocused(menuFocused - 1);
+	}
+	if (keyboard_check_pressed(ord("S")) || keyboard_check_pressed(vk_down) || keyboard_check_pressed(ord("D")) || keyboard_check_pressed(vk_right)) {
+		changeMenuFocused(menuFocused + 1);
 	}
 	
 	if (keyboard_check_pressed(vk_escape)) {

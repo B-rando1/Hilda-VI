@@ -15,6 +15,7 @@ enum SpikeState {
 	discarded
 }
 
+randomize();
 loadSave();
 global.pause = false;
 

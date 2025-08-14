@@ -10,6 +10,7 @@
     {"name":"oEnemy","order":3,"path":"objects/oEnemy/oEnemy.yy",},
     {"name":"oFade","order":11,"path":"objects/oFade/oFade.yy",},
     {"name":"oMenu","order":14,"path":"objects/oMenu/oMenu.yy",},
+    {"name":"oMenuBg","order":15,"path":"objects/oMenuBg/oMenuBg.yy",},
     {"name":"oMovingGround","order":1,"path":"objects/oMovingGround/oMovingGround.yy",},
     {"name":"oObjectGenerator","order":6,"path":"objects/oObjectGenerator/oObjectGenerator.yy",},
     {"name":"oOneWayWall","order":12,"path":"objects/oOneWayWall/oOneWayWall.yy",},

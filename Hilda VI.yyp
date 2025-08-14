@@ -47,6 +47,7 @@
     {"id":{"name":"oFade","path":"objects/oFade/oFade.yy",},},
     {"id":{"name":"oGround","path":"objects/oGround/oGround.yy",},},
     {"id":{"name":"oMenu","path":"objects/oMenu/oMenu.yy",},},
+    {"id":{"name":"oMenuBg","path":"objects/oMenuBg/oMenuBg.yy",},},
     {"id":{"name":"oMovingGround","path":"objects/oMovingGround/oMovingGround.yy",},},
     {"id":{"name":"oNonStick","path":"objects/oNonStick/oNonStick.yy",},},
     {"id":{"name":"oObjectGenerator","path":"objects/oObjectGenerator/oObjectGenerator.yy",},},

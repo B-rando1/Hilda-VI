@@ -1,0 +1,1 @@
+draw_sprite_ext(sPlayer, 0, centerX + lengthdir_x(length * zoom, angle + dir), centerY + lengthdir_y(length * zoom, angle + dir), zoom, zoom, angle, c_white, 1);

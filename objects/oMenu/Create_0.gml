@@ -1,4 +1,6 @@
 bgSound = audio_play_sound(sndMenu, 100, true);
+window_set_cursor(cr_default);
+cursor_sprite = -1;
 
 enum MenuState {
 	opening,

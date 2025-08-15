@@ -21,6 +21,7 @@ trigger = function() {
 			nextLevelCode = 4;
 			break;
 		case rmLevel5:
+		case rmLevelBonus:
 			nextLevelCode = 5;
 			newRoom = rmMenu;
 			break;

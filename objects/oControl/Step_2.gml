@@ -72,7 +72,7 @@ if (global.pause) {
 		changeMenuFocused(menuFocused + 1);
 	}
 	
-	if (keyboard_check_pressed(vk_escape)) {
+	if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(ord("P"))) {
 		changeMenuFocused(0);
 		unPause();
 	}
@@ -80,7 +80,7 @@ if (global.pause) {
 		handleMenuButtonPressed();
 	}
 }
-else if (keyboard_check_pressed(vk_escape)) {
+else if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(ord("P"))) {
 	pause();
 }
 

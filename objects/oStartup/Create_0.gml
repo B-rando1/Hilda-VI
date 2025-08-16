@@ -18,6 +18,8 @@ enum SpikeState {
 randomize();
 loadSave();
 global.pause = false;
+global.mute = false;
+global.gain = 1.0;
 
 instance_create_depth(0, 0, depth, oFade, {newRoom: room_next(room), crossedOver: true});
 

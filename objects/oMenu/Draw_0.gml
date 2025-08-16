@@ -31,22 +31,7 @@ switch (state) {
 		draw_set_color(c_white);
 		draw_set_halign(fa_center);
 		draw_set_font(fTextBox);
-		draw_text_transformed(centerX, room_height * 0.85, "Right-click or press Esc to go back.", 1/3, 1/3, 0);
-		break;
-	case MenuState.settings:
-		draw_set_alpha(0.65);
-		draw_set_color(c_black);
-		draw_rectangle(80, 0, room_width - 80, room_height, false);
-		draw_set_alpha(1);
-		draw_set_halign(fa_center);
-		draw_set_valign(fa_middle);
-		draw_set_font(fH2);
-		draw_set_color(c_white);
-		draw_text_transformed(centerX, room_height * 0.2, "Settings", 1/3, 1/3, 0);
-		
-		draw_set_halign(fa_center);
-		draw_set_font(fTextBox);
-		draw_text_transformed(centerX, room_height * 0.85, "Right-click or press Esc to go back.", 1/3, 1/3, 0);
+		draw_text_transformed(centerX, room_height * 0.85, "Right-click or press Esc or 'P' to go back.", 1/3, 1/3, 0);
 		break;
 	case MenuState.credits:
 		draw_set_alpha(0.65);
@@ -83,6 +68,6 @@ switch (state) {
 		draw_text_transformed(centerX, room_height * 0.2 + 310, "menu click 1 by Tissman -- https://freesound.org/s/531852/ -- License: Creative Commons 0", 1/4, 1/4, 0);
 		
 		draw_set_halign(fa_center);
-		draw_text_transformed(centerX, room_height * 0.85, "Right-click or press Esc to go back.", 1/3, 1/3, 0);
+		draw_text_transformed(centerX, room_height * 0.85, "Right-click or press Esc or 'P' to go back.", 1/3, 1/3, 0);
 		break;
 }

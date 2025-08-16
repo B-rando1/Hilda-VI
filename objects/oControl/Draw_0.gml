@@ -25,12 +25,12 @@ if (global.pause) {
 	draw_set_color(c_white);
 	draw_set_halign(fa_center);
 	draw_set_font(fTextBox);
-	draw_text_transformed(centerX, centerY + height * 0.4, "Press Esc to resume.", 1/3 * scale, 1/3 * scale, 0);
+	draw_text_transformed(centerX, centerY + height * 0.4, "Press Esc or 'P' to resume.", 1/3 * scale, 1/3 * scale, 0);
 	
 } else if (noMoveTimer >= 120) {
 	draw_set_color(c_white);
 	draw_set_halign(fa_left);
 	draw_set_valign(fa_top);
 	draw_set_font(fTextBox);
-	draw_text_transformed(centerX - width / 2 + 40 * scale, centerY - height / 2 + 25 * scale, "Press Esc to pause", 1/3 * scale, 1/3 * scale, 0);
+	draw_text_transformed(centerX - width / 2 + 40 * scale, centerY - height / 2 + 25 * scale, "Press Esc or 'P' to pause", 1/3 * scale, 1/3 * scale, 0);
 }

@@ -6,12 +6,11 @@ enum MenuState {
 	opening,
 	main,
 	levels,
-	settings,
 	credits
 }
 
 #macro MENU_SELECT (mouse_check_button_pressed(mb_left) || keyboard_check_pressed(vk_space) || keyboard_check_pressed(vk_enter))
-#macro MENU_BACK (mouse_check_button_pressed(mb_right) || keyboard_check_pressed(vk_escape))
+#macro MENU_BACK (mouse_check_button_pressed(mb_right) || keyboard_check_pressed(vk_escape) || keyboard_check_pressed(ord("P")))
 
 state = MenuState.opening;
 centerX = room_width / 2;
@@ -35,7 +34,7 @@ changeMainFocused = function(newIdx) {
 	mainFocused = newIdx;
 }
 
-mainButtonTexts = ["Levels", "Settings", "Credits", "Exit Game"];
+mainButtonTexts = ["Levels", global.mute ? "Unmute" : "Mute", "Credits", "Exit Game"];
 mainButtons = [];
 for (var i = 0; i < array_length(mainButtonTexts); i++) {
 	array_push(mainButtons, new Button(
@@ -52,7 +51,9 @@ handleMainButtonPressed = function() {
 			state = MenuState.levels;
 			break;
 		case 1:
-			state = MenuState.settings;
+			global.mute = !global.mute;
+			audio_master_gain(global.mute ? 0 : global.gain);
+			mainButtons[1].text = global.mute ? "Unmute" : "Mute";
 			break;
 		case 2:
 			state = MenuState.credits;

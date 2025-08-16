@@ -18,7 +18,8 @@ pause = function() {
 	global.pause = true;
 	oPlayer.aiming = false;
 	
-	audio_master_gain(0.4);
+	global.gain = 0.4;
+	audio_master_gain(global.mute ? 0 : 0.4);
 	
 	window_set_cursor(cr_default);
 	
@@ -32,7 +33,8 @@ pause = function() {
 
 unPause = function() {
 	audio_play_sound(sndMenu_select, 10, false);
-	audio_master_gain(1);
+	global.gain = 1;
+	audio_master_gain(global.mute ? 0 : 1);
 	window_set_cursor(cr_none);
 	global.pause = false;
 }
@@ -50,7 +52,7 @@ changeMenuFocused = function(newIdx) {
 	menuFocused = newIdx;
 }
 
-menuButtonTexts = ["Resume", "Settings", "Restart", "Menu"];
+menuButtonTexts = ["Resume", global.mute ? "Unmute" : "Mute", "Restart", "Menu"];
 menuButtons = [];
 for (var i = 0; i < array_length(menuButtonTexts); i++) {
 	array_push(menuButtons, new Button(
@@ -67,7 +69,9 @@ handleMenuButtonPressed = function() {
 			unPause();
 			break;
 		case 1:
-			//TODO
+			global.mute = !global.mute;
+			audio_master_gain(global.mute ? 0 : global.gain);
+			menuButtons[1].text = global.mute ? "Unmute" : "Mute";
 			break;
 		case 2:
 			instance_create_depth(0, 0, depth, oFade, {newRoom: room});

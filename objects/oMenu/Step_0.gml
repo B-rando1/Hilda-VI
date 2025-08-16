@@ -52,12 +52,6 @@ switch (state) {
 			handleLevelButtonPressed();
 		}
 		break;
-	case MenuState.settings:
-		if (MENU_BACK) {
-			audio_play_sound(sndMenu_select, 10, false);
-			state = MenuState.main;
-		}
-		break;
 	case MenuState.credits:
 		if (MENU_BACK) {
 			audio_play_sound(sndMenu_select, 10, false);

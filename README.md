@@ -22,3 +22,7 @@ A game by Brandon Bosman and his brother Zac.
 - \#5 Cardboard Scratch.wav by LittleLuigi -- https://freesound.org/s/364782/ -- License: Creative Commons 0
 - shimmer\_synth\_2.wav by wangzhuokun -- https://freesound.org/s/434599/ -- License: Creative Commons 0
 - menu click 1 by Tissman -- https://freesound.org/s/531852/ -- License: Creative Commons 0
+
+#### Special Thanks:
+
+Thanks to Vinoth, James, and Anthony for playtesting the game and helping to make it even better!

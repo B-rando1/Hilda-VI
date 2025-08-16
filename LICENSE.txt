@@ -4,5 +4,3 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-instance = instance_create_depth(x, y, depth, objectType, {generator: id});
-waitTime = -1;

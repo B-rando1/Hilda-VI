@@ -1,3 +1,9 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
 var mouseActive = (mouse_x != prevMouseX || mouse_y != prevMouseY || mouse_check_button_pressed(mb_any));
 switch (state) {
 	case MenuState.opening:

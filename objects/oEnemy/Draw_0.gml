@@ -1,3 +1,9 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
 if (spikeFrame >= 0) {
 	draw_sprite_ext(sEnemySpike, spikeFrame, x, y, image_xscale, image_yscale, imgAng, c_white, image_alpha);
 }

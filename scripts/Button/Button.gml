@@ -1,3 +1,9 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
 function Button(_x, _y, _text, _idx, _owner, _onFocus, _disabled=false) constructor {
     baseWidth = 120;
     baseHeight = 70;
